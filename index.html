@@ -39,7 +39,7 @@
             --shadow-header:  0 1px 8px rgba(0,0,0,0.08);
         }
 
-        /* ===== DARK MODE ===== */
+        /* ===== DARK MODE – via class auf <html> ===== */
         html.dark {
             --bg-page:        #111518;
             --bg-page-alt:    #181d21;
@@ -64,52 +64,14 @@
         }
 
         /* ===== BASE ===== */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
-
-        html {
-            overflow-x: hidden;
-            width: 100%;
-        }
-
         body {
             font-family: 'Inter', system-ui, sans-serif;
             background-color: var(--bg-page);
             color: var(--text-base);
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
-            width: 100%;
-            max-width: 100vw;
+            min-width: 100%;
             position: relative;
-        }
-
-        /* Blur overlay for mobile menu background */
-        body.menu-open {
-            overflow: hidden;
-        }
-
-        #page-blur-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(0px);
-            -webkit-backdrop-filter: blur(0px);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.35s ease, backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease, visibility 0.35s ease;
-            z-index: 998;
-            pointer-events: none;
-        }
-
-        #page-blur-overlay.active {
-            opacity: 1;
-            visibility: visible;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            pointer-events: auto;
         }
 
         .logo-font { font-family: 'Roboto', sans-serif; }
@@ -132,145 +94,92 @@
             box-shadow: var(--shadow-header);
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
             width: 100%;
-            max-width: 100vw;
-            overflow: hidden;
+            z-index: 1000;
         }
 
         /* ===== TOP BAR ===== */
         .top-bar {
             background-color: var(--bg-topbar);
             transition: background-color 0.3s ease;
-            width: 100%;
         }
 
-        .top-bar-inner {
-            max-width: 80rem;
-            margin: 0 auto;
-            padding: 0.5rem 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            width: 100%;
-        }
-
-        .top-bar-contact {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            flex: 1;
-            justify-content: center;
-            min-width: 0;
-            overflow: hidden;
-        }
-
-        .top-bar-contact a,
-        .top-bar-contact p {
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-            white-space: nowrap;
-            font-size: 0.75rem;
-            color: white;
-            text-decoration: none;
-            flex-shrink: 0;
-        }
-
-        .top-bar-contact a:hover { color: #83C5BE; }
-
-        .top-bar-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-shrink: 0;
-        }
-
-        /* Mobile: nur Telefon + Email in TopBar */
-        @media (max-width: 639px) {
-            .top-bar-contact .addr-item { display: none !important; }
-            .top-bar-right { display: none !important; }
-            .top-bar-contact {
-                gap: 0.75rem;
-                font-size: 0.7rem;
+        /* Mobile Top-Bar Anpassung */
+        @media (max-width: 640px) {
+            .top-bar .contact-info {
+                display: flex;
+                gap: 12px;
+                justify-content: center;
+                flex-wrap: nowrap;
+                white-space: nowrap;
             }
-            .top-bar-contact a {
-                font-size: 0.7rem;
+            .top-bar .contact-info a,
+            .top-bar .contact-info p {
+                font-size: 10px;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .top-bar .right-links,
+            .top-bar p.flex.items-center.gap-1.5 {
+                display: none !important;
             }
         }
 
-        @media (min-width: 640px) {
-            .top-bar-inner { padding: 0.5rem 1.5rem; gap: 1rem; }
-            .top-bar-contact { gap: 1rem; }
-            .top-bar-contact a,
-            .top-bar-contact p { font-size: 0.8rem; }
+        @media (min-width: 641px) {
+            .top-bar .contact-info {
+                gap: 16px;
+            }
+            .top-bar p.flex.items-center.gap-1.5 {
+                display: flex;
+            }
         }
 
-        /* ===== DARK MODE TOGGLE BUTTON – Mond + Sonne IM Button ===== */
+        /* ===== DARK MODE TOGGLE BUTTON ===== */
         #theme-toggle {
             display: flex;
             align-items: center;
-            position: relative;
-            width: 44px;
-            height: 24px;
-            border-radius: 14px;
+            justify-content: center;
+            width: 32px;
+            height: 18px;
+            border-radius: 9px;
             background: rgba(255,255,255,0.18);
             border: 1px solid rgba(255,255,255,0.30);
             cursor: pointer;
             transition: background 0.3s ease, border-color 0.3s ease;
+            position: relative;
             flex-shrink: 0;
-            padding: 0;
         }
         #theme-toggle:hover {
             background: rgba(255,255,255,0.28);
         }
-
-        /* Sliding knob */
         #theme-toggle-knob {
             position: absolute;
-            left: 3px;
-            width: 18px;
-            height: 18px;
+            left: 2px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: #fff;
             transition: transform 0.3s ease, background 0.3s ease;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         html.dark #theme-toggle-knob {
-            transform: translateX(18px);
+            transform: translateX(14px);
             background: #83C5BE;
         }
-
-        /* Sun icon – visible in light mode (right side of track) */
-        #toggle-sun {
+        #theme-toggle-icon {
             position: absolute;
-            right: 6px;
-            font-size: 10px;
-            color: rgba(255,255,255,0.85);
+            right: 4px;
+            font-size: 7px;
+            color: rgba(255,255,255,0.7);
             transition: opacity 0.3s;
-            z-index: 1;
+            pointer-events: none;
         }
-        html.dark #toggle-sun { opacity: 0; }
-
-        /* Moon icon – visible in dark mode (left side of track) */
-        #toggle-moon {
-            position: absolute;
-            left: 6px;
-            font-size: 10px;
-            color: #83C5BE;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1;
-        }
-        html.dark #toggle-moon { opacity: 1; }
+        html.dark #theme-toggle-icon { opacity: 0; }
 
         /* ===== NAV ===== */
         .nav-link {
             position: relative;
             transition: all 0.3s ease;
             color: var(--text-nav);
-            white-space: nowrap;
         }
         .nav-link:after {
             content: '';
@@ -327,17 +236,15 @@
             position: fixed;
             top: 0;
             right: 0;
-            width: 80%;
+            width: 85%;
             max-width: 320px;
             height: 100vh;
-            height: 100dvh;
             background-color: var(--bg-header);
             border-left: 1px solid var(--border-card);
             transform: translateX(100%);
             transition: transform 0.3s ease, background-color 0.3s ease;
-            z-index: 999;
+            z-index: 9999;
             overflow-y: auto;
-            overflow-x: hidden;
             padding-bottom: 120px;
         }
         #mobile-menu.active {
@@ -346,6 +253,7 @@
         #mobile-menu a { color: var(--text-nav); }
         #mobile-menu a:hover { color: var(--turquoise); }
 
+        /* Mobile Menu Submenu Anpassung */
         .mobile-submenu {
             max-height: 0;
             overflow: hidden;
@@ -440,7 +348,6 @@
             display: flex;
             flex-direction: column;
             gap: 2rem;
-            width: 100%;
         }
         @media (min-width: 1024px) {
             .image-text-wrapper { flex-direction: row; }
@@ -463,18 +370,11 @@
         }
 
         @media (min-width: 641px) {
-            .float-image-left  { max-width: 45%; }
-            .float-image-right { max-width: 45%; }
-        }
-
-        /* On mobile, float images go full-width */
-        @media (max-width: 640px) {
-            .float-image-left,
+            .float-image-left {
+                max-width: 45%;
+            }
             .float-image-right {
-                float: none;
-                max-width: 100%;
-                width: 100%;
-                margin: 0 0 1.5rem 0;
+                max-width: 45%;
             }
         }
 
@@ -492,8 +392,6 @@
         footer {
             background-color: var(--bg-footer);
             transition: background-color 0.3s ease;
-            width: 100%;
-            overflow-x: hidden;
         }
         footer, footer a, footer p, footer li { color: var(--text-footer); }
         .footer-link { transition: color 0.3s ease; }
@@ -503,74 +401,127 @@
 
         /* ===== MOBILE RESPONSIVE ===== */
         @media (max-width: 640px) {
-            .hero-h1 { font-size: 2.2rem; line-height: 1.1; }
+            .hero-h1 { font-size: 2.5rem; line-height: 1.1; }
             .hero-p  { font-size: 1rem; }
+            .float-image-left, .float-image-right {
+                float: none;
+                max-width: 100%;
+                margin: 0 0 1.5rem 0;
+            }
             .section-alt { padding: 2rem 1.25rem; }
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 0.5rem 0;
+            }
+            .submenu {
+                min-width: 200px;
+                left: -20px;
+            }
+            .submenu a {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
         }
         @media (max-width: 768px) {
-            .hero-h1 { font-size: 2.8rem; }
+            .hero-h1 { font-size: 3rem; }
         }
 
-        /* Prevent main nav items from overflowing */
-        nav.desktop-nav {
+        /* ===== DARK MODE TOGGLE ICON ===== */
+        #theme-toggle {
+            position: relative;
+            width: 40px;
+            height: 24px;
+            border-radius: 12px;
+        }
+        #theme-toggle-knob {
+            left: 3px;
+            width: 18px;
+            height: 18px;
+        }
+        #theme-toggle-icon {
+            right: 4px;
+            font-size: 10px;
+        }
+        #moon-icon {
+            position: absolute;
+            left: 6px;
+            top: 6px;
+            font-size: 10px;
+            color: #83C5BE;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        html.dark #moon-icon {
+            opacity: 1;
+        }
+        html.dark #theme-toggle-icon {
+            opacity: 0;
+        }
+
+        /* ===== BLUR EFFECT & NO SCROLL WHEN MENU OPEN ===== */
+        body.menu-open {
             overflow: hidden;
+            position: fixed;
+            width: 100%;
         }
-
-        /* Ensure images never overflow */
-        img {
-            max-width: 100%;
-            height: auto;
+        body.menu-open #blur-overlay {
+            display: block;
         }
-
-        /* Main content container */
-        main {
-            overflow-x: hidden;
+        #blur-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(4px);
+            z-index: 9998;
+            transition: all 0.3s ease;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Blur overlay for mobile menu -->
-    <div id="page-blur-overlay"></div>
+    <!-- Blur Overlay für Mobile Menu -->
+    <div id="blur-overlay"></div>
 
     <!-- ==================== HEADER ==================== -->
     <header class="sticky top-0 z-50 w-full">
 
         <!-- Top-Bar -->
-        <div class="top-bar text-white text-sm py-2">
-            <div class="top-bar-inner">
+        <div class="top-bar text-white text-sm py-2 w-full">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-2 w-full">
 
                 <!-- LEFT: Dark Mode Toggle -->
-                <div class="flex items-center flex-shrink-0">
-                    <button id="theme-toggle" aria-label="Light/Dark umschalten" title="Erscheinungsbild umschalten">
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <button id="theme-toggle" aria-label="Light/Dark umschalten" title="Erscheinungsbild umschalten" class="relative">
                         <div id="theme-toggle-knob"></div>
-                        <i id="toggle-sun" class="fas fa-sun"></i>
-                        <i id="toggle-moon" class="fas fa-moon"></i>
+                        <i id="theme-toggle-icon" class="fas fa-sun"></i>
+                        <i id="moon-icon" class="fas fa-moon"></i>
                     </button>
                 </div>
 
                 <!-- CENTER: Kontakt -->
-                <div class="top-bar-contact">
-                    <a href="tel:+49123456789">
+                <div class="contact-info flex items-center gap-4 sm:gap-6 text-xs mx-auto">
+                    <a href="tel:+49123456789" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors">
                         <i class="fas fa-phone"></i>
                         <span>+49 123 456789</span>
                     </a>
-                    <a href="mailto:proenergie@mail.de">
+                    <a href="mailto:proenergie@mail.de" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors">
                         <i class="fas fa-envelope"></i>
                         <span>proenergie@mail.de</span>
                     </a>
-                    <!-- Only shown on sm+ -->
-                    <p class="addr-item hidden sm:flex items-center gap-1.5">
+                    <p class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors hidden sm:flex">
                         <i class="fas fa-home"></i>
                         <span>Musterstraße 1, 12345 Berlin</span>
                     </p>
                 </div>
 
                 <!-- RIGHT: Impressum & Datenschutz (nur Desktop) -->
-                <div class="top-bar-right hidden sm:flex text-xs">
-                    <a href="#" class="hover:text-[#83C5BE] transition-colors">Impressum</a>
-                    <a href="#" class="hover:text-[#83C5BE] transition-colors">Datenschutz</a>
+                <div class="right-links flex items-center gap-4 text-xs flex-shrink-0">
+                    <a href="#" class="hover:text-[#83C5BE] transition-colors hidden sm:inline">Impressum</a>
+                    <a href="#" class="hover:text-[#83C5BE] transition-colors hidden sm:inline">Datenschutz</a>
                 </div>
 
             </div>
@@ -579,20 +530,20 @@
         <!-- Main Header -->
         <div class="px-4 sm:px-6 py-4 sm:py-5 flex justify-between items-center max-w-7xl mx-auto w-full">
             <!-- Logo -->
-            <a href="index.html" class="flex items-center gap-2 sm:gap-3 flex-shrink-0 min-w-0">
+            <a href="index.html" class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <img
                     id="logo"
-                    class="w-10 sm:w-12 h-auto transition-opacity duration-300 ease-in-out flex-shrink-0"
+                    class="w-10 sm:w-12 h-auto transition-opacity duration-300 ease-in-out"
                     src="logo_ohne_schrift_light.png"
                     alt="Proenergie Logo – Zur Startseite"
                 >
-                <span class="text-xl sm:text-2xl font-semibold tracking-tight text-[#006D77] logo-font whitespace-nowrap">
+                <span class="text-xl sm:text-2xl font-semibold tracking-tight text-[#006D77] logo-font">
                     Proenergie
                 </span>
             </a>
 
             <!-- Desktop Navigation -->
-            <nav class="desktop-nav hidden lg:flex items-center gap-5 xl:gap-7 text-sm font-medium flex-1 justify-center mx-4">
+            <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-medium">
                 <div class="nav-item relative">
                     <a href="index.html" class="nav-link">Startseite</a>
                 </div>
@@ -636,81 +587,81 @@
             </nav>
 
             <!-- Right side -->
-            <div class="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+            <div class="flex items-center gap-3 sm:gap-5">
                 <a href="kontakt.html"
-                   class="cta-button text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-semibold shadow-lg flex items-center gap-2 whitespace-nowrap">
+                class="cta-button text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-semibold shadow-lg flex items-center gap-2 whitespace-nowrap">
                     <i class="fas fa-paper-plane hidden sm:inline"></i>
                     Angebot anfordern
                 </a>
                 <!-- Mobile Hamburger -->
-                <button id="mobile-menu-btn" class="lg:hidden text-2xl sm:text-3xl text-[#006D77] flex-shrink-0" aria-label="Menü öffnen">
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl sm:text-3xl text-[#006D77]">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="lg:hidden" role="dialog" aria-modal="true" aria-label="Navigation">
-            <div class="flex justify-end p-6 mb-2">
-                <button id="mobile-menu-close" class="text-2xl p-2" style="color:var(--primary)" aria-label="Menü schließen">
+        <div id="mobile-menu" class="lg:hidden fixed top-0 right-0 w-4/5 max-w-xs h-full bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 z-50 p-6 overflow-y-auto">
+            <div class="flex justify-end mb-8">
+                <button id="mobile-menu-close" class="text-2xl text-[#006D77] dark:text-[#83C5BE]">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="flex flex-col gap-0 px-6 pb-6">
-                <div class="mobile-menu-item pt-0 mt-0" style="border-top:none;">
-                    <a href="index.html" class="block py-2 text-lg font-medium transition-colors">Startseite</a>
+            <div class="flex flex-col gap-0">
+                <div class="mobile-menu-item pt-0 mt-0">
+                    <a href="index.html" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Startseite</a>
                 </div>
 
                 <div class="mobile-menu-item">
-                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium transition-colors" onclick="toggleSubmenu('leistungen')" style="color:var(--text-nav)">
+                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('leistungen')">
                         Leistungen <i id="leistungen-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
                     </button>
                     <div id="leistungen-submenu" class="mobile-submenu pl-4">
-                        <a href="leistungen.html#druckluft" class="block py-1.5 text-base transition-colors">Druckluft-Systeme</a>
-                        <a href="leistungen.html#leckage" class="block py-1.5 text-base transition-colors">Leckagemanagement</a>
-                        <a href="leistungen.html#wartung" class="block py-1.5 text-base transition-colors">Wartung & Service</a>
-                        <a href="leistungen.html#beratung" class="block py-1.5 text-base transition-colors">Energieberatung</a>
+                        <a href="leistungen.html#druckluft" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Druckluft-Systeme</a>
+                        <a href="leistungen.html#leckage" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leckagemanagement</a>
+                        <a href="leistungen.html#wartung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Wartung & Service</a>
+                        <a href="leistungen.html#beratung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Energieberatung</a>
                     </div>
                 </div>
 
                 <div class="mobile-menu-item">
-                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium transition-colors" onclick="toggleSubmenu('druckluft')" style="color:var(--text-nav)">
+                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('druckluft')">
                         Druckluft-Systeme <i id="druckluft-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
                     </button>
                     <div id="druckluft-submenu" class="mobile-submenu pl-4">
-                        <a href="druckluft.html#kompressoren" class="block py-1.5 text-base transition-colors">Kompressoren</a>
-                        <a href="druckluft.html#trockner" class="block py-1.5 text-base transition-colors">Trockner & Filter</a>
-                        <a href="druckluft.html#rohrleitungen" class="block py-1.5 text-base transition-colors">Rohrleitungen</a>
-                        <a href="druckluft.html#steuerungen" class="block py-1.5 text-base transition-colors">Steuerungen</a>
+                        <a href="druckluft.html#kompressoren" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Kompressoren</a>
+                        <a href="druckluft.html#trockner" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Trockner & Filter</a>
+                        <a href="druckluft.html#rohrleitungen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Rohrleitungen</a>
+                        <a href="druckluft.html#steuerungen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Steuerungen</a>
                     </div>
                 </div>
 
                 <div class="mobile-menu-item">
-                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium transition-colors" onclick="toggleSubmenu('leckagemanagement')" style="color:var(--text-nav)">
+                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('leckagemanagement')">
                         Leckagemanagement <i id="leckagemanagement-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
                     </button>
                     <div id="leckagemanagement-submenu" class="mobile-submenu pl-4">
-                        <a href="leckagemanagement.html#ortung" class="block py-1.5 text-base transition-colors">Leckageortung</a>
-                        <a href="leckagemanagement.html#monitoring" class="block py-1.5 text-base transition-colors">Monitoring</a>
-                        <a href="leckagemanagement.html#reparatur" class="block py-1.5 text-base transition-colors">Reparatur-Service</a>
-                        <a href="leckagemanagement.html#software" class="block py-1.5 text-base transition-colors">Software-Lösungen</a>
+                        <a href="leckagemanagement.html#ortung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leckageortung</a>
+                        <a href="leckagemanagement.html#monitoring" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Monitoring</a>
+                        <a href="leckagemanagement.html#reparatur" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Reparatur-Service</a>
+                        <a href="leckagemanagement.html#software" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Software-Lösungen</a>
                     </div>
                 </div>
 
                 <div class="mobile-menu-item">
-                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium transition-colors" onclick="toggleSubmenu('ueber-uns')" style="color:var(--text-nav)">
+                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('ueber-uns')">
                         Über uns <i id="ueber-uns-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
                     </button>
                     <div id="ueber-uns-submenu" class="mobile-submenu pl-4">
-                        <a href="ueber-uns.html#team" class="block py-1.5 text-base transition-colors">Unser Team</a>
-                        <a href="ueber-uns.html#geschichte" class="block py-1.5 text-base transition-colors">Unternehmensgeschichte</a>
-                        <a href="ueber-uns.html#referenzen" class="block py-1.5 text-base transition-colors">Referenzen</a>
-                        <a href="ueber-uns.html#karriere" class="block py-1.5 text-base transition-colors">Karriere</a>
+                        <a href="ueber-uns.html#team" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Unser Team</a>
+                        <a href="ueber-uns.html#geschichte" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Unternehmensgeschichte</a>
+                        <a href="ueber-uns.html#referenzen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Referenzen</a>
+                        <a href="ueber-uns.html#karriere" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Karriere</a>
                     </div>
                 </div>
 
                 <div class="mobile-menu-item">
-                    <a href="kontakt.html" class="block py-2 text-lg font-medium transition-colors">Kontakt</a>
+                    <a href="kontakt.html" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Kontakt</a>
                 </div>
             </div>
         </div>
@@ -745,7 +696,7 @@
     </div>
 
     <!-- ==================== HERO ==================== -->
-    <section class="hero-bg min-h-screen flex items-center text-white relative overflow-hidden">
+    <section class="hero-bg min-h-screen flex items-center text-white relative">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center w-full py-24">
             <div class="max-w-3xl mx-auto">
                 <span class="inline-block bg-[#83C5BE] text-[#006D77] text-xs font-bold tracking-widest px-5 sm:px-6 py-2 sm:py-2.5 rounded-3xl mb-6">IHR PARTNER FÜR EFFIZIENZ</span>
@@ -774,13 +725,13 @@
     </section>
 
     <!-- ==================== MAIN CONTENT ==================== -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 space-y-20 sm:space-y-24 overflow-x-hidden">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 space-y-20 sm:space-y-24">
 
         <!-- Baukasten-Hinweis -->
         <div class="hint-box p-6 sm:p-8 rounded-3xl mb-12">
             <div class="flex items-start gap-4 sm:gap-6">
-                <i class="fas fa-toolbox text-4xl sm:text-5xl flex-shrink-0 mt-1" style="color:var(--text-heading)"></i>
-                <div class="min-w-0">
+                <i class="fas fa-toolbox text-4xl sm:text-5xl text-[#006D77] flex-shrink-0 mt-1" style="color:var(--text-heading)"></i>
+                <div>
                     <h3 class="text-xl sm:text-2xl font-semibold mb-2">Baukasten-System – So verwendest du die Vorlage</h3>
                     <p>Kopiere einfach einen der unten stehenden Blöcke in deine neue Seite (z. B. leistungen.html). Ändere nur den Inhalt. Für Bild links/rechts: füge die Klasse <code>reverse</code> hinzu. Für Text-Ausrichtung: <code>.block-text-left</code>, <code>.block-text-center</code> oder <code>.block-text-right</code>. Für Umfließung: nutze <code>float-image-left/right</code> direkt im Text.</p>
                 </div>
@@ -790,20 +741,23 @@
         <!-- BLOCK 1: Text zentriert + Highlights -->
         <section class="content-block block-text-center">
             <div class="max-w-3xl mx-auto">
-                <h2 class="text-3xl sm:text-4xl font-semibold mb-4" style="color:var(--text-heading)">Warum Unternehmen auf Proenergie vertrauen</h2>
-                <p class="text-base sm:text-lg" style="color:var(--text-muted)">Unsere Lösungen sparen bis zu 30 % Energie und reduzieren CO₂-Emissionen nachhaltig.</p>
+                <h2 class="text-3xl sm:text-4xl font-semibold mb-4 text-heading" style="color:var(--text-heading)">Warum Unternehmen auf Proenergie vertrauen</h2>
+                <p class="text-base sm:text-lg text-muted-custom" style="color:var(--text-muted)">Unsere Lösungen sparen bis zu 30 % Energie und reduzieren CO₂-Emissionen nachhaltig.</p>
             </div>
             <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mt-10 sm:mt-14">
+                <!-- Card 1 -->
                 <div class="proenergie-card content-block-hover rounded-3xl p-6 sm:p-8">
                     <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-2xl sm:text-3xl">⚡</div>
                     <h4 class="font-semibold text-lg sm:text-xl mb-3">Energieeinsparung</h4>
                     <p class="text-sm leading-relaxed" style="color:var(--text-muted)">Durch präzise Leckageortung und optimierte Druckluftsysteme sparen Sie bares Geld.</p>
                 </div>
+                <!-- Card 2 -->
                 <div class="proenergie-card content-block-hover rounded-3xl p-6 sm:p-8">
                     <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-2xl sm:text-3xl">🔍</div>
                     <h4 class="font-semibold text-lg sm:text-xl mb-3">24/7 Überwachung</h4>
                     <p class="text-sm leading-relaxed" style="color:var(--text-muted)">Unsere IoT-Sensoren erkennen Leckagen in Echtzeit – bevor sie teuer werden.</p>
                 </div>
+                <!-- Card 3 -->
                 <div class="proenergie-card content-block-hover rounded-3xl p-6 sm:p-8 sm:col-span-2 md:col-span-1">
                     <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-2xl sm:text-3xl">🌱</div>
                     <h4 class="font-semibold text-lg sm:text-xl mb-3">Nachhaltigkeit</h4>
@@ -815,12 +769,12 @@
         <!-- BLOCK 2: Bild links – Text rechts -->
         <section class="content-block">
             <div class="image-text-wrapper">
-                <div class="lg:w-5/12 w-full">
+                <div class="lg:w-5/12">
                     <img src="https://picsum.photos/id/1016/800/600"
                          alt="Druckluftanlage"
                          class="w-full rounded-3xl shadow-xl">
                 </div>
-                <div class="lg:w-7/12 w-full block-text-left">
+                <div class="lg:w-7/12 block-text-left">
                     <span class="uppercase text-xs tracking-widest text-[#83C5BE]">Druckluft-Systeme</span>
                     <h2 class="text-3xl sm:text-4xl font-semibold mt-3 mb-5 sm:mb-6" style="color:var(--text-heading)">Moderne Kompressoren &amp; Zubehör</h2>
                     <div class="prose-custom">
@@ -842,7 +796,7 @@
         <!-- BLOCK 3: Bild rechts – Text links (reverse) -->
         <section class="content-block">
             <div class="image-text-wrapper reverse">
-                <div class="lg:w-7/12 w-full block-text-left">
+                <div class="lg:w-7/12 block-text-left">
                     <span class="uppercase text-xs tracking-widest text-[#83C5BE]">Leckagemanagement</span>
                     <h2 class="text-3xl sm:text-4xl font-semibold mt-3 mb-5 sm:mb-6" style="color:var(--text-heading)">Leckagen finden – Kosten sparen</h2>
                     <div class="prose-custom">
@@ -855,7 +809,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="lg:w-5/12 w-full">
+                <div class="lg:w-5/12">
                     <img src="https://picsum.photos/id/201/800/600"
                          alt="Leckageortung"
                          class="w-full rounded-3xl shadow-xl">
@@ -863,34 +817,34 @@
             </div>
         </section>
 
-        <!-- BLOCK 4: Umfließender Text + Bild -->
-        <section class="content-block section-alt py-12 sm:py-16 px-6 sm:px-10 rounded-3xl overflow-hidden">
-            <div class="max-w-4xl mx-auto prose-custom">
-                <img src="https://picsum.photos/id/237/420/320"
-                     alt="Industrieanlage"
-                     class="float-image-left w-full sm:w-auto">
+        <!-- BLOCK 4: Umfließender Text + Bild (generische Variante) -->
+        <section class="content-block section-alt py-12 sm:py-16 px-6 sm:px-10 rounded-3xl">
+        <div class="max-w-4xl mx-auto prose-custom">
+            <img src="https://picsum.photos/id/237/420/320"
+                alt="Industrieanlage"
+                class="float-image-left">
 
-                <h2 class="text-3xl sm:text-4xl font-semibold" style="color:var(--text-heading)">
-                    Erfolgreiches Leckagemanagement in der Produktion
-                </h2>
+            <h2 class="text-3xl sm:text-4xl font-semibold" style="color:var(--text-heading)">
+            Erfolgreiches Leckagemanagement in der Produktion
+            </h2>
 
-                <p class="mt-4 sm:mt-6">
-                    Durch die systematische Leckageortung und -beseitigung konnten in einem großen Industrieunternehmen
-                    innerhalb eines Jahres mehrere hunderttausend Kilowattstunden Energie eingespart werden.
-                </p>
+            <p class="mt-4 sm:mt-6">
+            Durch die systematische Leckageortung und -beseitigung konnten in einem großen Industrieunternehmen
+            innerhalb eines Jahres mehrere hunderttausend Kilowattstunden Energie eingespart werden.
+            </p>
 
-                <p class="mt-4 sm:mt-6">
-                    In nur wenigen Tagen wurden mehrere hundert Druckluftlecks aufgespürt und dauerhaft abgestellt.
-                    Das Programm läuft seit mehreren Jahren und wird regelmäßig fortgeführt.
-                </p>
+            <p class="mt-4 sm:mt-6">
+            In nur wenigen Tagen wurden mehrere hundert Druckluftlecks aufgespürt und dauerhaft abgestellt.
+            Das Programm läuft seit mehreren Jahren und wird regelmäßig fortgeführt.
+            </p>
 
-                <div class="clear-both mt-10 sm:mt-12 flex justify-end">
-                    <a href="#" class="font-semibold flex items-center gap-2" style="color:var(--primary)">
-                        Referenzübersicht herunterladen
-                        <i class="fas fa-download"></i>
-                    </a>
-                </div>
+            <div class="clear-both mt-10 sm:mt-12 flex justify-end">
+            <a href="#" class="font-semibold flex items-center gap-2" style="color:var(--primary)">
+                Referenzübersicht herunterladen
+                <i class="fas fa-download"></i>
+            </a>
             </div>
+        </div>
         </section>
 
         <!-- CTA Banner -->
@@ -912,20 +866,20 @@
                 <!-- Logo + Info -->
                 <div class="md:col-span-4">
                     <a href="index.html" class="flex items-center gap-2 sm:gap-3 mb-6 flex-shrink-0">
-                        <span class="text-xl sm:text-2xl font-semibold tracking-tight logo-font">
+                        <span class="text-xl sm:text-2xl font-semibold tracking-tight logo-font dark:text-white">
                             Proenergie
                         </span>
                     </a>
-                    <p class="text-sm leading-relaxed max-w-xs footer-muted">
+                    <p class="text-sm leading-relaxed max-w-xs footer-muted dark:text-gray-300">
                         Ihr Spezialist für energieeffiziente Druckluftlösungen und professionelles Leckagemanagement.
                     </p>
                     <div class="mt-6 sm:mt-8 flex gap-4 text-xl sm:text-2xl">
-                        <a href="#" class="hover:text-[#83C5BE] transition-colors"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="hover:text-[#83C5BE] transition-colors"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" class="hover:text-[#83C5BE] transition-colors dark:hover:text-[#83C5BE] dark:text-gray-300"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="hover:text-[#83C5BE] transition-colors dark:hover:text-[#83C5BE] dark:text-gray-300"><i class="fab fa-x-twitter"></i></a>
                     </div>
                 </div>
 
-                <!-- Navigation -->
+                <!-- Links Navigation -->
                 <div class="md:col-span-2">
                     <h5 class="uppercase text-xs tracking-widest mb-5 sm:mb-6 text-[#83C5BE]">Navigation</h5>
                     <ul class="space-y-3 sm:space-y-4 text-sm">
@@ -936,7 +890,7 @@
                     </ul>
                 </div>
 
-                <!-- Unternehmen -->
+                <!-- Links Unternehmen -->
                 <div class="md:col-span-2">
                     <h5 class="uppercase text-xs tracking-widest mb-5 sm:mb-6 text-[#83C5BE]">Unternehmen</h5>
                     <ul class="space-y-3 sm:space-y-4 text-sm">
@@ -952,19 +906,19 @@
                     <h5 class="uppercase text-xs tracking-widest mb-5 sm:mb-6 text-[#83C5BE]">Kontakt</h5>
                     <div class="space-y-5 sm:space-y-6 text-sm">
                         <div class="flex items-start gap-3">
-                            <i class="fas fa-map-marker-alt text-[#83C5BE] mt-0.5 flex-shrink-0"></i>
+                            <i class="fas fa-map-marker-alt text-[#83C5BE] mt-0.5"></i>
                             <div>
                                 <p>Proenergie</p>
                                 <p class="footer-muted text-xs">Musterstraße 1 • 12345 Berlin</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <i class="fas fa-phone text-[#83C5BE] flex-shrink-0"></i>
+                            <i class="fas fa-phone text-[#83C5BE]"></i>
                             <a href="tel:+49123456789" class="hover:text-[#83C5BE] transition-colors">+49 123 456789</a>
                         </div>
                         <div class="flex items-center gap-3">
-                            <i class="fas fa-envelope text-[#83C5BE] flex-shrink-0"></i>
-                            <p class="hover:text-[#83C5BE] transition-colors">proenergie@mail.de</p>
+                            <i class="fas fa-envelope text-[#83C5BE]"></i>
+                            <p class="hover:text-[#83C5BE] transition-colors">proenergie@mail.de</a>
                         </div>
                     </div>
                 </div>
@@ -984,7 +938,7 @@
 
     <!-- ==================== JAVASCRIPT ==================== -->
     <script>
-        /* ===== DARK MODE – sofort beim Laden ===== */
+        /* ===== DARK MODE ===== */
         (function() {
             const saved = localStorage.getItem('proenergie-theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -995,17 +949,8 @@
 
         function updateLogoBasedOnTheme() {
             const logo = document.getElementById('logo');
-            if (!logo) return;
             const isDark = document.documentElement.classList.contains('dark');
             logo.src = isDark ? 'logo_ohne_schrift_dark.png' : 'logo_ohne_schrift_light.png';
-        }
-
-        function updateToggleIcon() {
-            const isDark = document.documentElement.classList.contains('dark');
-            const moonIcon = document.getElementById('toggle-moon');
-            const sunIcon  = document.getElementById('toggle-sun');
-            if (moonIcon) moonIcon.style.opacity = isDark ? '1' : '0';
-            if (sunIcon)  sunIcon.style.opacity  = isDark ? '0' : '1';
         }
 
         function applyTheme(dark) {
@@ -1021,57 +966,53 @@
             updateLogoBasedOnTheme();
         }
 
+        function updateToggleIcon() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const moonIcon = document.getElementById('moon-icon');
+            const sunIcon = document.getElementById('theme-toggle-icon');
+            if (moonIcon && sunIcon) {
+                moonIcon.style.opacity = isDark ? '1' : '0';
+                sunIcon.style.opacity = isDark ? '0' : '1';
+            }
+        }
+
         document.getElementById('theme-toggle').addEventListener('click', function() {
-            applyTheme(!document.documentElement.classList.contains('dark'));
+            const isDark = document.documentElement.classList.contains('dark');
+            applyTheme(!isDark);
         });
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-            if (!localStorage.getItem('proenergie-theme')) applyTheme(e.matches);
+            if (!localStorage.getItem('proenergie-theme')) {
+                applyTheme(e.matches);
+            }
         });
 
         updateToggleIcon();
         updateLogoBasedOnTheme();
 
         /* ===== MOBILE MENU ===== */
-        const mobileBtn    = document.getElementById('mobile-menu-btn');
-        const mobileMenu   = document.getElementById('mobile-menu');
-        const mobileClose  = document.getElementById('mobile-menu-close');
-        const blurOverlay  = document.getElementById('page-blur-overlay');
+        const mobileBtn  = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileClose = document.getElementById('mobile-menu-close');
+        const blurOverlay = document.getElementById('blur-overlay');
 
-        let scrollY = 0;
-
-        function openMobileMenu() {
-            scrollY = window.scrollY;
+        mobileBtn.addEventListener('click', () => {
             mobileMenu.classList.add('active');
-            blurOverlay.classList.add('active');
-            // Lock body scroll
-            document.body.style.position = 'fixed';
-            document.body.style.top = `-${scrollY}px`;
-            document.body.style.width = '100%';
-            document.body.style.overflowY = 'scroll'; // keep scrollbar width stable
-        }
+            document.body.classList.add('menu-open');
+            blurOverlay.style.display = 'block';
+            setTimeout(() => blurOverlay.style.opacity = '1', 10);
+        });
 
-        function closeMobileMenu() {
+        mobileClose.addEventListener('click', () => {
             mobileMenu.classList.remove('active');
-            blurOverlay.classList.remove('active');
-            // Restore body scroll
-            document.body.style.position = '';
-            document.body.style.top = '';
-            document.body.style.width = '';
-            document.body.style.overflowY = '';
-            window.scrollTo(0, scrollY);
-        }
-
-        mobileBtn.addEventListener('click', openMobileMenu);
-        mobileClose.addEventListener('click', closeMobileMenu);
-
-        // Tap on blur overlay closes menu
-        blurOverlay.addEventListener('click', closeMobileMenu);
+            document.body.classList.remove('menu-open');
+            blurOverlay.style.opacity = '0';
+            setTimeout(() => blurOverlay.style.display = 'none', 300);
+        });
 
         function toggleSubmenu(menuId) {
             const submenu = document.getElementById(`${menuId}-submenu`);
-            const icon    = document.getElementById(`${menuId}-icon`);
-            if (!submenu || !icon) return;
+            const icon = document.getElementById(`${menuId}-icon`);
             submenu.classList.toggle('active');
             icon.classList.toggle('fa-chevron-up');
             icon.classList.toggle('fa-chevron-down');
@@ -1089,7 +1030,7 @@
         function fakeSearch() {
             const input = document.getElementById('search-input').value;
             if (input.trim() !== '') {
-                alert(`Suchergebnisse für: "${input}"\n\n(Demo)`);
+                alert(`Suchergebnisse für: "${input}"\n\n(Demo – in der echten Version würden hier echte Ergebnisse erscheinen)`);
             }
         }
 
@@ -1102,7 +1043,6 @@
             if (e.key === 'Escape') {
                 const overlay = document.getElementById('search-overlay');
                 if (!overlay.classList.contains('hidden')) toggleSearch();
-                if (mobileMenu.classList.contains('active')) closeMobileMenu();
             }
         });
 
@@ -1126,7 +1066,7 @@
                         entry.target.style.transform = 'translateY(0)';
                     }
                 });
-            }, { threshold: 0.08 });
+            }, { threshold: 0.12 });
 
             blocks.forEach(block => {
                 block.style.opacity = '0';
@@ -1135,9 +1075,11 @@
             });
         }
 
-        window.addEventListener('load', function() {
+        window.onload = function() {
             animateOnScroll();
-        });
+            console.log('%c✅ Dark Mode erfolgreich geladen!',
+                'color:#006D77; font-family:monospace; font-size:12px');
+        };
     </script>
 </body>
 </html>
