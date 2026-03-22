@@ -98,6 +98,21 @@
             transition: background-color 0.3s ease;
         }
 
+        /* Mobile Top-Bar Anpassung */
+        @media (max-width: 640px) {
+            .top-bar .flex.items-center.gap-2 {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .top-bar .text-xs {
+                font-size: 10px;
+                white-space: nowrap;
+            }
+            .top-bar .hidden.sm\:inline {
+                display: inline;
+            }
+        }
+
         /* ===== DARK MODE TOGGLE BUTTON ===== */
         #theme-toggle {
             display: flex;
@@ -209,12 +224,23 @@
             transition: transform 0.3s ease, background-color 0.3s ease;
             z-index: 999;
             overflow-y: auto;
+            padding-bottom: 120px; /* Dead Space am Ende */
         }
         #mobile-menu.active {
             transform: translateX(0);
         }
         #mobile-menu a { color: var(--text-nav); }
         #mobile-menu a:hover { color: var(--turquoise); }
+
+        /* Mobile Menu Submenu Anpassung */
+        .mobile-submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .mobile-submenu.active {
+            max-height: 500px;
+        }
 
         /* ===== SEARCH OVERLAY ===== */
         .search-box {
@@ -355,7 +381,6 @@
     </style>
 </head>
 
-<!-- Dark mode class applied by JS before paint -->
 <body>
 
     <!-- ==================== HEADER ==================== -->
@@ -375,19 +400,15 @@
                 </div>
 
                 <!-- CENTER: Kontakt -->
-                <div class="flex items-center gap-4 sm:gap-6 text-xs mx-auto">
+                <div class="flex items-center gap-2 sm:gap-6 text-xs mx-auto flex-wrap justify-center">
                     <a href="tel:+49123456789" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors">
                         <i class="fas fa-phone"></i>
-                        <span class="hidden sm:inline">+49 123 456789</span>
+                        <span>+49 123 456789</span>
                     </a>
-                    <p class="flex items-center gap-1.5">
+                    <a href="mailto:proenergie@mail.de" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors">
                         <i class="fas fa-envelope"></i>
-                        <span class="hidden sm:inline">proenergie@mail.de</span>
-                    </p>
-                    <p class="flex items-center gap-1.5">
-                        <i class="fas fa-home"></i>
-                        <span class="hidden sm:inline">Musterstraße 1, 12345 Berlin</span>
-                    </p>
+                        <span>proenergie@mail.de</span>
+                    </a>
                 </div>
 
                 <!-- RIGHT: Impressum & Datenschutz -->
@@ -483,42 +504,53 @@
                 <a href="index.html" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Startseite</a>
 
                 <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
-                    <a href="#" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leistungen <i class="fas fa-chevron-down float-right text-sm"></i></a>
-                    <div class="pl-4">
+                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('leistungen')">
+                        Leistungen <i id="leistungen-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
+                    </button>
+                    <div id="leistungen-submenu" class="mobile-submenu pl-4">
                         <a href="leistungen.html#druckluft" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Druckluft-Systeme</a>
                         <a href="leistungen.html#leckage" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leckagemanagement</a>
                         <a href="leistungen.html#wartung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Wartung & Service</a>
                         <a href="leistungen.html#beratung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Energieberatung</a>
                     </div>
+                </div>
 
                 <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
-                    <a href="#" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Druckluft-Systeme <i class="fas fa-chevron-down float-right text-sm"></i></a>
-                    <div class="pl-4">
+                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('druckluft')">
+                        Druckluft-Systeme <i id="druckluft-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
+                    </button>
+                    <div id="druckluft-submenu" class="mobile-submenu pl-4">
                         <a href="druckluft.html#kompressoren" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Kompressoren</a>
                         <a href="druckluft.html#trockner" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Trockner & Filter</a>
                         <a href="druckluft.html#rohrleitungen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Rohrleitungen</a>
                         <a href="druckluft.html#steuerungen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Steuerungen</a>
                     </div>
+                </div>
 
                 <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
-                    <a href="#" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leckagemanagement <i class="fas fa-chevron-down float-right text-sm"></i></a>
-                    <div class="pl-4">
+                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('leckagemanagement')">
+                        Leckagemanagement <i id="leckagemanagement-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
+                    </button>
+                    <div id="leckagemanagement-submenu" class="mobile-submenu pl-4">
                         <a href="leckagemanagement.html#ortung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leckageortung</a>
                         <a href="leckagemanagement.html#monitoring" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Monitoring</a>
                         <a href="leckagemanagement.html#reparatur" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Reparatur-Service</a>
                         <a href="leckagemanagement.html#software" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Software-Lösungen</a>
                     </div>
+                </div>
 
                 <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
-                    <a href="#" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Über uns <i class="fas fa-chevron-down float-right text-sm"></i></a>
-                    <div class="pl-4">
+                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('ueber-uns')">
+                        Über uns <i id="ueber-uns-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
+                    </button>
+                    <div id="ueber-uns-submenu" class="mobile-submenu pl-4">
                         <a href="ueber-uns.html#team" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Unser Team</a>
                         <a href="ueber-uns.html#geschichte" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Unternehmensgeschichte</a>
                         <a href="ueber-uns.html#referenzen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Referenzen</a>
                         <a href="ueber-uns.html#karriere" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Karriere</a>
                     </div>
-
                 </div>
+
                 <a href="kontakt.html" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Kontakt</a>
             </div>
         </div>
@@ -686,12 +718,12 @@
             </h2>
 
             <p class="mt-4 sm:mt-6">
-            Durch die systematische Leckageortung und -beseitigung konnten in einem großen Industrieunternehmen 
+            Durch die systematische Leckageortung und -beseitigung konnten in einem großen Industrieunternehmen
             innerhalb eines Jahres mehrere hunderttausend Kilowattstunden Energie eingespart werden.
             </p>
 
             <p class="mt-4 sm:mt-6">
-            In nur wenigen Tagen wurden mehrere hundert Druckluftlecks aufgespürt und dauerhaft abgestellt. 
+            In nur wenigen Tagen wurden mehrere hundert Druckluftlecks aufgespürt und dauerhaft abgestellt.
             Das Programm läuft seit mehreren Jahren und wird regelmäßig fortgeführt.
             </p>
 
@@ -797,7 +829,6 @@
     <script>
         /* ===== DARK MODE ===== */
         (function() {
-            // Gespeicherte Einstellung oder Systemeinstellung auslesen
             const saved = localStorage.getItem('proenergie-theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (saved === 'dark' || (!saved && prefersDark)) {
@@ -835,14 +866,12 @@
             applyTheme(!isDark);
         });
 
-        // Systemeinstellung live verfolgen (wenn keine manuelle Wahl getroffen)
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
             if (!localStorage.getItem('proenergie-theme')) {
                 applyTheme(e.matches);
             }
         });
 
-        // Init icon state
         updateToggleIcon();
         updateLogoBasedOnTheme();
 
@@ -858,6 +887,14 @@
         mobileClose.addEventListener('click', () => {
             mobileMenu.classList.remove('active');
         });
+
+        function toggleSubmenu(menuId) {
+            const submenu = document.getElementById(`${menuId}-submenu`);
+            const icon = document.getElementById(`${menuId}-icon`);
+            submenu.classList.toggle('active');
+            icon.classList.toggle('fa-chevron-up');
+            icon.classList.toggle('fa-chevron-down');
+        }
 
         /* ===== SEARCH OVERLAY ===== */
         function toggleSearch() {
