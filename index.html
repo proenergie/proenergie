@@ -77,13 +77,13 @@
         /* ===== HERO ===== */
         .hero-bg {
             background-image: linear-gradient(rgba(0,109,119,0.78), rgba(0,109,119,0.78)),
-                              url('https://via.placeholder.com/1920x1080/006D77/ffffff?text=Proenergie');
+                              url('https://picsum.photos/id/1015/1920/1080');
             background-size: cover;
             background-position: center;
         }
         html.dark .hero-bg {
             background-image: linear-gradient(rgba(0,50,58,0.88), rgba(0,50,58,0.88)),
-                              url('https://via.placeholder.com/1920x1080/004f57/ffffff?text=Proenergie');
+                              url('https://picsum.photos/id/1015/1920/1080');
         }
 
         /* ===== HEADER ===== */
@@ -118,11 +118,17 @@
             .top-bar .right-links {
                 display: none;
             }
+            .top-bar p.flex.items-center.gap-1.5 {
+                display: none;
+            }
         }
 
         @media (min-width: 641px) {
             .top-bar .contact-info {
                 gap: 16px;
+            }
+            .top-bar p.flex.items-center.gap-1.5 {
+                display: flex;
             }
         }
 
@@ -427,7 +433,7 @@
                         <i class="fas fa-envelope"></i>
                         <span>proenergie@mail.de</span>
                     </a>
-                    <p class="flex items-center gap-1.5 hidden sm:inline">
+                    <p class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors hidden sm:flex">
                         <i class="fas fa-home"></i>
                         <span>Musterstraße 1, 12345 Berlin</span>
                     </p>
@@ -685,7 +691,7 @@
         <section class="content-block">
             <div class="image-text-wrapper">
                 <div class="lg:w-5/12">
-                    <img src="https://via.placeholder.com/800x600/83C5BE/ffffff?text=Druckluftanlage"
+                    <img src="https://picsum.photos/id/1016/800/600"
                          alt="Druckluftanlage"
                          class="w-full rounded-3xl shadow-xl">
                 </div>
@@ -725,7 +731,7 @@
                     </div>
                 </div>
                 <div class="lg:w-5/12">
-                    <img src="https://via.placeholder.com/800x600/83C5BE/ffffff?text=Leckageortung"
+                    <img src="https://picsum.photos/id/201/800/600"
                          alt="Leckageortung"
                          class="w-full rounded-3xl shadow-xl">
                 </div>
@@ -735,7 +741,7 @@
         <!-- BLOCK 4: Umfließender Text + Bild (generische Variante) -->
         <section class="content-block section-alt py-12 sm:py-16 px-6 sm:px-10 rounded-3xl">
         <div class="max-w-4xl mx-auto prose-custom">
-            <img src="https://via.placeholder.com/420x320/83C5BE/ffffff?text=Industrieanlage"
+            <img src="https://picsum.photos/id/237/420/320"
                 alt="Industrieanlage"
                 class="float-image-left">
 
