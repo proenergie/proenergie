@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="de" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proenergie – Druckluft & Leckagemanagement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@400;500&display=swap');
+
+        /* ===== CSS VARIABLEN – LIGHT MODE (default) ===== */
+        :root {
+            --primary: #006D77;
+            --secondary: #2E8F98;
+            --turquoise: #83C5BE;
+            --dark: #3A3A3A;
+            --light: #E0E0E0;
+
+            --bg-page:        #ffffff;
+            --bg-page-alt:    #F8F8F8;
+            --bg-header:      #ffffff;
+            --bg-topbar:      #006D77;
+            --bg-footer:      #3A3A3A;
+            --bg-card:        #ffffff;
+            --bg-hint:        #E0E0E0;
+            --bg-search:      #ffffff;
+            --bg-input:       #E0E0E0;
+            --bg-tag:         #E0E0E0;
+
+            --text-base:      #3A3A3A;
+            --text-muted:     rgba(58,58,58,0.70);
+            --text-heading:   #006D77;
+            --text-nav:       #3A3A3A;
+            --text-footer:    #ffffff;
+            --text-footer-muted: #E0E0E0;
+
+            --border-card:    #E0E0E0;
+            --shadow-header:  0 1px 8px rgba(0,0,0,0.08);
+        }
+
+        /* ===== DARK MODE – via class auf <html> ===== */
+        html.dark {
+            --bg-page:        #111518;
+            --bg-page-alt:    #181d21;
+            --bg-header:      #14191e;
+            --bg-topbar:      #004f57;
+            --bg-footer:      #0d1114;
+            --bg-card:        #1a2127;
+            --bg-hint:        #1e2830;
+            --bg-search:      #1a2127;
+            --bg-input:       #232d35;
+            --bg-tag:         #1e2830;
+
+            --text-base:      #d8e3e8;
+            --text-muted:     rgba(180,210,218,0.65);
+            --text-heading:   #83C5BE;
+            --text-nav:       #c5dde2;
+            --text-footer:    #d8e3e8;
+            --text-footer-muted: #8ea8ae;
+
+            --border-card:    #263040;
+            --shadow-header:  0 1px 12px rgba(0,0,0,0.40);
+        }
+
+        /* ===== BASE ===== */
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-base);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .logo-font { font-family: 'Roboto', sans-serif; }
+
+        /* ===== HERO ===== */
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,109,119,0.78), rgba(0,109,119,0.78)),
+                              url('https://picsum.photos/id/1015/1920/1080');
+            background-size: cover;
+            background-position: center;
+        }
+        html.dark .hero-bg {
+            background-image: linear-gradient(rgba(0,50,58,0.88), rgba(0,50,58,0.88)),
+                              url('https://picsum.photos/id/1015/1920/1080');
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background-color: var(--bg-header);
+            box-shadow: var(--shadow-header);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background-color: var(--bg-topbar);
+            transition: background-color 0.3s ease;
+        }
+
+        /* ===== DARK MODE TOGGLE BUTTON ===== */
+        #theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 18px;
+            border-radius: 9px;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.30);
+            cursor: pointer;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+        #theme-toggle:hover {
+            background: rgba(255,255,255,0.28);
+        }
+        #theme-toggle-knob {
+            position: absolute;
+            left: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        html.dark #theme-toggle-knob {
+            transform: translateX(14px);
+            background: #83C5BE;
+        }
+        #theme-toggle-icon {
+            position: absolute;
+            right: 4px;
+            font-size: 7px;
+            color: rgba(255,255,255,0.7);
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        html.dark #theme-toggle-icon { opacity: 0; }
+
+        /* ===== NAV ===== */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            color: var(--text-nav);
+        }
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link:hover:after { width: 100%; }
+        html.dark .nav-link:hover { color: var(--turquoise); }
+        html.dark .nav-link:hover:after { background-color: var(--turquoise); }
+
+        /* ===== SUBMENU ===== */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--bg-header);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 50;
+            padding: 12px 0;
+        }
+        .nav-item:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+        }
+        .submenu a {
+            display: block;
+            padding: 8px 16px;
+            color: var(--text-nav);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .submenu a:hover {
+            background-color: rgba(0,109,119,0.08);
+            color: var(--primary);
+        }
+        html.dark .submenu a:hover {
+            background-color: rgba(131,197,190,0.12);
+            color: var(--turquoise);
+        }
+
+        /* ===== MOBILE MENU ===== */
+        #mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80%;
+            max-width: 320px;
+            height: 100vh;
+            background-color: var(--bg-header);
+            border-left: 1px solid var(--border-card);
+            transform: translateX(100%);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            z-index: 999;
+            overflow-y: auto;
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+        #mobile-menu a { color: var(--text-nav); }
+        #mobile-menu a:hover { color: var(--turquoise); }
+
+        /* ===== SEARCH OVERLAY ===== */
+        .search-box {
+            background-color: var(--bg-search);
+            transition: background-color 0.3s ease;
+        }
+        .search-input {
+            background-color: var(--bg-input);
+            color: var(--text-base);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .search-tag {
+            background-color: var(--bg-tag);
+            color: var(--text-base);
+            transition: all 0.2s ease;
+        }
+        .search-tag:hover { background: var(--primary); color: #fff; }
+
+        /* ===== CONTENT BLOCKS ===== */
+        .content-block {
+            transition: opacity 0.6s cubic-bezier(0.34,1.56,0.64,1),
+                        transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .content-block-hover {
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .content-block-hover:hover { transform: translateY(-8px); }
+
+        /* ===== CARDS ===== */
+        .proenergie-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        }
+        .proenergie-card:hover { border-color: var(--primary); }
+        html.dark .proenergie-card:hover { border-color: var(--turquoise); }
+        .proenergie-card h4, .proenergie-card p { color: var(--text-base); }
+
+        /* ===== HINT BOX ===== */
+        .hint-box {
+            background-color: var(--bg-hint);
+            border-left: 8px solid var(--primary);
+            transition: background-color 0.3s ease;
+        }
+        html.dark .hint-box { border-left-color: var(--turquoise); }
+        .hint-box h3 { color: var(--text-heading); }
+        .hint-box p, .hint-box code { color: var(--text-base); }
+        .hint-box code {
+            background-color: var(--bg-card);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        /* ===== ALT SECTION ===== */
+        .section-alt {
+            background-color: var(--bg-page-alt);
+            transition: background-color 0.3s ease;
+        }
+
+        /* ===== TEXT ===== */
+        .text-heading { color: var(--text-heading); }
+        .text-muted-custom { color: var(--text-muted); }
+        .text-nav-custom { color: var(--text-nav); }
+
+        /* ===== PROSE ===== */
+        .prose-custom p {
+            margin-bottom: 1.25rem;
+            line-height: 1.75;
+            color: var(--text-base);
+        }
+        .prose-custom ul { color: var(--text-base); }
+
+        /* ===== LAYOUT ===== */
+        .block-text-left   { text-align: left; }
+        .block-text-center { text-align: center; }
+        .block-text-right  { text-align: right; }
+
+        .image-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .image-text-wrapper { flex-direction: row; }
+            .image-text-wrapper.reverse { flex-direction: row-reverse; }
+        }
+
+        .float-image-left {
+            float: left;
+            margin: 0 1.5rem 1rem 0;
+            max-width: 45%;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.12);
+        }
+        .float-image-right {
+            float: right;
+            margin: 0 0 1rem 1.5rem;
+            max-width: 45%;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.12);
+        }
+
+        /* ===== CTA BUTTON ===== */
+        .cta-button {
+            background: linear-gradient(90deg, #006D77, #2E8F98);
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(0,109,119,0.4);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: var(--bg-footer);
+            transition: background-color 0.3s ease;
+        }
+        footer, footer a, footer p, footer li { color: var(--text-footer); }
+        .footer-link { transition: color 0.3s ease; }
+        .footer-link:hover { color: #83C5BE; }
+        .footer-muted { color: var(--text-footer-muted); }
+        .footer-border { border-color: rgba(255,255,255,0.12); }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .hero-h1 { font-size: 2.5rem; line-height: 1.1; }
+            .hero-p  { font-size: 1rem; }
+            .float-image-left, .float-image-right {
+                float: none;
+                max-width: 100%;
+                margin: 0 0 1.5rem 0;
+            }
+            .section-alt { padding: 2rem 1.25rem; }
+        }
+        @media (max-width: 768px) {
+            .hero-h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+
+<!-- Dark mode class applied by JS before paint -->
+<body>
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="sticky top-0 z-50">
+
+        <!-- Top-Bar -->
+        <div class="top-bar text-white text-sm py-2">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-2">
+
+                <!-- LEFT: Dark Mode Toggle -->
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <button id="theme-toggle" aria-label="Light/Dark umschalten" title="Erscheinungsbild umschalten">
+                        <div id="theme-toggle-knob"></div>
+                        <i id="theme-toggle-icon" class="fas fa-sun"></i>
+                    </button>
+                    <i id="moon-icon" class="fas fa-moon text-[8px] text-[#83C5BE] opacity-0 transition-opacity" aria-hidden="true"></i>
+                </div>
+
+                <!-- CENTER: Kontakt -->
+                <div class="flex items-center gap-4 sm:gap-6 text-xs mx-auto">
+                    <a href="tel:+49123456789" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors">
+                        <i class="fas fa-phone"></i>
+                        <span class="hidden sm:inline">+49 123 456789</span>
+                    </a>
+                    <p class="flex items-center gap-1.5">
+                        <i class="fas fa-envelope"></i>
+                        <span class="hidden sm:inline">proenergie@mail.de</span>
+                    </p>
+                    <p class="flex items-center gap-1.5">
+                        <i class="fas fa-home"></i>
+                        <span class="hidden sm:inline">Musterstraße 1, 12345 Berlin</span>
+                    </p>
+                </div>
+
+                <!-- RIGHT: Impressum & Datenschutz -->
+                <div class="flex items-center gap-4 text-xs flex-shrink-0">
+                    <a href="#" class="hover:text-[#83C5BE] transition-colors hidden sm:inline">Impressum</a>
+                    <a href="#" class="hover:text-[#83C5BE] transition-colors hidden sm:inline">Datenschutz</a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Main Header -->
+        <div class="px-4 sm:px-6 py-4 sm:py-5 flex justify-between items-center max-w-7xl mx-auto w-full">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                <img
+                    id="logo"
+                    class="w-10 sm:w-12 h-auto transition-opacity duration-300 ease-in-out"
+                    src="logo_ohne_schrift_light.png"
+                    alt="Proenergie Logo – Zur Startseite"
+                >
+                <span class="text-xl sm:text-2xl font-semibold tracking-tight text-[#006D77] logo-font">
+                    Proenergie
+                </span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-medium">
+                <div class="nav-item relative">
+                    <a href="index.html" class="nav-link">Startseite</a>
+                </div>
+                <div class="nav-item relative">
+                    <a href="leistungen.html" class="nav-link">Leistungen</a>
+                    <div class="submenu">
+                        <a href="leistungen.html#druckluft">Druckluft-Systeme</a>
+                        <a href="leistungen.html#leckage">Leckagemanagement</a>
+                        <a href="leistungen.html#wartung">Wartung & Service</a>
+                        <a href="leistungen.html#beratung">Energieberatung</a>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="druckluft.html" class="nav-link">Druckluft-Systeme</a>
+                    <div class="submenu">
+                        <a href="druckluft.html#kompressoren">Kompressoren</a>
+                        <a href="druckluft.html#trockner">Trockner & Filter</a>
+                        <a href="druckluft.html#rohrleitungen">Rohrleitungen</a>
+                        <a href="druckluft.html#steuerungen">Steuerungen</a>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="leckagemanagement.html" class="nav-link">Leckagemanagement</a>
+                    <div class="submenu">
+                        <a href="leckagemanagement.html#ortung">Leckageortung</a>
+                        <a href="leckagemanagement.html#monitoring">Monitoring</a>
+                        <a href="leckagemanagement.html#reparatur">Reparatur-Service</a>
+                        <a href="leckagemanagement.html#software">Software-Lösungen</a>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="ueber-uns.html" class="nav-link">Über uns</a>
+                    <div class="submenu">
+                        <a href="ueber-uns.html#team">Unser Team</a>
+                        <a href="ueber-uns.html#geschichte">Unternehmensgeschichte</a>
+                        <a href="ueber-uns.html#referenzen">Referenzen</a>
+                        <a href="ueber-uns.html#karriere">Karriere</a>
+                    </div>
+                </div>
+                <a href="kontakt.html" class="nav-link">Kontakt</a>
+            </nav>
+
+            <!-- Right side -->
+            <div class="flex items-center gap-3 sm:gap-5">
+                <a href="kontakt.html"
+                class="cta-button text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-semibold shadow-lg flex items-center gap-2 whitespace-nowrap">
+                    <i class="fas fa-paper-plane hidden sm:inline"></i>
+                    Angebot anfordern
+                </a>
+                <!-- Mobile Hamburger -->
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl sm:text-3xl text-[#006D77]">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden fixed top-0 right-0 w-4/5 max-w-xs h-full bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 z-50 p-6 overflow-y-auto">
+            <div class="flex justify-end mb-8">
+                <button id="mobile-menu-close" class="text-2xl text-[#006D77] dark:text-[#83C5BE]">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="flex flex-col gap-4">
+                <a href="index.html" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Startseite</a>
+
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                    <a href="#" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leistungen <i class="fas fa-chevron-down float-right text-sm"></i></a>
+                    <div class="pl-4">
+                        <a href="leistungen.html#druckluft" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Druckluft-Systeme</a>
+                        <a href="leistungen.html#leckage" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leckagemanagement</a>
+                        <a href="leistungen.html#wartung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Wartung & Service</a>
+                        <a href="leistungen.html#beratung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Energieberatung</a>
+                    </div>
+
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                    <a href="#" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Druckluft-Systeme <i class="fas fa-chevron-down float-right text-sm"></i></a>
+                    <div class="pl-4">
+                        <a href="druckluft.html#kompressoren" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Kompressoren</a>
+                        <a href="druckluft.html#trockner" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Trockner & Filter</a>
+                        <a href="druckluft.html#rohrleitungen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Rohrleitungen</a>
+                        <a href="druckluft.html#steuerungen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Steuerungen</a>
+                    </div>
+
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                    <a href="#" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leckagemanagement <i class="fas fa-chevron-down float-right text-sm"></i></a>
+                    <div class="pl-4">
+                        <a href="leckagemanagement.html#ortung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leckageortung</a>
+                        <a href="leckagemanagement.html#monitoring" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Monitoring</a>
+                        <a href="leckagemanagement.html#reparatur" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Reparatur-Service</a>
+                        <a href="leckagemanagement.html#software" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Software-Lösungen</a>
+                    </div>
+
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                    <a href="#" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Über uns <i class="fas fa-chevron-down float-right text-sm"></i></a>
+                    <div class="pl-4">
+                        <a href="ueber-uns.html#team" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Unser Team</a>
+                        <a href="ueber-uns.html#geschichte" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Unternehmensgeschichte</a>
+                        <a href="ueber-uns.html#referenzen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Referenzen</a>
+                        <a href="ueber-uns.html#karriere" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Karriere</a>
+                    </div>
+
+                </div>
+                <a href="kontakt.html" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Kontakt</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== SEARCH OVERLAY ==================== -->
+    <div id="search-overlay" class="hidden fixed inset-0 bg-black/70 z-[9999] flex items-start justify-center pt-24 sm:pt-32 px-4">
+        <div class="search-box rounded-3xl w-full max-w-2xl p-6 sm:p-8 shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl sm:text-2xl font-semibold" style="color:var(--text-heading)">Suche</h3>
+                <button onclick="toggleSearch()" class="text-3xl" style="color:var(--text-base)">×</button>
+            </div>
+            <div class="relative">
+                <input id="search-input"
+                       type="text"
+                       placeholder="z.B. Leckageortung, Druckluftkompressor..."
+                       class="search-input w-full border-2 border-transparent focus:border-[#006D77] rounded-2xl px-4 sm:px-6 py-4 sm:py-5 text-base sm:text-lg outline-none">
+                <button onclick="fakeSearch()"
+                        class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 bg-[#006D77] text-white px-5 sm:px-8 py-2.5 sm:py-3 rounded-2xl font-medium text-sm">
+                    Suchen
+                </button>
+            </div>
+            <div class="mt-6 sm:mt-8 text-sm" style="color:var(--text-muted)">
+                <p class="mb-2 font-medium">Beliebte Suchbegriffe:</p>
+                <div class="flex flex-wrap gap-3">
+                    <span onclick="quickSearch(this)" class="search-tag cursor-pointer px-5 py-2 rounded-2xl text-xs transition-all">Leckageortung</span>
+                    <span onclick="quickSearch(this)" class="search-tag cursor-pointer px-5 py-2 rounded-2xl text-xs transition-all">Druckluftanlage</span>
+                    <span onclick="quickSearch(this)" class="search-tag cursor-pointer px-5 py-2 rounded-2xl text-xs transition-all">Energieeinsparung</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="hero-bg min-h-screen flex items-center text-white relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center w-full py-24">
+            <div class="max-w-3xl mx-auto">
+                <span class="inline-block bg-[#83C5BE] text-[#006D77] text-xs font-bold tracking-widest px-5 sm:px-6 py-2 sm:py-2.5 rounded-3xl mb-6">IHR PARTNER FÜR EFFIZIENZ</span>
+                <h1 class="hero-h1 text-5xl sm:text-6xl md:text-7xl font-bold leading-none mb-6">Druckluft &amp;<br>Leckagemanagement</h1>
+                <p class="hero-p text-lg sm:text-xl md:text-2xl mb-10 max-w-2xl mx-auto opacity-95">
+                    Maximale Effizienz. Minimale Verluste. Nachhaltige Lösungen für Industrie und Gewerbe.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="leistungen.html"
+                       class="cta-button text-white px-8 sm:px-10 py-4 sm:py-5 rounded-3xl text-base sm:text-lg font-semibold inline-flex items-center gap-3 justify-center">
+                        Leistungen entdecken
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="kontakt.html"
+                       class="border-2 border-white hover:bg-white hover:text-[#006D77] transition-all px-8 sm:px-10 py-4 sm:py-5 rounded-3xl text-base sm:text-lg font-semibold">
+                        Jetzt beraten lassen
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center">
+            <div class="text-xs tracking-widest mb-2 opacity-75">SCROLLEN</div>
+            <div class="w-px h-12 bg-white/50 animate-bounce"></div>
+        </div>
+    </section>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 space-y-20 sm:space-y-24">
+
+        <!-- Baukasten-Hinweis -->
+        <div class="hint-box p-6 sm:p-8 rounded-3xl mb-12">
+            <div class="flex items-start gap-4 sm:gap-6">
+                <i class="fas fa-toolbox text-4xl sm:text-5xl text-[#006D77] flex-shrink-0 mt-1" style="color:var(--text-heading)"></i>
+                <div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-2">Baukasten-System – So verwendest du die Vorlage</h3>
+                    <p>Kopiere einfach einen der unten stehenden Blöcke in deine neue Seite (z. B. leistungen.html). Ändere nur den Inhalt. Für Bild links/rechts: füge die Klasse <code>reverse</code> hinzu. Für Text-Ausrichtung: <code>.block-text-left</code>, <code>.block-text-center</code> oder <code>.block-text-right</code>. Für Umfließung: nutze <code>float-image-left/right</code> direkt im Text.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BLOCK 1: Text zentriert + Highlights -->
+        <section class="content-block block-text-center">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-semibold mb-4 text-heading" style="color:var(--text-heading)">Warum Unternehmen auf Proenergie vertrauen</h2>
+                <p class="text-base sm:text-lg text-muted-custom" style="color:var(--text-muted)">Unsere Lösungen sparen bis zu 30 % Energie und reduzieren CO₂-Emissionen nachhaltig.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mt-10 sm:mt-14">
+                <!-- Card 1 -->
+                <div class="proenergie-card content-block-hover rounded-3xl p-6 sm:p-8">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-2xl sm:text-3xl">⚡</div>
+                    <h4 class="font-semibold text-lg sm:text-xl mb-3">Energieeinsparung</h4>
+                    <p class="text-sm leading-relaxed" style="color:var(--text-muted)">Durch präzise Leckageortung und optimierte Druckluftsysteme sparen Sie bares Geld.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="proenergie-card content-block-hover rounded-3xl p-6 sm:p-8">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-2xl sm:text-3xl">🔍</div>
+                    <h4 class="font-semibold text-lg sm:text-xl mb-3">24/7 Überwachung</h4>
+                    <p class="text-sm leading-relaxed" style="color:var(--text-muted)">Unsere IoT-Sensoren erkennen Leckagen in Echtzeit – bevor sie teuer werden.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="proenergie-card content-block-hover rounded-3xl p-6 sm:p-8 sm:col-span-2 md:col-span-1">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-2xl sm:text-3xl">🌱</div>
+                    <h4 class="font-semibold text-lg sm:text-xl mb-3">Nachhaltigkeit</h4>
+                    <p class="text-sm leading-relaxed" style="color:var(--text-muted)">CO₂-Reduktion und ESG-konforme Berichte inklusive.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCK 2: Bild links – Text rechts -->
+        <section class="content-block">
+            <div class="image-text-wrapper">
+                <div class="lg:w-5/12">
+                    <img src="https://picsum.photos/id/1016/800/600"
+                         alt="Druckluftanlage"
+                         class="w-full rounded-3xl shadow-xl">
+                </div>
+                <div class="lg:w-7/12 block-text-left">
+                    <span class="uppercase text-xs tracking-widest text-[#83C5BE]">Druckluft-Systeme</span>
+                    <h2 class="text-3xl sm:text-4xl font-semibold mt-3 mb-5 sm:mb-6" style="color:var(--text-heading)">Moderne Kompressoren &amp; Zubehör</h2>
+                    <div class="prose-custom">
+                        <p>Wir planen, liefern und warten komplette Druckluftanlagen von 5–500 kW. Energieeffiziente Schraubenkompressoren mit Wärmerückgewinnung und intelligente Steuerungen.</p>
+                        <ul class="list-disc pl-6 mt-4 space-y-2">
+                            <li>Schrauben- &amp; Kolbenkompressoren</li>
+                            <li>Trockner &amp; Filter der neuesten Generation</li>
+                            <li>Individuelle Rohrleitungssysteme</li>
+                        </ul>
+                    </div>
+                    <a href="druckluft.html" class="inline-flex items-center gap-3 mt-8 sm:mt-10 font-semibold hover:gap-5 transition-all" style="color:var(--primary)">
+                        Mehr erfahren
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCK 3: Bild rechts – Text links (reverse) -->
+        <section class="content-block">
+            <div class="image-text-wrapper reverse">
+                <div class="lg:w-7/12 block-text-left">
+                    <span class="uppercase text-xs tracking-widest text-[#83C5BE]">Leckagemanagement</span>
+                    <h2 class="text-3xl sm:text-4xl font-semibold mt-3 mb-5 sm:mb-6" style="color:var(--text-heading)">Leckagen finden – Kosten sparen</h2>
+                    <div class="prose-custom">
+                        <p>Mit unserem Ultraschall- und Infrarot-System orten wir Leckagen in Sekunden – auch unter Druck. Jährlich entgehen deutschen Unternehmen Millionen durch unentdeckte Leckagen.</p>
+                    </div>
+                    <div class="mt-8 sm:mt-10 flex gap-4">
+                        <button onclick="alert('Termin gebucht! (Demo)')"
+                                class="bg-[#006D77] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-medium transition-all hover:bg-[#2E8F98]">
+                            Kostenlose Ortung buchen
+                        </button>
+                    </div>
+                </div>
+                <div class="lg:w-5/12">
+                    <img src="https://picsum.photos/id/201/800/600"
+                         alt="Leckageortung"
+                         class="w-full rounded-3xl shadow-xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCK 4: Umfließender Text + Bild (generische Variante) -->
+        <section class="content-block section-alt py-12 sm:py-16 px-6 sm:px-10 rounded-3xl">
+        <div class="max-w-4xl mx-auto prose-custom">
+            <img src="https://picsum.photos/id/237/420/320"
+                alt="Industrieanlage"
+                class="float-image-left">
+
+            <h2 class="text-3xl sm:text-4xl font-semibold" style="color:var(--text-heading)">
+            Erfolgreiches Leckagemanagement in der Produktion
+            </h2>
+
+            <p class="mt-4 sm:mt-6">
+            Durch die systematische Leckageortung und -beseitigung konnten in einem großen Industrieunternehmen 
+            innerhalb eines Jahres mehrere hunderttausend Kilowattstunden Energie eingespart werden.
+            </p>
+
+            <p class="mt-4 sm:mt-6">
+            In nur wenigen Tagen wurden mehrere hundert Druckluftlecks aufgespürt und dauerhaft abgestellt. 
+            Das Programm läuft seit mehreren Jahren und wird regelmäßig fortgeführt.
+            </p>
+
+            <div class="clear-both mt-10 sm:mt-12 flex justify-end">
+            <a href="#" class="font-semibold flex items-center gap-2" style="color:var(--primary)">
+                Referenzübersicht herunterladen
+                <i class="fas fa-download"></i>
+            </a>
+            </div>
+        </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <div class="bg-gradient-to-r from-[#006D77] to-[#2E8F98] text-white rounded-3xl p-8 sm:p-12 text-center">
+            <h3 class="text-2xl sm:text-3xl font-semibold mb-4">Bereit für den nächsten Effizienz-Schritt?</h3>
+            <p class="max-w-md mx-auto opacity-90 mb-8 text-sm sm:text-base">Lassen Sie uns in 15 Minuten über Ihre Druckluftanlage sprechen.</p>
+            <a href="kontakt.html"
+               class="inline-block bg-white text-[#006D77] font-semibold px-8 sm:px-12 py-4 sm:py-5 rounded-3xl text-base sm:text-lg hover:scale-105 transition-transform">
+                Kostenloses Erstgespräch vereinbaren
+            </a>
+        </div>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-8 sm:pb-10">
+            <div class="grid sm:grid-cols-2 md:grid-cols-12 gap-10 sm:gap-12">
+                <!-- Logo + Info -->
+                <div class="md:col-span-4">
+                    <a href="index.html" class="flex items-center gap-2 sm:gap-3 mb-6 flex-shrink-0">
+                        <span class="text-xl sm:text-2xl font-semibold tracking-tight logo-font dark:text-white">
+                            Proenergie
+                        </span>
+                    </a>
+                    <p class="text-sm leading-relaxed max-w-xs footer-muted dark:text-gray-300">
+                        Ihr Spezialist für energieeffiziente Druckluftlösungen und professionelles Leckagemanagement.
+                    </p>
+                    <div class="mt-6 sm:mt-8 flex gap-4 text-xl sm:text-2xl">
+                        <a href="#" class="hover:text-[#83C5BE] transition-colors dark:hover:text-[#83C5BE] dark:text-gray-300"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="hover:text-[#83C5BE] transition-colors dark:hover:text-[#83C5BE] dark:text-gray-300"><i class="fab fa-x-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Links Navigation -->
+                <div class="md:col-span-2">
+                    <h5 class="uppercase text-xs tracking-widest mb-5 sm:mb-6 text-[#83C5BE]">Navigation</h5>
+                    <ul class="space-y-3 sm:space-y-4 text-sm">
+                        <li><a href="index.html"            class="footer-link">Startseite</a></li>
+                        <li><a href="leistungen.html"        class="footer-link">Leistungen</a></li>
+                        <li><a href="druckluft.html"         class="footer-link">Druckluft</a></li>
+                        <li><a href="leckagemanagement.html" class="footer-link">Leckagemanagement</a></li>
+                    </ul>
+                </div>
+
+                <!-- Links Unternehmen -->
+                <div class="md:col-span-2">
+                    <h5 class="uppercase text-xs tracking-widest mb-5 sm:mb-6 text-[#83C5BE]">Unternehmen</h5>
+                    <ul class="space-y-3 sm:space-y-4 text-sm">
+                        <li><a href="ueber-uns.html" class="footer-link">Über uns</a></li>
+                        <li><a href="#"              class="footer-link">Karriere</a></li>
+                        <li><a href="#"              class="footer-link">Partner</a></li>
+                        <li><a href="#"              class="footer-link">Zertifizierungen</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kontakt -->
+                <div class="md:col-span-4">
+                    <h5 class="uppercase text-xs tracking-widest mb-5 sm:mb-6 text-[#83C5BE]">Kontakt</h5>
+                    <div class="space-y-5 sm:space-y-6 text-sm">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt text-[#83C5BE] mt-0.5"></i>
+                            <div>
+                                <p>Proenergie</p>
+                                <p class="footer-muted text-xs">Musterstraße 1 • 12345 Berlin</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-phone text-[#83C5BE]"></i>
+                            <a href="tel:+49123456789" class="hover:text-[#83C5BE] transition-colors">+49 123 456789</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-[#83C5BE]"></i>
+                            <p class="hover:text-[#83C5BE] transition-colors">proenergie@mail.de</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-border border-t mt-12 sm:mt-16 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs footer-muted">
+                <p>© 2026 Proenergie – Alle Rechte vorbehalten</p>
+                <div class="flex gap-4 sm:gap-6">
+                    <a href="#" class="footer-link">Impressum</a>
+                    <a href="#" class="footer-link">Datenschutz</a>
+                    <a href="#" class="footer-link">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        /* ===== DARK MODE ===== */
+        (function() {
+            // Gespeicherte Einstellung oder Systemeinstellung auslesen
+            const saved = localStorage.getItem('proenergie-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (saved === 'dark' || (!saved && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+
+        function updateLogoBasedOnTheme() {
+            const logo = document.getElementById('logo');
+            const isDark = document.documentElement.classList.contains('dark');
+            logo.src = isDark ? 'logo_ohne_schrift_dark.png' : 'logo_ohne_schrift_light.png';
+        }
+
+        function applyTheme(dark) {
+            const html = document.documentElement;
+            if (dark) {
+                html.classList.add('dark');
+                localStorage.setItem('proenergie-theme', 'dark');
+            } else {
+                html.classList.remove('dark');
+                localStorage.setItem('proenergie-theme', 'light');
+            }
+            updateToggleIcon();
+            updateLogoBasedOnTheme();
+        }
+
+        function updateToggleIcon() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const moonIcon = document.getElementById('moon-icon');
+            if (moonIcon) moonIcon.style.opacity = isDark ? '1' : '0';
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            const isDark = document.documentElement.classList.contains('dark');
+            applyTheme(!isDark);
+        });
+
+        // Systemeinstellung live verfolgen (wenn keine manuelle Wahl getroffen)
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            if (!localStorage.getItem('proenergie-theme')) {
+                applyTheme(e.matches);
+            }
+        });
+
+        // Init icon state
+        updateToggleIcon();
+        updateLogoBasedOnTheme();
+
+        /* ===== MOBILE MENU ===== */
+        const mobileBtn  = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileClose = document.getElementById('mobile-menu-close');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        /* ===== SEARCH OVERLAY ===== */
+        function toggleSearch() {
+            const overlay = document.getElementById('search-overlay');
+            overlay.classList.toggle('hidden');
+            if (!overlay.classList.contains('hidden')) {
+                setTimeout(() => document.getElementById('search-input').focus(), 300);
+            }
+        }
+
+        function fakeSearch() {
+            const input = document.getElementById('search-input').value;
+            if (input.trim() !== '') {
+                alert(`Suchergebnisse für: "${input}"\n\n(Demo – in der echten Version würden hier echte Ergebnisse erscheinen)`);
+            }
+        }
+
+        function quickSearch(el) {
+            document.getElementById('search-input').value = el.textContent;
+            fakeSearch();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById('search-overlay');
+                if (!overlay.classList.contains('hidden')) toggleSearch();
+            }
+        });
+
+        /* ===== SMOOTH SCROLL ===== */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        /* ===== SCROLL ANIMATION ===== */
+        function animateOnScroll() {
+            const blocks = document.querySelectorAll('.content-block');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            blocks.forEach(block => {
+                block.style.opacity = '0';
+                block.style.transform = 'translateY(30px)';
+                observer.observe(block);
+            });
+        }
+
+        window.onload = function() {
+            animateOnScroll();
+            console.log('%c✅ Dark Mode erfolgreich geladen!',
+                'color:#006D77; font-family:monospace; font-size:12px');
+        };
+    </script>
+</body>
+</html>
