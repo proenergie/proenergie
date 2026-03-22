@@ -984,13 +984,21 @@
         updateToggleIcon();
         updateLogoBasedOnTheme();
 
-        /* ===== MOBILE MENU – Blur nur für Reiter-Area ===== */
+        /* ===== MOBILE MENU – Toggle-Funktion ===== */
         const mobileBtn   = document.getElementById('mobile-menu-btn');
         const mobileMenu  = document.getElementById('mobile-menu');
         const mobileClose = document.getElementById('mobile-menu-close');
         const blurOverlay = document.getElementById('page-blur-overlay');
 
         let scrollY = 0;
+
+        function toggleMobileMenu() {
+            if (mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        }
 
         function openMobileMenu() {
             scrollY = window.scrollY;
@@ -1024,7 +1032,7 @@
             e.preventDefault();
         }, { passive: false });
 
-        mobileBtn.addEventListener('click', openMobileMenu);
+        mobileBtn.addEventListener('click', toggleMobileMenu);
         mobileClose.addEventListener('click', closeMobileMenu);
         blurOverlay.addEventListener('click', closeMobileMenu);
 
