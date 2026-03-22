@@ -39,7 +39,6 @@
             --shadow-header:  0 1px 8px rgba(0,0,0,0.08);
         }
 
-        /* ===== DARK MODE – via class auf <html> ===== */
         html.dark {
             --bg-page:        #111518;
             --bg-page-alt:    #181d21;
@@ -63,15 +62,46 @@
             --shadow-header:  0 1px 12px rgba(0,0,0,0.40);
         }
 
-        /* ===== BASE ===== */
+        /* ===== GLOBAL RESET – kein horizontales Scrollen ===== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
         body {
             font-family: 'Inter', system-ui, sans-serif;
             background-color: var(--bg-page);
             color: var(--text-base);
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
-            min-width: 100%;
+            width: 100%;
+            max-width: 100vw;
             position: relative;
+        }
+
+        /* Blur-Overlay für Hintergrund wenn Menü offen */
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        #page-blur-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #page-blur-overlay.active {
+            opacity: 1;
+            pointer-events: all;
         }
 
         .logo-font { font-family: 'Roboto', sans-serif; }
@@ -94,69 +124,51 @@
             box-shadow: var(--shadow-header);
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
             width: 100%;
-            z-index: 1000;
+            max-width: 100vw;
+            overflow: hidden;
         }
 
         /* ===== TOP BAR ===== */
         .top-bar {
             background-color: var(--bg-topbar);
             transition: background-color 0.3s ease;
+            width: 100%;
         }
 
-        /* Mobile Top-Bar Anpassung */
+        /* Mobile Top-Bar: nur Telefon + Email */
         @media (max-width: 640px) {
-            .top-bar .contact-info {
-                display: flex;
-                gap: 12px;
-                justify-content: center;
-                flex-wrap: nowrap;
-                white-space: nowrap;
-            }
-            .top-bar .contact-info a,
-            .top-bar .contact-info p {
-                font-size: 10px;
-                display: flex;
-                align-items: center;
-                gap: 4px;
-            }
-            .top-bar .right-links,
-            .top-bar p.flex.items-center.gap-1.5 {
+            .top-bar-address,
+            .top-bar-impressum,
+            .top-bar-datenschutz {
                 display: none !important;
             }
-        }
-
-        @media (min-width: 641px) {
             .top-bar .contact-info {
-                gap: 16px;
-            }
-            .top-bar p.flex.items-center.gap-1.5 {
-                display: flex;
+                justify-content: center;
+                gap: 12px;
             }
         }
 
-        /* ===== DARK MODE TOGGLE BUTTON ===== */
+        /* ===== DARK MODE TOGGLE ===== */
         #theme-toggle {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 18px;
-            border-radius: 9px;
+            position: relative;
+            width: 40px;
+            height: 24px;
+            border-radius: 12px;
             background: rgba(255,255,255,0.18);
             border: 1px solid rgba(255,255,255,0.30);
             cursor: pointer;
-            transition: background 0.3s ease, border-color 0.3s ease;
-            position: relative;
+            transition: background 0.3s ease;
             flex-shrink: 0;
         }
-        #theme-toggle:hover {
-            background: rgba(255,255,255,0.28);
-        }
+        #theme-toggle:hover { background: rgba(255,255,255,0.28); }
         #theme-toggle-knob {
             position: absolute;
-            left: 2px;
-            width: 12px;
-            height: 12px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: #fff;
             transition: transform 0.3s ease, background 0.3s ease;
@@ -168,11 +180,22 @@
         #theme-toggle-icon {
             position: absolute;
             right: 4px;
-            font-size: 7px;
+            font-size: 10px;
             color: rgba(255,255,255,0.7);
             transition: opacity 0.3s;
             pointer-events: none;
         }
+        html.dark #theme-toggle-icon { opacity: 0; }
+        #moon-icon {
+            position: absolute;
+            left: 6px;
+            top: 6px;
+            font-size: 10px;
+            color: #83C5BE;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        html.dark #moon-icon { opacity: 1; }
         html.dark #theme-toggle-icon { opacity: 0; }
 
         /* ===== NAV ===== */
@@ -180,6 +203,7 @@
             position: relative;
             transition: all 0.3s ease;
             color: var(--text-nav);
+            white-space: nowrap;
         }
         .nav-link:after {
             content: '';
@@ -236,16 +260,21 @@
             position: fixed;
             top: 0;
             right: 0;
-            width: 85%;
+            width: 80%;
             max-width: 320px;
             height: 100vh;
+            height: 100dvh;
             background-color: var(--bg-header);
             border-left: 1px solid var(--border-card);
             transform: translateX(100%);
             transition: transform 0.3s ease, background-color 0.3s ease;
-            z-index: 9999;
+            z-index: 999;
             overflow-y: auto;
-            padding-bottom: 120px;
+            overflow-x: hidden;
+            padding-bottom: 40px;
+            /* Menü selbst bleibt NICHT blur */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
         }
         #mobile-menu.active {
             transform: translateX(0);
@@ -253,7 +282,6 @@
         #mobile-menu a { color: var(--text-nav); }
         #mobile-menu a:hover { color: var(--turquoise); }
 
-        /* Mobile Menu Submenu Anpassung */
         .mobile-submenu {
             max-height: 0;
             overflow: hidden;
@@ -348,33 +376,35 @@
             display: flex;
             flex-direction: column;
             gap: 2rem;
+            width: 100%;
         }
         @media (min-width: 1024px) {
             .image-text-wrapper { flex-direction: row; }
             .image-text-wrapper.reverse { flex-direction: row-reverse; }
         }
 
-        .float-image-left {
-            float: left;
-            margin: 0 1.5rem 1rem 0;
-            max-width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.12);
-        }
+        /* Float Images – auf Mobile kein Float */
+        .float-image-left,
         .float-image-right {
-            float: right;
-            margin: 0 0 1rem 1.5rem;
             max-width: 100%;
             border-radius: 12px;
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.12);
+            display: block;
+            width: 100%;
+            margin: 0 0 1.5rem 0;
         }
-
         @media (min-width: 641px) {
             .float-image-left {
+                float: left;
+                width: 45%;
                 max-width: 45%;
+                margin: 0 1.5rem 1rem 0;
             }
             .float-image-right {
+                float: right;
+                width: 45%;
                 max-width: 45%;
+                margin: 0 0 1rem 1.5rem;
             }
         }
 
@@ -399,99 +429,72 @@
         .footer-muted { color: var(--text-footer-muted); }
         .footer-border { border-color: rgba(255,255,255,0.12); }
 
-        /* ===== MOBILE RESPONSIVE ===== */
+        /* ===== HERO RESPONSIVE ===== */
+        .hero-h1 {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            line-height: 1.1;
+            word-break: break-word;
+            hyphens: auto;
+        }
+        .hero-p {
+            font-size: clamp(0.95rem, 3vw, 1.5rem);
+        }
+
+        /* ===== SEKTION-ALT PADDING ===== */
         @media (max-width: 640px) {
-            .hero-h1 { font-size: 2.5rem; line-height: 1.1; }
-            .hero-p  { font-size: 1rem; }
-            .float-image-left, .float-image-right {
-                float: none;
-                max-width: 100%;
-                margin: 0 0 1.5rem 0;
-            }
-            .section-alt { padding: 2rem 1.25rem; }
-            .nav-link {
-                font-size: 0.9rem;
-                padding: 0.5rem 0;
-            }
-            .submenu {
-                min-width: 200px;
-                left: -20px;
-            }
-            .submenu a {
-                padding: 6px 12px;
-                font-size: 0.9rem;
-            }
-        }
-        @media (max-width: 768px) {
-            .hero-h1 { font-size: 3rem; }
+            .section-alt { padding: 2rem 1rem; }
         }
 
-        /* ===== DARK MODE TOGGLE ICON ===== */
-        #theme-toggle {
-            position: relative;
-            width: 40px;
-            height: 24px;
-            border-radius: 12px;
-        }
-        #theme-toggle-knob {
-            left: 3px;
-            width: 18px;
-            height: 18px;
-        }
-        #theme-toggle-icon {
-            right: 4px;
-            font-size: 10px;
-        }
-        #moon-icon {
-            position: absolute;
-            left: 6px;
-            top: 6px;
-            font-size: 10px;
-            color: #83C5BE;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        html.dark #moon-icon {
-            opacity: 1;
-        }
-        html.dark #theme-toggle-icon {
-            opacity: 0;
+        /* ===== ALLGEMEINE MOBILE FIXES ===== */
+        img {
+            max-width: 100%;
+            height: auto;
         }
 
-        /* ===== BLUR EFFECT & NO SCROLL WHEN MENU OPEN ===== */
-        body.menu-open {
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
+        /* Verhindert, dass irgendwas über den Viewport ragt */
+        section, div, main, footer, header, nav {
+            max-width: 100%;
         }
-        body.menu-open #blur-overlay {
-            display: block;
+
+        /* Navigation auf kleineren Desktops kompakter */
+        @media (min-width: 1024px) and (max-width: 1280px) {
+            nav.hidden.lg\:flex {
+                gap: 1rem !important;
+            }
+            nav.hidden.lg\:flex .nav-link {
+                font-size: 0.8rem;
+            }
         }
-        #blur-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+
+        /* ===== MAIN CONTENT BREITE ===== */
+        main {
             width: 100%;
-            height: 100%;
-            backdrop-filter: blur(4px);
-            z-index: 9998;
-            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Hint-Box Overflow Fix */
+        .hint-box {
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .hint-box code {
+            word-break: break-all;
+            font-size: 0.8em;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Blur Overlay für Mobile Menu -->
-    <div id="blur-overlay"></div>
+    <!-- Blur-Overlay für Hintergrund (wird aktiviert wenn Menü offen) -->
+    <div id="page-blur-overlay"></div>
 
     <!-- ==================== HEADER ==================== -->
     <header class="sticky top-0 z-50 w-full">
 
         <!-- Top-Bar -->
         <div class="top-bar text-white text-sm py-2 w-full">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-2 w-full">
+            <div class="max-w-7xl mx-auto px-3 sm:px-6 flex items-center gap-2 w-full">
 
                 <!-- LEFT: Dark Mode Toggle -->
                 <div class="flex items-center gap-2 flex-shrink-0">
@@ -503,47 +506,48 @@
                 </div>
 
                 <!-- CENTER: Kontakt -->
-                <div class="contact-info flex items-center gap-4 sm:gap-6 text-xs mx-auto">
-                    <a href="tel:+49123456789" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors">
+                <div class="contact-info flex items-center gap-3 sm:gap-6 text-xs mx-auto flex-wrap justify-center">
+                    <a href="tel:+49123456789" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors whitespace-nowrap">
                         <i class="fas fa-phone"></i>
                         <span>+49 123 456789</span>
                     </a>
-                    <a href="mailto:proenergie@mail.de" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors">
+                    <a href="mailto:proenergie@mail.de" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors whitespace-nowrap">
                         <i class="fas fa-envelope"></i>
                         <span>proenergie@mail.de</span>
                     </a>
-                    <p class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors hidden sm:flex">
+                    <p class="top-bar-address flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors whitespace-nowrap sm:flex hidden">
                         <i class="fas fa-home"></i>
                         <span>Musterstraße 1, 12345 Berlin</span>
                     </p>
                 </div>
 
                 <!-- RIGHT: Impressum & Datenschutz (nur Desktop) -->
-                <div class="right-links flex items-center gap-4 text-xs flex-shrink-0">
-                    <a href="#" class="hover:text-[#83C5BE] transition-colors hidden sm:inline">Impressum</a>
-                    <a href="#" class="hover:text-[#83C5BE] transition-colors hidden sm:inline">Datenschutz</a>
+                <div class="top-bar-impressum flex items-center gap-4 text-xs flex-shrink-0 hidden sm:flex">
+                    <a href="#" class="top-bar-datenschutz hover:text-[#83C5BE] transition-colors hidden sm:inline">Impressum</a>
+                    <a href="#" class="top-bar-datenschutz hover:text-[#83C5BE] transition-colors hidden sm:inline">Datenschutz</a>
                 </div>
 
             </div>
         </div>
 
         <!-- Main Header -->
-        <div class="px-4 sm:px-6 py-4 sm:py-5 flex justify-between items-center max-w-7xl mx-auto w-full">
+        <div class="px-3 sm:px-6 py-3 sm:py-5 flex justify-between items-center max-w-7xl mx-auto w-full">
             <!-- Logo -->
             <a href="index.html" class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <img
                     id="logo"
-                    class="w-10 sm:w-12 h-auto transition-opacity duration-300 ease-in-out"
+                    class="w-9 sm:w-12 h-auto transition-opacity duration-300 ease-in-out"
                     src="logo_ohne_schrift_light.png"
-                    alt="Proenergie Logo – Zur Startseite"
+                    alt="Proenergie Logo"
+                    onerror="this.style.display='none'"
                 >
-                <span class="text-xl sm:text-2xl font-semibold tracking-tight text-[#006D77] logo-font">
+                <span class="text-lg sm:text-2xl font-semibold tracking-tight text-[#006D77] logo-font whitespace-nowrap">
                     Proenergie
                 </span>
             </a>
 
             <!-- Desktop Navigation -->
-            <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-medium">
+            <nav class="hidden lg:flex items-center gap-4 xl:gap-6 text-sm font-medium flex-shrink-0">
                 <div class="nav-item relative">
                     <a href="index.html" class="nav-link">Startseite</a>
                 </div>
@@ -557,7 +561,7 @@
                     </div>
                 </div>
                 <div class="nav-item relative">
-                    <a href="druckluft.html" class="nav-link">Druckluft-Systeme</a>
+                    <a href="druckluft.html" class="nav-link whitespace-nowrap">Druckluft-Systeme</a>
                     <div class="submenu">
                         <a href="druckluft.html#kompressoren">Kompressoren</a>
                         <a href="druckluft.html#trockner">Trockner & Filter</a>
@@ -566,7 +570,7 @@
                     </div>
                 </div>
                 <div class="nav-item relative">
-                    <a href="leckagemanagement.html" class="nav-link">Leckagemanagement</a>
+                    <a href="leckagemanagement.html" class="nav-link whitespace-nowrap">Leckagemanagement</a>
                     <div class="submenu">
                         <a href="leckagemanagement.html#ortung">Leckageortung</a>
                         <a href="leckagemanagement.html#monitoring">Monitoring</a>
@@ -587,81 +591,82 @@
             </nav>
 
             <!-- Right side -->
-            <div class="flex items-center gap-3 sm:gap-5">
+            <div class="flex items-center gap-2 sm:gap-4 flex-shrink-0">
                 <a href="kontakt.html"
-                class="cta-button text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-semibold shadow-lg flex items-center gap-2 whitespace-nowrap">
+                   class="cta-button text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm font-semibold shadow-lg flex items-center gap-2 whitespace-nowrap">
                     <i class="fas fa-paper-plane hidden sm:inline"></i>
-                    Angebot anfordern
+                    <span class="hidden sm:inline">Angebot anfordern</span>
+                    <span class="sm:hidden">Angebot</span>
                 </a>
                 <!-- Mobile Hamburger -->
-                <button id="mobile-menu-btn" class="lg:hidden text-2xl sm:text-3xl text-[#006D77]">
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-[#006D77] p-1 flex-shrink-0" aria-label="Menü öffnen">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="lg:hidden fixed top-0 right-0 w-4/5 max-w-xs h-full bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 z-50 p-6 overflow-y-auto">
-            <div class="flex justify-end mb-8">
-                <button id="mobile-menu-close" class="text-2xl text-[#006D77] dark:text-[#83C5BE]">
+        <!-- Mobile Menu (fixed, außerhalb header flow) -->
+        <div id="mobile-menu" class="lg:hidden">
+            <div class="flex justify-end p-4 pb-2">
+                <button id="mobile-menu-close" class="text-2xl text-[#006D77] p-2" aria-label="Menü schließen">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="flex flex-col gap-0">
-                <div class="mobile-menu-item pt-0 mt-0">
-                    <a href="index.html" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Startseite</a>
+            <div class="flex flex-col gap-0 px-4 pb-8">
+                <div class="mobile-menu-item pt-0 mt-0 border-t-0">
+                    <a href="index.html" class="block py-3 text-base font-medium hover:text-[#006D77] transition-colors" style="color:var(--text-nav)">Startseite</a>
                 </div>
 
                 <div class="mobile-menu-item">
-                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('leistungen')">
+                    <button class="w-full text-left flex justify-between items-center py-3 text-base font-medium transition-colors" style="color:var(--text-nav)" onclick="toggleSubmenu('leistungen')">
                         Leistungen <i id="leistungen-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
                     </button>
                     <div id="leistungen-submenu" class="mobile-submenu pl-4">
-                        <a href="leistungen.html#druckluft" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Druckluft-Systeme</a>
-                        <a href="leistungen.html#leckage" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leckagemanagement</a>
-                        <a href="leistungen.html#wartung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Wartung & Service</a>
-                        <a href="leistungen.html#beratung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Energieberatung</a>
+                        <a href="leistungen.html#druckluft" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Druckluft-Systeme</a>
+                        <a href="leistungen.html#leckage" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Leckagemanagement</a>
+                        <a href="leistungen.html#wartung" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Wartung & Service</a>
+                        <a href="leistungen.html#beratung" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Energieberatung</a>
                     </div>
                 </div>
 
                 <div class="mobile-menu-item">
-                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('druckluft')">
+                    <button class="w-full text-left flex justify-between items-center py-3 text-base font-medium transition-colors" style="color:var(--text-nav)" onclick="toggleSubmenu('druckluft')">
                         Druckluft-Systeme <i id="druckluft-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
                     </button>
                     <div id="druckluft-submenu" class="mobile-submenu pl-4">
-                        <a href="druckluft.html#kompressoren" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Kompressoren</a>
-                        <a href="druckluft.html#trockner" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Trockner & Filter</a>
-                        <a href="druckluft.html#rohrleitungen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Rohrleitungen</a>
-                        <a href="druckluft.html#steuerungen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Steuerungen</a>
+                        <a href="druckluft.html#kompressoren" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Kompressoren</a>
+                        <a href="druckluft.html#trockner" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Trockner & Filter</a>
+                        <a href="druckluft.html#rohrleitungen" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Rohrleitungen</a>
+                        <a href="druckluft.html#steuerungen" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Steuerungen</a>
                     </div>
                 </div>
 
                 <div class="mobile-menu-item">
-                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('leckagemanagement')">
+                    <button class="w-full text-left flex justify-between items-center py-3 text-base font-medium transition-colors" style="color:var(--text-nav)" onclick="toggleSubmenu('leckagemanagement')">
                         Leckagemanagement <i id="leckagemanagement-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
                     </button>
                     <div id="leckagemanagement-submenu" class="mobile-submenu pl-4">
-                        <a href="leckagemanagement.html#ortung" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Leckageortung</a>
-                        <a href="leckagemanagement.html#monitoring" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Monitoring</a>
-                        <a href="leckagemanagement.html#reparatur" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Reparatur-Service</a>
-                        <a href="leckagemanagement.html#software" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Software-Lösungen</a>
+                        <a href="leckagemanagement.html#ortung" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Leckageortung</a>
+                        <a href="leckagemanagement.html#monitoring" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Monitoring</a>
+                        <a href="leckagemanagement.html#reparatur" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Reparatur-Service</a>
+                        <a href="leckagemanagement.html#software" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Software-Lösungen</a>
                     </div>
                 </div>
 
                 <div class="mobile-menu-item">
-                    <button class="w-full text-left flex justify-between items-center py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors" onclick="toggleSubmenu('ueber-uns')">
+                    <button class="w-full text-left flex justify-between items-center py-3 text-base font-medium transition-colors" style="color:var(--text-nav)" onclick="toggleSubmenu('ueber-uns')">
                         Über uns <i id="ueber-uns-icon" class="fas fa-chevron-down text-sm transition-transform"></i>
                     </button>
                     <div id="ueber-uns-submenu" class="mobile-submenu pl-4">
-                        <a href="ueber-uns.html#team" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Unser Team</a>
-                        <a href="ueber-uns.html#geschichte" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Unternehmensgeschichte</a>
-                        <a href="ueber-uns.html#referenzen" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Referenzen</a>
-                        <a href="ueber-uns.html#karriere" class="block py-1.5 text-base hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Karriere</a>
+                        <a href="ueber-uns.html#team" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Unser Team</a>
+                        <a href="ueber-uns.html#geschichte" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Unternehmensgeschichte</a>
+                        <a href="ueber-uns.html#referenzen" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Referenzen</a>
+                        <a href="ueber-uns.html#karriere" class="block py-2 text-sm transition-colors hover:text-[#006D77]">Karriere</a>
                     </div>
                 </div>
 
                 <div class="mobile-menu-item">
-                    <a href="kontakt.html" class="block py-2 text-lg font-medium hover:text-[#006D77] dark:hover:text-[#83C5BE] transition-colors">Kontakt</a>
+                    <a href="kontakt.html" class="block py-3 text-base font-medium transition-colors hover:text-[#006D77]" style="color:var(--text-nav)">Kontakt</a>
                 </div>
             </div>
         </div>
@@ -678,46 +683,45 @@
                 <input id="search-input"
                        type="text"
                        placeholder="z.B. Leckageortung, Druckluftkompressor..."
-                       class="search-input w-full border-2 border-transparent focus:border-[#006D77] rounded-2xl px-4 sm:px-6 py-4 sm:py-5 text-base sm:text-lg outline-none">
+                       class="search-input w-full border-2 border-transparent focus:border-[#006D77] rounded-2xl px-4 sm:px-6 py-4 sm:py-5 text-base sm:text-lg outline-none pr-28">
                 <button onclick="fakeSearch()"
-                        class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 bg-[#006D77] text-white px-5 sm:px-8 py-2.5 sm:py-3 rounded-2xl font-medium text-sm">
+                        class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 bg-[#006D77] text-white px-4 sm:px-6 py-2 rounded-2xl font-medium text-sm whitespace-nowrap">
                     Suchen
                 </button>
             </div>
             <div class="mt-6 sm:mt-8 text-sm" style="color:var(--text-muted)">
                 <p class="mb-2 font-medium">Beliebte Suchbegriffe:</p>
                 <div class="flex flex-wrap gap-3">
-                    <span onclick="quickSearch(this)" class="search-tag cursor-pointer px-5 py-2 rounded-2xl text-xs transition-all">Leckageortung</span>
-                    <span onclick="quickSearch(this)" class="search-tag cursor-pointer px-5 py-2 rounded-2xl text-xs transition-all">Druckluftanlage</span>
-                    <span onclick="quickSearch(this)" class="search-tag cursor-pointer px-5 py-2 rounded-2xl text-xs transition-all">Energieeinsparung</span>
+                    <span onclick="quickSearch(this)" class="search-tag cursor-pointer px-4 py-2 rounded-2xl text-xs transition-all">Leckageortung</span>
+                    <span onclick="quickSearch(this)" class="search-tag cursor-pointer px-4 py-2 rounded-2xl text-xs transition-all">Druckluftanlage</span>
+                    <span onclick="quickSearch(this)" class="search-tag cursor-pointer px-4 py-2 rounded-2xl text-xs transition-all">Energieeinsparung</span>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- ==================== HERO ==================== -->
-    <section class="hero-bg min-h-screen flex items-center text-white relative">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center w-full py-24">
+    <section class="hero-bg min-h-screen flex items-center text-white relative w-full">
+        <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 text-center py-24">
             <div class="max-w-3xl mx-auto">
                 <span class="inline-block bg-[#83C5BE] text-[#006D77] text-xs font-bold tracking-widest px-5 sm:px-6 py-2 sm:py-2.5 rounded-3xl mb-6">IHR PARTNER FÜR EFFIZIENZ</span>
-                <h1 class="hero-h1 text-5xl sm:text-6xl md:text-7xl font-bold leading-none mb-6">Druckluft &amp;<br>Leckagemanagement</h1>
-                <p class="hero-p text-lg sm:text-xl md:text-2xl mb-10 max-w-2xl mx-auto opacity-95">
+                <h1 class="hero-h1 font-bold leading-none mb-6">Druckluft &amp;<br>Leckagemanagement</h1>
+                <p class="hero-p mb-10 max-w-2xl mx-auto opacity-95">
                     Maximale Effizienz. Minimale Verluste. Nachhaltige Lösungen für Industrie und Gewerbe.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="leistungen.html"
-                       class="cta-button text-white px-8 sm:px-10 py-4 sm:py-5 rounded-3xl text-base sm:text-lg font-semibold inline-flex items-center gap-3 justify-center">
+                       class="cta-button text-white px-6 sm:px-10 py-4 sm:py-5 rounded-3xl text-base sm:text-lg font-semibold inline-flex items-center gap-3 justify-center">
                         Leistungen entdecken
                         <i class="fas fa-arrow-right"></i>
                     </a>
                     <a href="kontakt.html"
-                       class="border-2 border-white hover:bg-white hover:text-[#006D77] transition-all px-8 sm:px-10 py-4 sm:py-5 rounded-3xl text-base sm:text-lg font-semibold">
+                       class="border-2 border-white hover:bg-white hover:text-[#006D77] transition-all px-6 sm:px-10 py-4 sm:py-5 rounded-3xl text-base sm:text-lg font-semibold text-center">
                         Jetzt beraten lassen
                     </a>
                 </div>
             </div>
         </div>
-        <!-- Scroll indicator -->
         <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center">
             <div class="text-xs tracking-widest mb-2 opacity-75">SCROLLEN</div>
             <div class="w-px h-12 bg-white/50 animate-bounce"></div>
@@ -725,42 +729,39 @@
     </section>
 
     <!-- ==================== MAIN CONTENT ==================== -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 space-y-20 sm:space-y-24">
+    <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20 space-y-16 sm:space-y-24">
 
         <!-- Baukasten-Hinweis -->
-        <div class="hint-box p-6 sm:p-8 rounded-3xl mb-12">
+        <div class="hint-box p-5 sm:p-8 rounded-3xl">
             <div class="flex items-start gap-4 sm:gap-6">
-                <i class="fas fa-toolbox text-4xl sm:text-5xl text-[#006D77] flex-shrink-0 mt-1" style="color:var(--text-heading)"></i>
-                <div>
-                    <h3 class="text-xl sm:text-2xl font-semibold mb-2">Baukasten-System – So verwendest du die Vorlage</h3>
-                    <p>Kopiere einfach einen der unten stehenden Blöcke in deine neue Seite (z. B. leistungen.html). Ändere nur den Inhalt. Für Bild links/rechts: füge die Klasse <code>reverse</code> hinzu. Für Text-Ausrichtung: <code>.block-text-left</code>, <code>.block-text-center</code> oder <code>.block-text-right</code>. Für Umfließung: nutze <code>float-image-left/right</code> direkt im Text.</p>
+                <i class="fas fa-toolbox text-3xl sm:text-5xl flex-shrink-0 mt-1" style="color:var(--text-heading)"></i>
+                <div class="min-w-0">
+                    <h3 class="text-lg sm:text-2xl font-semibold mb-2">Baukasten-System – So verwendest du die Vorlage</h3>
+                    <p class="text-sm sm:text-base">Kopiere einfach einen der unten stehenden Blöcke in deine neue Seite (z. B. leistungen.html). Ändere nur den Inhalt. Für Bild links/rechts: füge die Klasse <code>reverse</code> hinzu. Für Text-Ausrichtung: <code>.block-text-left</code>, <code>.block-text-center</code> oder <code>.block-text-right</code>. Für Umfließung: nutze <code>float-image-left/right</code> direkt im Text.</p>
                 </div>
             </div>
         </div>
 
         <!-- BLOCK 1: Text zentriert + Highlights -->
         <section class="content-block block-text-center">
-            <div class="max-w-3xl mx-auto">
-                <h2 class="text-3xl sm:text-4xl font-semibold mb-4 text-heading" style="color:var(--text-heading)">Warum Unternehmen auf Proenergie vertrauen</h2>
-                <p class="text-base sm:text-lg text-muted-custom" style="color:var(--text-muted)">Unsere Lösungen sparen bis zu 30 % Energie und reduzieren CO₂-Emissionen nachhaltig.</p>
+            <div class="max-w-3xl mx-auto px-2">
+                <h2 class="text-2xl sm:text-4xl font-semibold mb-4" style="color:var(--text-heading)">Warum Unternehmen auf Proenergie vertrauen</h2>
+                <p class="text-base sm:text-lg" style="color:var(--text-muted)">Unsere Lösungen sparen bis zu 30 % Energie und reduzieren CO₂-Emissionen nachhaltig.</p>
             </div>
-            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mt-10 sm:mt-14">
-                <!-- Card 1 -->
-                <div class="proenergie-card content-block-hover rounded-3xl p-6 sm:p-8">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-2xl sm:text-3xl">⚡</div>
-                    <h4 class="font-semibold text-lg sm:text-xl mb-3">Energieeinsparung</h4>
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-8 mt-8 sm:mt-14">
+                <div class="proenergie-card content-block-hover rounded-3xl p-5 sm:p-8">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-4 sm:mb-6 text-2xl sm:text-3xl">⚡</div>
+                    <h4 class="font-semibold text-base sm:text-xl mb-3">Energieeinsparung</h4>
                     <p class="text-sm leading-relaxed" style="color:var(--text-muted)">Durch präzise Leckageortung und optimierte Druckluftsysteme sparen Sie bares Geld.</p>
                 </div>
-                <!-- Card 2 -->
-                <div class="proenergie-card content-block-hover rounded-3xl p-6 sm:p-8">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-2xl sm:text-3xl">🔍</div>
-                    <h4 class="font-semibold text-lg sm:text-xl mb-3">24/7 Überwachung</h4>
+                <div class="proenergie-card content-block-hover rounded-3xl p-5 sm:p-8">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-4 sm:mb-6 text-2xl sm:text-3xl">🔍</div>
+                    <h4 class="font-semibold text-base sm:text-xl mb-3">24/7 Überwachung</h4>
                     <p class="text-sm leading-relaxed" style="color:var(--text-muted)">Unsere IoT-Sensoren erkennen Leckagen in Echtzeit – bevor sie teuer werden.</p>
                 </div>
-                <!-- Card 3 -->
-                <div class="proenergie-card content-block-hover rounded-3xl p-6 sm:p-8 sm:col-span-2 md:col-span-1">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-5 sm:mb-6 text-2xl sm:text-3xl">🌱</div>
-                    <h4 class="font-semibold text-lg sm:text-xl mb-3">Nachhaltigkeit</h4>
+                <div class="proenergie-card content-block-hover rounded-3xl p-5 sm:p-8 sm:col-span-2 md:col-span-1">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-[#83C5BE] text-white rounded-2xl flex items-center justify-center mb-4 sm:mb-6 text-2xl sm:text-3xl">🌱</div>
+                    <h4 class="font-semibold text-base sm:text-xl mb-3">Nachhaltigkeit</h4>
                     <p class="text-sm leading-relaxed" style="color:var(--text-muted)">CO₂-Reduktion und ESG-konforme Berichte inklusive.</p>
                 </div>
             </div>
@@ -776,7 +777,7 @@
                 </div>
                 <div class="lg:w-7/12 block-text-left">
                     <span class="uppercase text-xs tracking-widest text-[#83C5BE]">Druckluft-Systeme</span>
-                    <h2 class="text-3xl sm:text-4xl font-semibold mt-3 mb-5 sm:mb-6" style="color:var(--text-heading)">Moderne Kompressoren &amp; Zubehör</h2>
+                    <h2 class="text-2xl sm:text-4xl font-semibold mt-3 mb-4 sm:mb-6" style="color:var(--text-heading)">Moderne Kompressoren &amp; Zubehör</h2>
                     <div class="prose-custom">
                         <p>Wir planen, liefern und warten komplette Druckluftanlagen von 5–500 kW. Energieeffiziente Schraubenkompressoren mit Wärmerückgewinnung und intelligente Steuerungen.</p>
                         <ul class="list-disc pl-6 mt-4 space-y-2">
@@ -785,7 +786,7 @@
                             <li>Individuelle Rohrleitungssysteme</li>
                         </ul>
                     </div>
-                    <a href="druckluft.html" class="inline-flex items-center gap-3 mt-8 sm:mt-10 font-semibold hover:gap-5 transition-all" style="color:var(--primary)">
+                    <a href="druckluft.html" class="inline-flex items-center gap-3 mt-6 sm:mt-10 font-semibold hover:gap-5 transition-all" style="color:var(--primary)">
                         Mehr erfahren
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -798,13 +799,13 @@
             <div class="image-text-wrapper reverse">
                 <div class="lg:w-7/12 block-text-left">
                     <span class="uppercase text-xs tracking-widest text-[#83C5BE]">Leckagemanagement</span>
-                    <h2 class="text-3xl sm:text-4xl font-semibold mt-3 mb-5 sm:mb-6" style="color:var(--text-heading)">Leckagen finden – Kosten sparen</h2>
+                    <h2 class="text-2xl sm:text-4xl font-semibold mt-3 mb-4 sm:mb-6" style="color:var(--text-heading)">Leckagen finden – Kosten sparen</h2>
                     <div class="prose-custom">
                         <p>Mit unserem Ultraschall- und Infrarot-System orten wir Leckagen in Sekunden – auch unter Druck. Jährlich entgehen deutschen Unternehmen Millionen durch unentdeckte Leckagen.</p>
                     </div>
-                    <div class="mt-8 sm:mt-10 flex gap-4">
+                    <div class="mt-6 sm:mt-10 flex gap-4 flex-wrap">
                         <button onclick="alert('Termin gebucht! (Demo)')"
-                                class="bg-[#006D77] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-medium transition-all hover:bg-[#2E8F98]">
+                                class="bg-[#006D77] text-white px-5 sm:px-8 py-3 sm:py-4 rounded-2xl font-medium transition-all hover:bg-[#2E8F98] whitespace-nowrap">
                             Kostenlose Ortung buchen
                         </button>
                     </div>
@@ -817,42 +818,42 @@
             </div>
         </section>
 
-        <!-- BLOCK 4: Umfließender Text + Bild (generische Variante) -->
-        <section class="content-block section-alt py-12 sm:py-16 px-6 sm:px-10 rounded-3xl">
-        <div class="max-w-4xl mx-auto prose-custom">
-            <img src="https://picsum.photos/id/237/420/320"
-                alt="Industrieanlage"
-                class="float-image-left">
+        <!-- BLOCK 4: Umfließender Text + Bild -->
+        <section class="content-block section-alt py-10 sm:py-16 px-5 sm:px-10 rounded-3xl overflow-hidden">
+            <div class="max-w-4xl mx-auto prose-custom">
+                <img src="https://picsum.photos/id/237/420/320"
+                     alt="Industrieanlage"
+                     class="float-image-left">
 
-            <h2 class="text-3xl sm:text-4xl font-semibold" style="color:var(--text-heading)">
-            Erfolgreiches Leckagemanagement in der Produktion
-            </h2>
+                <h2 class="text-2xl sm:text-4xl font-semibold" style="color:var(--text-heading)">
+                    Erfolgreiches Leckagemanagement in der Produktion
+                </h2>
 
-            <p class="mt-4 sm:mt-6">
-            Durch die systematische Leckageortung und -beseitigung konnten in einem großen Industrieunternehmen
-            innerhalb eines Jahres mehrere hunderttausend Kilowattstunden Energie eingespart werden.
-            </p>
+                <p class="mt-4 sm:mt-6">
+                    Durch die systematische Leckageortung und -beseitigung konnten in einem großen Industrieunternehmen
+                    innerhalb eines Jahres mehrere hunderttausend Kilowattstunden Energie eingespart werden.
+                </p>
 
-            <p class="mt-4 sm:mt-6">
-            In nur wenigen Tagen wurden mehrere hundert Druckluftlecks aufgespürt und dauerhaft abgestellt.
-            Das Programm läuft seit mehreren Jahren und wird regelmäßig fortgeführt.
-            </p>
+                <p class="mt-4 sm:mt-6">
+                    In nur wenigen Tagen wurden mehrere hundert Druckluftlecks aufgespürt und dauerhaft abgestellt.
+                    Das Programm läuft seit mehreren Jahren und wird regelmäßig fortgeführt.
+                </p>
 
-            <div class="clear-both mt-10 sm:mt-12 flex justify-end">
-            <a href="#" class="font-semibold flex items-center gap-2" style="color:var(--primary)">
-                Referenzübersicht herunterladen
-                <i class="fas fa-download"></i>
-            </a>
+                <div class="clear-both mt-8 sm:mt-12 flex justify-end">
+                    <a href="#" class="font-semibold flex items-center gap-2" style="color:var(--primary)">
+                        Referenzübersicht herunterladen
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
             </div>
-        </div>
         </section>
 
         <!-- CTA Banner -->
-        <div class="bg-gradient-to-r from-[#006D77] to-[#2E8F98] text-white rounded-3xl p-8 sm:p-12 text-center">
-            <h3 class="text-2xl sm:text-3xl font-semibold mb-4">Bereit für den nächsten Effizienz-Schritt?</h3>
+        <div class="bg-gradient-to-r from-[#006D77] to-[#2E8F98] text-white rounded-3xl p-7 sm:p-12 text-center">
+            <h3 class="text-xl sm:text-3xl font-semibold mb-4">Bereit für den nächsten Effizienz-Schritt?</h3>
             <p class="max-w-md mx-auto opacity-90 mb-8 text-sm sm:text-base">Lassen Sie uns in 15 Minuten über Ihre Druckluftanlage sprechen.</p>
             <a href="kontakt.html"
-               class="inline-block bg-white text-[#006D77] font-semibold px-8 sm:px-12 py-4 sm:py-5 rounded-3xl text-base sm:text-lg hover:scale-105 transition-transform">
+               class="inline-block bg-white text-[#006D77] font-semibold px-7 sm:px-12 py-4 sm:py-5 rounded-3xl text-base sm:text-lg hover:scale-105 transition-transform">
                 Kostenloses Erstgespräch vereinbaren
             </a>
         </div>
@@ -860,72 +861,68 @@
     </main>
 
     <!-- ==================== FOOTER ==================== -->
-    <footer>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-8 sm:pb-10">
-            <div class="grid sm:grid-cols-2 md:grid-cols-12 gap-10 sm:gap-12">
+    <footer class="w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-8 sm:pb-10">
+            <div class="grid sm:grid-cols-2 md:grid-cols-12 gap-8 sm:gap-12">
                 <!-- Logo + Info -->
                 <div class="md:col-span-4">
-                    <a href="index.html" class="flex items-center gap-2 sm:gap-3 mb-6 flex-shrink-0">
-                        <span class="text-xl sm:text-2xl font-semibold tracking-tight logo-font dark:text-white">
+                    <a href="index.html" class="flex items-center gap-2 sm:gap-3 mb-5 flex-shrink-0">
+                        <span class="text-xl sm:text-2xl font-semibold tracking-tight logo-font">
                             Proenergie
                         </span>
                     </a>
-                    <p class="text-sm leading-relaxed max-w-xs footer-muted dark:text-gray-300">
+                    <p class="text-sm leading-relaxed max-w-xs footer-muted">
                         Ihr Spezialist für energieeffiziente Druckluftlösungen und professionelles Leckagemanagement.
                     </p>
-                    <div class="mt-6 sm:mt-8 flex gap-4 text-xl sm:text-2xl">
-                        <a href="#" class="hover:text-[#83C5BE] transition-colors dark:hover:text-[#83C5BE] dark:text-gray-300"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="hover:text-[#83C5BE] transition-colors dark:hover:text-[#83C5BE] dark:text-gray-300"><i class="fab fa-x-twitter"></i></a>
+                    <div class="mt-6 flex gap-4 text-xl">
+                        <a href="#" class="hover:text-[#83C5BE] transition-colors"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="hover:text-[#83C5BE] transition-colors"><i class="fab fa-x-twitter"></i></a>
                     </div>
                 </div>
 
-                <!-- Links Navigation -->
                 <div class="md:col-span-2">
-                    <h5 class="uppercase text-xs tracking-widest mb-5 sm:mb-6 text-[#83C5BE]">Navigation</h5>
-                    <ul class="space-y-3 sm:space-y-4 text-sm">
-                        <li><a href="index.html"            class="footer-link">Startseite</a></li>
-                        <li><a href="leistungen.html"        class="footer-link">Leistungen</a></li>
-                        <li><a href="druckluft.html"         class="footer-link">Druckluft</a></li>
+                    <h5 class="uppercase text-xs tracking-widest mb-4 sm:mb-6 text-[#83C5BE]">Navigation</h5>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="index.html" class="footer-link">Startseite</a></li>
+                        <li><a href="leistungen.html" class="footer-link">Leistungen</a></li>
+                        <li><a href="druckluft.html" class="footer-link">Druckluft</a></li>
                         <li><a href="leckagemanagement.html" class="footer-link">Leckagemanagement</a></li>
                     </ul>
                 </div>
 
-                <!-- Links Unternehmen -->
                 <div class="md:col-span-2">
-                    <h5 class="uppercase text-xs tracking-widest mb-5 sm:mb-6 text-[#83C5BE]">Unternehmen</h5>
-                    <ul class="space-y-3 sm:space-y-4 text-sm">
+                    <h5 class="uppercase text-xs tracking-widest mb-4 sm:mb-6 text-[#83C5BE]">Unternehmen</h5>
+                    <ul class="space-y-3 text-sm">
                         <li><a href="ueber-uns.html" class="footer-link">Über uns</a></li>
-                        <li><a href="#"              class="footer-link">Karriere</a></li>
-                        <li><a href="#"              class="footer-link">Partner</a></li>
-                        <li><a href="#"              class="footer-link">Zertifizierungen</a></li>
+                        <li><a href="#" class="footer-link">Karriere</a></li>
+                        <li><a href="#" class="footer-link">Partner</a></li>
+                        <li><a href="#" class="footer-link">Zertifizierungen</a></li>
                     </ul>
                 </div>
 
-                <!-- Kontakt -->
                 <div class="md:col-span-4">
-                    <h5 class="uppercase text-xs tracking-widest mb-5 sm:mb-6 text-[#83C5BE]">Kontakt</h5>
-                    <div class="space-y-5 sm:space-y-6 text-sm">
+                    <h5 class="uppercase text-xs tracking-widest mb-4 sm:mb-6 text-[#83C5BE]">Kontakt</h5>
+                    <div class="space-y-4 text-sm">
                         <div class="flex items-start gap-3">
-                            <i class="fas fa-map-marker-alt text-[#83C5BE] mt-0.5"></i>
+                            <i class="fas fa-map-marker-alt text-[#83C5BE] mt-0.5 flex-shrink-0"></i>
                             <div>
                                 <p>Proenergie</p>
                                 <p class="footer-muted text-xs">Musterstraße 1 • 12345 Berlin</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <i class="fas fa-phone text-[#83C5BE]"></i>
+                            <i class="fas fa-phone text-[#83C5BE] flex-shrink-0"></i>
                             <a href="tel:+49123456789" class="hover:text-[#83C5BE] transition-colors">+49 123 456789</a>
                         </div>
                         <div class="flex items-center gap-3">
-                            <i class="fas fa-envelope text-[#83C5BE]"></i>
-                            <p class="hover:text-[#83C5BE] transition-colors">proenergie@mail.de</a>
+                            <i class="fas fa-envelope text-[#83C5BE] flex-shrink-0"></i>
+                            <span class="hover:text-[#83C5BE] transition-colors break-all">proenergie@mail.de</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Bar -->
-            <div class="footer-border border-t mt-12 sm:mt-16 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs footer-muted">
+            <div class="footer-border border-t mt-10 sm:mt-16 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs footer-muted">
                 <p>© 2026 Proenergie – Alle Rechte vorbehalten</p>
                 <div class="flex gap-4 sm:gap-6">
                     <a href="#" class="footer-link">Impressum</a>
@@ -949,6 +946,7 @@
 
         function updateLogoBasedOnTheme() {
             const logo = document.getElementById('logo');
+            if (!logo) return;
             const isDark = document.documentElement.classList.contains('dark');
             logo.src = isDark ? 'logo_ohne_schrift_dark.png' : 'logo_ohne_schrift_light.png';
         }
@@ -990,24 +988,61 @@
         updateToggleIcon();
         updateLogoBasedOnTheme();
 
-        /* ===== MOBILE MENU ===== */
-        const mobileBtn  = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
+        /* ===== MOBILE MENU – kein Scroll, kein Sprung, Blur-Hintergrund ===== */
+        const mobileBtn   = document.getElementById('mobile-menu-btn');
+        const mobileMenu  = document.getElementById('mobile-menu');
         const mobileClose = document.getElementById('mobile-menu-close');
-        const blurOverlay = document.getElementById('blur-overlay');
+        const blurOverlay = document.getElementById('page-blur-overlay');
 
-        mobileBtn.addEventListener('click', () => {
+        let scrollY = 0;
+
+        function openMobileMenu() {
+            // Scroll-Position merken BEVOR wir sperren
+            scrollY = window.scrollY;
+
+            // Body scroll sperren ohne Sprung
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.left = '0';
+            document.body.style.right = '0';
+            document.body.style.overflowY = 'scroll'; // verhindert Layout-Shift durch Scrollbar
+
+            // Menü + Overlay aktivieren
             mobileMenu.classList.add('active');
-            document.body.classList.add('menu-open');
-            blurOverlay.style.display = 'block';
-            setTimeout(() => blurOverlay.style.opacity = '1', 10);
-        });
+            blurOverlay.classList.add('active');
+        }
 
-        mobileClose.addEventListener('click', () => {
+        function closeMobileMenu() {
+            // Menü + Overlay schließen
             mobileMenu.classList.remove('active');
-            document.body.classList.remove('menu-open');
-            blurOverlay.style.opacity = '0';
-            setTimeout(() => blurOverlay.style.display = 'none', 300);
+            blurOverlay.classList.remove('active');
+
+            // Body-Sperre aufheben und zurück zur alten Position scrollen
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            document.body.style.overflowY = '';
+            window.scrollTo(0, scrollY);
+        }
+
+        mobileBtn.addEventListener('click', openMobileMenu);
+        mobileClose.addEventListener('click', closeMobileMenu);
+
+        // Overlay-Klick schließt Menü
+        blurOverlay.addEventListener('click', closeMobileMenu);
+
+        // Escape-Taste schließt Menü
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (mobileMenu.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+                const overlay = document.getElementById('search-overlay');
+                if (overlay && !overlay.classList.contains('hidden')) {
+                    toggleSearch();
+                }
+            }
         });
 
         function toggleSubmenu(menuId) {
@@ -1039,13 +1074,6 @@
             fakeSearch();
         }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                const overlay = document.getElementById('search-overlay');
-                if (!overlay.classList.contains('hidden')) toggleSearch();
-            }
-        });
-
         /* ===== SMOOTH SCROLL ===== */
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -1066,7 +1094,7 @@
                         entry.target.style.transform = 'translateY(0)';
                     }
                 });
-            }, { threshold: 0.12 });
+            }, { threshold: 0.08 });
 
             blocks.forEach(block => {
                 block.style.opacity = '0';
@@ -1077,8 +1105,6 @@
 
         window.onload = function() {
             animateOnScroll();
-            console.log('%c✅ Dark Mode erfolgreich geladen!',
-                'color:#006D77; font-family:monospace; font-size:12px');
         };
     </script>
 </body>
