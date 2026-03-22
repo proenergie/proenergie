@@ -70,6 +70,7 @@
             color: var(--text-base);
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
+            min-width: 100%;
         }
 
         .logo-font { font-family: 'Roboto', sans-serif; }
@@ -91,6 +92,7 @@
             background-color: var(--bg-header);
             box-shadow: var(--shadow-header);
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
         }
 
         /* ===== TOP BAR ===== */
@@ -115,11 +117,9 @@
                 align-items: center;
                 gap: 4px;
             }
-            .top-bar .right-links {
-                display: none;
-            }
+            .top-bar .right-links,
             .top-bar p.flex.items-center.gap-1.5 {
-                display: none;
+                display: none !important;
             }
         }
 
@@ -355,16 +355,25 @@
         .float-image-left {
             float: left;
             margin: 0 1.5rem 1rem 0;
-            max-width: 45%;
+            max-width: 100%;
             border-radius: 12px;
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.12);
         }
         .float-image-right {
             float: right;
             margin: 0 0 1rem 1.5rem;
-            max-width: 45%;
+            max-width: 100%;
             border-radius: 12px;
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.12);
+        }
+
+        @media (min-width: 641px) {
+            .float-image-left {
+                max-width: 45%;
+            }
+            .float-image-right {
+                max-width: 45%;
+            }
         }
 
         /* ===== CTA BUTTON ===== */
@@ -402,25 +411,57 @@
         @media (max-width: 768px) {
             .hero-h1 { font-size: 3rem; }
         }
+
+        /* ===== DARK MODE TOGGLE ICON ===== */
+        #theme-toggle {
+            position: relative;
+            width: 40px;
+            height: 24px;
+            border-radius: 12px;
+        }
+        #theme-toggle-knob {
+            left: 3px;
+            width: 18px;
+            height: 18px;
+        }
+        #theme-toggle-icon {
+            right: 6px;
+            font-size: 10px;
+        }
+        #moon-icon {
+            position: absolute;
+            left: 6px;
+            top: 6px;
+            font-size: 10px;
+            color: #83C5BE;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        html.dark #moon-icon {
+            opacity: 1;
+        }
+        html.dark #theme-toggle-icon {
+            opacity: 0;
+        }
     </style>
 </head>
 
 <body>
 
     <!-- ==================== HEADER ==================== -->
-    <header class="sticky top-0 z-50">
+    <header class="sticky top-0 z-50 w-full">
 
         <!-- Top-Bar -->
-        <div class="top-bar text-white text-sm py-2">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-2">
+        <div class="top-bar text-white text-sm py-2 w-full">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-2 w-full">
 
                 <!-- LEFT: Dark Mode Toggle -->
                 <div class="flex items-center gap-2 flex-shrink-0">
-                    <button id="theme-toggle" aria-label="Light/Dark umschalten" title="Erscheinungsbild umschalten">
+                    <button id="theme-toggle" aria-label="Light/Dark umschalten" title="Erscheinungsbild umschalten" class="relative">
                         <div id="theme-toggle-knob"></div>
                         <i id="theme-toggle-icon" class="fas fa-sun"></i>
+                        <i id="moon-icon" class="fas fa-moon"></i>
                     </button>
-                    <i id="moon-icon" class="fas fa-moon text-[8px] text-[#83C5BE] opacity-0 transition-opacity" aria-hidden="true"></i>
                 </div>
 
                 <!-- CENTER: Kontakt -->
@@ -890,7 +931,11 @@
         function updateToggleIcon() {
             const isDark = document.documentElement.classList.contains('dark');
             const moonIcon = document.getElementById('moon-icon');
-            if (moonIcon) moonIcon.style.opacity = isDark ? '1' : '0';
+            const sunIcon = document.getElementById('theme-toggle-icon');
+            if (moonIcon && sunIcon) {
+                moonIcon.style.opacity = isDark ? '1' : '0';
+                sunIcon.style.opacity = isDark ? '0' : '1';
+            }
         }
 
         document.getElementById('theme-toggle').addEventListener('click', function() {
