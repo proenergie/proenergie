@@ -81,6 +81,7 @@
             width: 100%;
             max-width: 100vw;
             position: relative;
+            padding-top: 120px; /* Platz für Top-Bar + Header */
         }
 
         /* Blur-Overlay für Hintergrund wenn Menü offen */
@@ -97,7 +98,6 @@
             background: rgba(0,0,0,0.35);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            /* Unter dem sticky header (z-50), über normalem Seiteninhalt */
             z-index: 45;
             opacity: 0;
             pointer-events: none;
@@ -123,36 +123,30 @@
         }
 
         /* ===== HEADER ===== */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-topbar);
+            transition: background-color 0.3s ease;
+            width: 100%;
+            z-index: 100;
+            height: 40px;
+        }
+
         header {
+            position: fixed;
+            top: 40px;
+            left: 0;
+            right: 0;
             background-color: var(--bg-header);
             box-shadow: var(--shadow-header);
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
             width: 100%;
             max-width: 100vw;
-            /* KEIN overflow:hidden – würde sticky brechen und Submenüs abschneiden */
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        /* ===== TOP BAR ===== */
-        .top-bar {
-            background-color: var(--bg-topbar);
-            transition: background-color 0.3s ease;
-            width: 100%;
-        }
-
-        /* Mobile Top-Bar: nur Telefon + Email */
-        @media (max-width: 640px) {
-            .top-bar-address,
-            .top-bar-impressum,
-            .top-bar-datenschutz {
-                display: none !important;
-            }
-            .top-bar .contact-info {
-                justify-content: center;
-                gap: 12px;
-            }
+            z-index: 99;
+            height: 80px;
         }
 
         /* ===== DARK MODE TOGGLE ===== */
@@ -275,11 +269,10 @@
             border-left: 1px solid var(--border-card);
             transform: translateX(100%);
             transition: transform 0.3s ease, background-color 0.3s ease;
-            z-index: 55; /* über header (z-50) und über overlay (z-45) */
+            z-index: 55;
             overflow-y: auto;
             overflow-x: hidden;
             padding-bottom: 40px;
-            /* Menü selbst KEIN blur */
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
             isolation: isolate;
@@ -497,49 +490,45 @@
     <!-- Blur-Overlay für Hintergrund (wird aktiviert wenn Menü offen) -->
     <div id="page-blur-overlay"></div>
 
-    <!-- ==================== HEADER ==================== -->
-    <header class="sticky top-0 z-50 w-full">
+    <!-- ==================== TOP BAR ==================== -->
+    <div class="top-bar text-white text-sm py-2 w-full">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 flex items-center gap-2 w-full h-full">
+            <!-- LEFT: Dark Mode Toggle -->
+            <div class="flex items-center gap-2 flex-shrink-0">
+                <button id="theme-toggle" aria-label="Light/Dark umschalten" title="Erscheinungsbild umschalten" class="relative">
+                    <div id="theme-toggle-knob"></div>
+                    <i id="theme-toggle-icon" class="fas fa-sun"></i>
+                    <i id="moon-icon" class="fas fa-moon"></i>
+                </button>
+            </div>
 
-        <!-- Top-Bar -->
-        <div class="top-bar text-white text-sm py-2 w-full">
-            <div class="max-w-7xl mx-auto px-3 sm:px-6 flex items-center gap-2 w-full">
+            <!-- CENTER: Kontakt -->
+            <div class="contact-info flex items-center gap-3 sm:gap-6 text-xs mx-auto flex-wrap justify-center h-full">
+                <a href="tel:+49123456789" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors whitespace-nowrap">
+                    <i class="fas fa-phone"></i>
+                    <span>+49 123 456789</span>
+                </a>
+                <p class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors whitespace-nowrap">
+                    <i class="fas fa-envelope"></i>
+                    <span>proenergie@mail.de</span>
+                </p>
+                <p class="top-bar-address flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors whitespace-nowrap sm:flex hidden">
+                    <i class="fas fa-home"></i>
+                    <span>Musterstraße 1, 12345 Berlin</span>
+                </p>
+            </div>
 
-                <!-- LEFT: Dark Mode Toggle -->
-                <div class="flex items-center gap-2 flex-shrink-0">
-                    <button id="theme-toggle" aria-label="Light/Dark umschalten" title="Erscheinungsbild umschalten" class="relative">
-                        <div id="theme-toggle-knob"></div>
-                        <i id="theme-toggle-icon" class="fas fa-sun"></i>
-                        <i id="moon-icon" class="fas fa-moon"></i>
-                    </button>
-                </div>
-
-                <!-- CENTER: Kontakt -->
-                <div class="contact-info flex items-center gap-3 sm:gap-6 text-xs mx-auto flex-wrap justify-center">
-                    <a href="tel:+49123456789" class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors whitespace-nowrap">
-                        <i class="fas fa-phone"></i>
-                        <span>+49 123 456789</span>
-                    </a>
-                    <p class="flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors whitespace-nowrap">
-                        <i class="fas fa-envelope"></i>
-                        <span>proenergie@mail.de</span>
-                    </a>
-                    <p class="top-bar-address flex items-center gap-1.5 hover:text-[#83C5BE] transition-colors whitespace-nowrap sm:flex hidden">
-                        <i class="fas fa-home"></i>
-                        <span>Musterstraße 1, 12345 Berlin</span>
-                    </p>
-                </div>
-
-                <!-- RIGHT: Impressum & Datenschutz (nur Desktop) -->
-                <div class="top-bar-impressum flex items-center gap-4 text-xs flex-shrink-0 hidden sm:flex">
-                    <a href="#" class="top-bar-datenschutz hover:text-[#83C5BE] transition-colors hidden sm:inline">Impressum</a>
-                    <a href="#" class="top-bar-datenschutz hover:text-[#83C5BE] transition-colors hidden sm:inline">Datenschutz</a>
-                </div>
-
+            <!-- RIGHT: Impressum & Datenschutz (nur Desktop) -->
+            <div class="top-bar-impressum flex items-center gap-4 text-xs flex-shrink-0 hidden sm:flex h-full">
+                <a href="#" class="top-bar-datenschutz hover:text-[#83C5BE] transition-colors hidden sm:inline">Impressum</a>
+                <a href="#" class="top-bar-datenschutz hover:text-[#83C5BE] transition-colors hidden sm:inline">Datenschutz</a>
             </div>
         </div>
+    </div>
 
-        <!-- Main Header -->
-        <div class="px-3 sm:px-6 py-3 sm:py-5 flex justify-between items-center max-w-7xl mx-auto w-full">
+    <!-- ==================== HEADER ==================== -->
+    <header class="w-full">
+        <div class="px-3 sm:px-6 py-3 sm:py-5 flex justify-between items-center max-w-7xl mx-auto w-full h-full">
             <!-- Logo -->
             <a href="index.html" class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <img
@@ -1004,27 +993,19 @@
         let scrollY = 0;
 
         function openMobileMenu() {
-            // Scroll-Position merken BEVOR wir sperren
             scrollY = window.scrollY;
-
-            // Body scroll sperren ohne Sprung
             document.body.style.position = 'fixed';
             document.body.style.top = `-${scrollY}px`;
             document.body.style.left = '0';
             document.body.style.right = '0';
             document.body.style.overflowY = 'scroll';
-
-            // Menü + Overlay aktivieren
             mobileMenu.classList.add('active');
             blurOverlay.classList.add('active');
         }
 
         function closeMobileMenu() {
-            // Menü + Overlay schließen
             mobileMenu.classList.remove('active');
             blurOverlay.classList.remove('active');
-
-            // Body-Sperre aufheben und zurück zur alten Position scrollen
             document.body.style.position = '';
             document.body.style.top = '';
             document.body.style.left = '';
@@ -1033,23 +1014,18 @@
             window.scrollTo(0, scrollY);
         }
 
-        // Scrollen INNERHALB des Menüs erlauben, Seite dahinter gesperrt lassen
         mobileMenu.addEventListener('touchmove', function(e) {
             e.stopPropagation();
         }, { passive: true });
 
-        // Verhindert, dass touchmove auf dem Overlay die Seite scrollt
         blurOverlay.addEventListener('touchmove', function(e) {
             e.preventDefault();
         }, { passive: false });
 
         mobileBtn.addEventListener('click', openMobileMenu);
         mobileClose.addEventListener('click', closeMobileMenu);
-
-        // Overlay-Klick schließt Menü
         blurOverlay.addEventListener('click', closeMobileMenu);
 
-        // Escape-Taste schließt Menü
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 if (mobileMenu.classList.contains('active')) {
