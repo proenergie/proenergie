@@ -181,7 +181,7 @@
             transition: transform 0.3s ease, background 0.3s ease;
         }
         html.dark #theme-toggle-knob {
-            transform: translateX(14px);
+            transform: translateX(16px);
             background: #83C5BE;
         }
         #theme-toggle-icon {
@@ -1032,6 +1032,16 @@
             document.body.style.overflowY = '';
             window.scrollTo(0, scrollY);
         }
+
+        // Scrollen INNERHALB des Menüs erlauben, Seite dahinter gesperrt lassen
+        mobileMenu.addEventListener('touchmove', function(e) {
+            e.stopPropagation();
+        }, { passive: true });
+
+        // Verhindert, dass touchmove auf dem Overlay die Seite scrollt
+        blurOverlay.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
 
         mobileBtn.addEventListener('click', openMobileMenu);
         mobileClose.addEventListener('click', closeMobileMenu);
