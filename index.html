@@ -90,11 +90,15 @@
 
         #page-blur-overlay {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: rgba(0,0,0,0.35);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            z-index: 998;
+            /* Unter dem sticky header (z-50), über normalem Seiteninhalt */
+            z-index: 45;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
@@ -125,7 +129,10 @@
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
             width: 100%;
             max-width: 100vw;
-            overflow: hidden;
+            /* KEIN overflow:hidden – würde sticky brechen und Submenüs abschneiden */
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
         /* ===== TOP BAR ===== */
@@ -232,7 +239,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
-            z-index: 50;
+            z-index: 9999;
             padding: 12px 0;
         }
         .nav-item:hover .submenu {
@@ -268,13 +275,14 @@
             border-left: 1px solid var(--border-card);
             transform: translateX(100%);
             transition: transform 0.3s ease, background-color 0.3s ease;
-            z-index: 999;
+            z-index: 55; /* über header (z-50) und über overlay (z-45) */
             overflow-y: auto;
             overflow-x: hidden;
             padding-bottom: 40px;
-            /* Menü selbst bleibt NICHT blur */
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
+            /* Menü selbst KEIN blur */
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            isolation: isolate;
         }
         #mobile-menu.active {
             transform: translateX(0);
@@ -451,8 +459,8 @@
             height: auto;
         }
 
-        /* Verhindert, dass irgendwas über den Viewport ragt */
-        section, div, main, footer, header, nav {
+        /* Verhindert, dass Bilder und Inhalte über den Viewport ragen */
+        img, video, iframe {
             max-width: 100%;
         }
 
@@ -595,8 +603,7 @@
                 <a href="kontakt.html"
                    class="cta-button text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm font-semibold shadow-lg flex items-center gap-2 whitespace-nowrap">
                     <i class="fas fa-paper-plane hidden sm:inline"></i>
-                    <span class="hidden sm:inline">Angebot anfordern</span>
-                    <span class="sm:hidden">Angebot</span>
+                    Angebot anfordern
                 </a>
                 <!-- Mobile Hamburger -->
                 <button id="mobile-menu-btn" class="lg:hidden text-2xl text-[#006D77] p-1 flex-shrink-0" aria-label="Menü öffnen">
@@ -1005,7 +1012,7 @@
             document.body.style.top = `-${scrollY}px`;
             document.body.style.left = '0';
             document.body.style.right = '0';
-            document.body.style.overflowY = 'scroll'; // verhindert Layout-Shift durch Scrollbar
+            document.body.style.overflowY = 'scroll';
 
             // Menü + Overlay aktivieren
             mobileMenu.classList.add('active');
