@@ -1006,66 +1006,77 @@ html.dark .desktop-contact-info a:hover {
 </div>
 
   <!-- Kontaktformular -->
-  <div id="anfrage" class="section-outer content-block">
-    <div class="max-w-2xl mx-auto">
-      <div class="text-center mb-10">
-        <span class="section-label">Anfrage</span>
-        <h2 class="section-h2">Jetzt unverbindlich anfragen</h2>
-        <p class="section-intro text-sm">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
-      </div>
-      <div class="proenergie-card p-8 sm:p-10">
-        <form>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label class="form-label">Firmenname *</label>
-              <input type="text" class="form-input" placeholder="Ihre Firma" required>
-            </div>
-            <div>
-              <label class="form-label">Ansprechpartner *</label>
-              <input type="text" class="form-input" placeholder="Name des Ansprechpartners" required>
-            </div>
-            <div class="sm:col-span-2">
-              <label class="form-label">E-Mail-Adresse *</label>
-              <input type="email" class="form-input" placeholder="name@unternehmen.de" required>
-            </div>
-            <div class="sm:col-span-2">
-              <label class="form-label">Adresse (optional)</label>
-              <input type="text" class="form-input" placeholder="Straße, PLZ, Ort">
-            </div>
-            <div class="sm:col-span-2">
+<div id="anfrage" class="section-outer content-block">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-10">
+      <span class="section-label">Anfrage</span>
+      <h2 class="section-h2">Jetzt unverbindlich anfragen</h2>
+      <p class="section-intro text-sm">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+    </div>
+    <div class="proenergie-card p-8 sm:p-10">
+      <form id="contactForm" action="https://api.web3forms.com/submit" method="POST"
+            onsubmit="return validateHoneypot() && validateTime() && validateInteraction()">
+        <input type="hidden" name="access_key" value="ea80d424-3259-4cab-85de-9751fe99c0bd">
+        <input type="hidden" name="redirect" value="danke.html">
+        <input type="hidden" id="formTimestamp" name="formTimestamp" value="">
+
+        <!-- Honeypot-Feld -->
+        <div style="display: none;">
+          <label for="honeypot">Bitte leer lassen</label>
+          <input type="text" id="honeypot" name="honeypot" tabindex="-1" autocomplete="off">
+        </div>
+
+        <!-- Deine bestehenden Felder -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label class="form-label">Firmenname *</label>
+            <input type="text" name="Firmenname" class="form-input" placeholder="Ihre Firma" required>
+          </div>
+          <div>
+            <label class="form-label">Ansprechpartner *</label>
+            <input type="text" name="Ansprechpartner" class="form-input" placeholder="Name des Ansprechpartners" required>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="form-label">E-Mail-Adresse *</label>
+            <input type="email" name="email" class="form-input" placeholder="name@unternehmen.de" required>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="form-label">Adresse (optional)</label>
+            <input type="text" name="Adresse" class="form-input" placeholder="Straße, PLZ, Ort">
+          </div>
+          <div class="sm:col-span-2">
             <label class="form-label">Anliegen *</label>
             <div class="relative">
-                <select class="form-input appearance-none pr-10" required>
+              <select name="Anliegen" class="form-input appearance-none pr-10" required>
                 <option value="">Bitte wählen</option>
-                <option value="energieeffizienz">Anfrage Energieeffizienz</option>
-                <option value="projektbegleitung">Anfrage Projektbegleitung/Objektüberwachung</option>
-                <option value="sonstiges">Sonstiges</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center px-2 text-gray-700">
+                <option value="Energieeffizienz">Anfrage Energieeffizienz</option>
+                <option value="Projektbegleitung">Anfrage Projektbegleitung/Objektüberwachung</option>
+                <option value="Sonstiges">Sonstiges</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
                 </svg>
-                </div>
-            </div>
-            </div>
-            <div class="sm:col-span-2">
-              <label class="form-label">Ihre Nachricht *</label>
-              <textarea rows="4" class="form-input" placeholder="Beschreiben Sie kurz Ihr Anliegen..." required></textarea>
-            </div>
-            <div class="sm:col-span-2">
-              <button type="submit" class="cta-button text-white w-full py-3.5 text-base font-semibold flex items-center justify-center gap-2.5">
-                <i class="fas fa-paper-plane text-sm"></i> Anfrage absenden
-              </button>
+              </div>
             </div>
           </div>
+          <div class="sm:col-span-2">
+            <label class="form-label">Ihre Nachricht *</label>
+            <textarea name="Nachricht" rows="4" class="form-input" placeholder="Beschreiben Sie kurz Ihr Anliegen..." required></textarea>
+          </div>
+          <div class="sm:col-span-2">
+            <button type="submit" class="cta-button text-white w-full py-3.5 text-base font-semibold flex items-center justify-center gap-2.5">
+              <i class="fas fa-paper-plane text-sm"></i> Anfrage absenden
+            </button>
+          </div>
+        </div>
         <p class="text-xs text-center mt-4 text-muted-custom">
           * Pflichtfeld
         </p>
       </form>
-      </div>
     </div>
   </div>
-</main>
+</div>
 
 <!-- FOOTER -->
 <footer class="w-full mt-4">
@@ -1126,6 +1137,50 @@ html.dark .desktop-contact-info a:hover {
   </div>
 </footer>
 
+<!-- JavaScript für Kontaktformular -->
+<script>
+  // Globale Variable für Interaktionscheck
+  let hasInteracted = false;
+
+  // Setze Timestamp beim Laden
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('formTimestamp').value = new Date().getTime();
+  });
+
+  // Tracke Nutzerinteraktionen
+  document.addEventListener('mousemove', () => { hasInteracted = true; });
+  document.addEventListener('keydown', () => { hasInteracted = true; });
+  document.addEventListener('click', () => { hasInteracted = true; });
+
+  // Validierungsfunktionen
+  function validateHoneypot() {
+    const honeypot = document.getElementById('honeypot').value;
+    if (honeypot) {
+      alert('Bitte füllen Sie das Formular korrekt aus.');
+      return false;
+    }
+    return true;
+  }
+
+  function validateTime() {
+    const startTime = parseInt(document.getElementById('formTimestamp').value);
+    const endTime = new Date().getTime();
+    const timeDiff = (endTime - startTime) / 1000; // Sekunden
+    if (timeDiff < 2) {
+      alert('Bitte nehmen Sie sich etwas Zeit für das Formular.');
+      return false;
+    }
+    return true;
+  }
+
+  function validateInteraction() {
+    if (!hasInteracted) {
+      alert('Bitte interagieren Sie mit der Seite.');
+      return false;
+    }
+    return true;
+  }
+</script>
 <script>
 /* ─── THEME ─── */
 function getURLTheme() {
