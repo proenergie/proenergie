@@ -1063,17 +1063,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-/* ─── SCROLL ANIMATIONS ─── */
-function animateOnScroll() {
-  const blocks = document.querySelectorAll('.content-block');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
-  }, { threshold: 0.08 });
-  blocks.forEach(b => { b.style.opacity='0'; b.style.transform='translateY(28px)'; obs.observe(b); });
-}
-
 window.onload = function() {
-  animateOnScroll();
   patchLinks(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
   updateToggleState();
 };
