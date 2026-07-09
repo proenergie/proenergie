@@ -264,11 +264,7 @@ html.dark .page-hero::after { background: linear-gradient(to bottom, transparent
 .breadcrumb i { font-size: 0.6rem; }
 
 .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(107,162,66,0.18); border: 1px solid rgba(107,162,66,0.40); color: #b8e88a; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 18px; border-radius: 100px; margin-bottom: 1.75rem; }
-.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #72CD14; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(114,205,20,0.3); animation: pulse 2s infinite; }
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(114,205,20,0.3); }
-  50% { box-shadow: 0 0 0 6px rgba(114,205,20,0.1); }
-}
+
 .page-hero-h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(2.2rem, 5vw, 3.5rem); line-height: 1.1; color: #fff; font-weight: 400; }
 .page-hero-h1 em { font-style: italic; color: #a0d860; }
 .page-hero-lead { font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.65; color: rgba(255,255,255,0.78); margin-top: 1.25rem; max-width: 640px; }
@@ -277,7 +273,7 @@ html.dark .page-hero::after { background: linear-gradient(to bottom, transparent
 .section-outer { padding: 5rem 2rem; }
 @media (max-width: 768px) { .section-outer { padding: 3.5rem 1.25rem; } }
 .section-divider { height: 1px; background: var(--border-card); margin: 0 2rem; }
-.section-label { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 1rem; }
+.section-label { display: inline-block; font-size: 1rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 1rem; }
 .section-h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.9rem, 4vw, 2.8rem); line-height: 1.12; font-weight: 400; color: var(--text-heading); margin-bottom: 1.25rem; }
 .section-intro { font-size: clamp(1rem, 2vw, 1.1rem); color: var(--text-muted); line-height: 1.7; }
 
@@ -490,12 +486,13 @@ footer { background: var(--bg-footer); }
       <div class="nav-item relative">
         <a class="nav-link">Leistungen</a>
         <div class="submenu">
-          <a href="projektleitung.html">Projektleitung/Objektüberwachung</a>
           <a href="energieberatung.html">Energieberatung</a>
+          <a href="fachplanung.html">Fachplanung</a>
+          <a href="projektleitung.html">Projektleitung/Objektüberwachung</a>
         </div>
       </div>
       <div class="nav-item relative">
-        <a class="nav-link">Leckagemanagement</a>
+        <a class="nav-link">Druckluft-Effizienz</a>
         <div class="submenu">
           <a href="basischeck.html">BasisCheck</a>
           <a href="leckageortung.html">Leckageortung</a>
@@ -525,17 +522,18 @@ footer { background: var(--bg-footer); }
           Leistungen <i id="leistungen-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
         </button>
         <div id="leistungen-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
-          <a href="projektleitung.html" class="block py-3">Projektleitung/Objektüberwachung</a>
           <a href="energieberatung.html" class="block py-3">Energieberatung</a>
+          <a href="fachplanung.html" class="block py-3">Fachplanung</a>
+          <a href="projektleitung.html" class="block py-3">Projektleitung/Objektüberwachung</a>
         </div>
       </div>
 
-      <!-- Leckagemanagement mit Unterpunkten -->
+      <!-- Druckluft-Effizienz mit Unterpunkten -->
       <div class="nav-item relative">
-        <button onclick="toggleSubmenu('leckagemanagement')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
-          Leckagemanagement <i id="leckagemanagement-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
+        <button onclick="toggleSubmenu('druckluft-effizienz')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
+          Druckluft-Effizienz <i id="druckluft-effizienz-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
         </button>
-        <div id="leckagemanagement-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
+        <div id="druckluft-effizienz-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
           <a href="basischeck.html" class="block py-3">BasisCheck</a>
           <a href="leckageortung.html" class="block py-3">Leckageortung</a>
         </div>
@@ -553,7 +551,7 @@ footer { background: var(--bg-footer); }
         <p class="text-[10px] font-bold tracking-widest uppercase" style="color:var(--secondary)">Kontakt</p>
         <div class="flex items-center gap-3">
           <i class="fas fa-phone flex-shrink-0" style="color:var(--primary)"></i>
-          <a href="tel:+49123456789" style="color:var(--text-nav)">+49 123 456789</a>
+          <a href="tel:+49123456789" style="color:var(--text-nav)">+49 152 28760622</a>
         </div>
         <div class="flex items-center gap-3">
           <i class="fas fa-envelope flex-shrink-0" style="color:var(--primary)"></i>
@@ -592,12 +590,11 @@ footer { background: var(--bg-footer); }
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
       <div class="lg:col-span-2">
         <span class="section-label">Unser Ansatz</span>
-        <h2 class="section-h2">Mehr als nur Überwachung – ein aktiver Partner auf der Baustelle</h2>
+        <h2 class="section-h2">Druckluft effizienter denken</h2>
         <div class="prose-custom text-sm mt-4 space-y-4">
-          <p>Druckluft zählt in vielen Betrieben zu den wichtigsten, aber auch zu den kostenintensivsten Energieformen. Bereits kleine Verluste, falsche Druckeinstellungen oder ineffiziente Betriebsweisen können dauerhaft hohe Energiekosten verursachen.</p>
-          <p>Wir analysieren Ihre Druckluftanlage praxisnah und mit Blick auf den tatsächlichen Betrieb. Vor Ort verschaffen wir uns ein klares Bild über Kompressoren, Laufzeiten, Druckniveau, Verbraucher, Speicher, Aufbereitung und das Leitungsnetz. Je nach Anwendungsfall können Messungen, Betriebsdatenanalysen oder eine überschlägige Bewertung der Anlage durchgeführt werden.</p>
-          <p>Aus den gewonnenen Erkenntnissen leiten wir konkrete Einsparpotenziale ab und zeigen auf, welche Maßnahmen technisch und wirtschaftlich sinnvoll sind. Häufig lassen sich bereits durch kleinere Optimierungen deutliche Verbesserungen erzielen – zum Beispiel durch die Anpassung des Druckniveaus, die Reduzierung von Leckagen oder eine bessere Abstimmung der Kompressoren auf den tatsächlichen Bedarf.</p>
-          <p>Unser Ansatz ist transparent, praxisnah und herstellerunabhängig. Sie erhalten eine verständliche Bewertung Ihrer Anlage, nachvollziehbare Einsparpotenziale und klare Empfehlungen für die nächsten Schritte.</p>
+          <p>Druckluft ist für viele Betriebe unverzichtbar, verursacht jedoch oft hohe und dauerhaft laufende Energiekosten. Verluste, ungünstige Betriebsweisen oder nicht optimal abgestimmte Anlagen bleiben im Alltag häufig unbemerkt.</p>
+          <p>Wir analysieren Ihre Druckluftversorgung praxisnah, neutral und mit Blick auf den tatsächlichen Betrieb. Dabei betrachten wir Kompressoren, Laufzeiten, Druckniveau, Verbraucher, Speicher, Aufbereitung und das Leitungsnetz.</p>
+          <p>Auf dieser Basis zeigen wir energetische Schwachstellen, wirtschaftliche Einsparpotenziale und sinnvolle nächste Schritte auf. Sie erhalten eine verständliche Bewertung Ihrer Anlage und klare Empfehlungen für eine effizientere und wirtschaftlichere Druckluftversorgung.</p>
         </div>
       </div>
     </div>
@@ -613,42 +610,34 @@ footer { background: var(--bg-footer); }
     </div>
     <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
       <div class="why-card">
-        <div class="why-card-icon">🔍</div>
         <h4>Transparente Anlagenbewertung</h4>
         <p>Verständliche Einschätzung Ihrer Druckluftanlage auf Basis realer Betriebsdaten – ohne Fachchinesisch.</p>
       </div>
       <div class="why-card">
-        <div class="why-card-icon">⚡</div>
         <h4>Energieverluste erkennen</h4>
         <p>Identifikation von Leckagen, ungünstigen Druckniveaus und ineffizienten Betriebsweisen im laufenden Betrieb.</p>
       </div>
       <div class="why-card">
-        <div class="why-card-icon">💶</div>
         <h4>Wirtschaftlichkeitsbetrachtung</h4>
         <p>Überschlägige Kosten-Nutzen-Bewertung möglicher Maßnahmen – damit Sie wissen, was sich wann lohnt.</p>
       </div>
       <div class="why-card">
-        <div class="why-card-icon">🛡️</div>
         <h4>Betriebssicherheit verbessern</h4>
         <p>Neben Einsparungen steigern optimierte Anlagen auch die Versorgungssicherheit und Verfügbarkeit.</p>
       </div>
       <div class="why-card">
-        <div class="why-card-icon">📉</div>
         <h4>Betriebskosten reduzieren</h4>
         <p>Gezielte Maßnahmen senken den Energieverbrauch dauerhaft – messbar und nachvollziehbar.</p>
       </div>
       <div class="why-card">
-        <div class="why-card-icon">🏭</div>
         <h4>Herstellerunabhängig</h4>
         <p>Keine Produktempfehlungen zugunsten bestimmter Hersteller – nur technisch und wirtschaftlich sinnvolle Lösungen.</p>
       </div>
       <div class="why-card">
-        <div class="why-card-icon">📋</div>
         <h4>Klare Handlungsempfehlungen</h4>
         <p>Sie erhalten konkrete, priorisierte Maßnahmenvorschläge mit verständlicher Begründung.</p>
       </div>
       <div class="why-card">
-        <div class="why-card-icon">🤝</div>
         <h4>Praxisnahe Beratung</h4>
         <p>Unsere Bewertung entsteht vor Ort unter realen Betriebsbedingungen – nicht am Schreibtisch.</p>
       </div>
@@ -708,7 +697,7 @@ footer { background: var(--bg-footer); }
         <p>Nehmen Sie gerne Kontakt mit uns auf, wenn Sie wissen möchten, wo Ihre Druckluftanlage Energie verliert und wie sich Ihre Versorgung wirtschaftlich optimieren lässt.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="tel:+49123456789" class="cta-outline px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5">
-            <i class="fas fa-phone text-sm"></i> +49 123 456789
+            <i class="fas fa-phone text-sm"></i> +49 152 28760622
           </a>
           <a href="index.html#anfrage" class="cta-button text-white px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg">
             <i class="fas fa-paper-plane text-sm"></i> Kontaktformular
@@ -742,7 +731,7 @@ footer { background: var(--bg-footer); }
             <span class="logo-sub" style="color: #ffffff; font-size: 0.55rem;">— Versorgungstechnik —</span>
           </div>
         </a>
-        <p class="text-sm leading-relaxed" style="color:var(--text-footer-muted); max-width:260px;">Ihr Spezialist für zuverlässige, effiziente und zukunftssichere Druckluft- und Reinstgasversorgungen.</p>
+        <p class="text-sm leading-relaxed" style="color:var(--text-footer-muted); max-width:260px;">Ihr Spezialist für zuverlässige, effiziente und zukunftssichere Druckluft- und Gasversorgungssysteme.</p>
         <div class="mt-6 flex gap-4">
           <a href="#" class="w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all" style="background:rgba(255,255,255,0.07); color:var(--text-footer-muted);" onmouseover="this.style.color='#72CD14'" onmouseout="this.style.color=''"><i class="fab fa-instagram"></i></a>
         </div>
@@ -753,10 +742,10 @@ footer { background: var(--bg-footer); }
         <div class="space-y-4 text-sm" style="color:var(--text-footer-muted)">
           <div class="flex items-center gap-3">
             <i class="fas fa-phone flex-shrink-0" style="color:#72CD14"></i>
-            <a href="tel:+49123456789" style="color:var(--text-footer-muted)" class="hover:text-[#72CD14] transition-colors">+49 123 456789</a>
+            <a href="tel:+49123456789" style="color:var(--text-footer-muted)" class="hover:text-[#72CD14] transition-colors">+49 152 28760622</a>
           </div>
           <div class="flex items-start gap-3">
-            <i class="fas fa-envelope mt-0.5 flex-shrink-0" style="color:#72CD42"></i>
+            <i class="fas fa-envelope mt-0.5 flex-shrink-0" style="color:#72CD14"></i>
             <a href="mailto:info@proenergie-versorgungstechnik.de" style="color:var(--text-footer-muted)" class="break-all hover:text-[#72CD14] transition-colors">info@proenergie-versorgungstechnik.de</a>
           </div>
           <div class="flex items-start gap-3">

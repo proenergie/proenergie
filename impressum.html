@@ -3,19 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Druckluft-Effizienz – Leckagen erkennen | ProEnergie</title>
+<title>Fachplanung für Druckluft & Gasversorgung – ProEnergie</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
 :root {
+  /* Farbschema: Dunkelblau #031F5C + Grün #6BA242 */
   --primary: #031F5C;
   --primary-mid: #1249B4;
   --secondary: #6BA242;
   --secondary-light: #72CD14;
   --accent-green: #72CD14;
   --accent-blue: #1249B4;
+  --turquoise: #6BA242;
   --dark: #1a1f2e;
   --light: #e8edf5;
   --bg-page: #ffffff;
@@ -75,7 +77,8 @@ header {
 }
 #page-blur-overlay {
   position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.18); backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.18);
+  backdrop-filter: blur(4px);
   z-index: 45; opacity: 0; pointer-events: none;
   transition: opacity 0.3s ease;
 }
@@ -107,10 +110,9 @@ header {
   object-fit: contain;
   padding: 0;
 }
-.logo-svg-fallback {
+.logo-img-box .logo-svg-fallback {
   width: 30px;
   height: 30px;
-  display: none;
 }
 .logo-text-block {
   display: flex;
@@ -224,54 +226,67 @@ html.dark #mobile-menu .cta-button {
 .theme-toggle-btn {
   display: flex; align-items: center; justify-content: center;
   position: relative; width: 44px; height: 26px; border-radius: 13px;
-  background: rgba(3,31,92,0.18);
-  border: 2px solid rgba(3,31,92,0.45);
-  cursor: pointer; transition: all 0.3s ease; flex-shrink: 0;
+  background: rgba(3,31,92,0.10);
+  border: 1.5px solid rgba(3,31,92,0.22);
+  cursor: pointer; transition: background 0.3s; flex-shrink: 0;
 }
-html.dark .theme-toggle-btn { background: rgba(107,162,66,0.22); border: 2px solid rgba(107,162,66,0.55); }
+html.dark .theme-toggle-btn { background: rgba(107,162,66,0.12); border-color: rgba(107,162,66,0.28); }
 .toggle-knob {
-  position: absolute; left: 4px; width: 18px; height: 18px;
-  border-radius: 50%; background: #ffffff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: absolute; left: 3px; width: 20px; height: 20px;
+  border-radius: 50%; background: var(--primary);
+  transition: transform 0.3s ease, background 0.3s;
 }
-html.dark .toggle-knob { transform: translateX(14px); }
+html.dark .toggle-knob { transform: translateX(16px); background: #6BA242; }
 .toggle-sun {
-  position: absolute; right: 4px; font-size: 11px;
-  color: #6BA242; transition: opacity 0.3s; pointer-events: none;
+  position: absolute; right: 5px; font-size: 10px;
+  color: var(--primary); transition: opacity 0.3s; pointer-events: none;
 }
 html.dark .toggle-sun { opacity: 0; }
 .toggle-moon {
-  position: absolute; left: 6px; top: 5px; font-size: 12px;
+  position: absolute; left: 7px; top: 7px; font-size: 10px;
   color: #6BA242; opacity: 0; transition: opacity 0.3s;
 }
 html.dark .toggle-moon { opacity: 1; }
 
-/* ───── PAGE HERO ───── */
+/* ───── PAGE HERO (Subpage) ───── */
 .page-hero {
   background: linear-gradient(135deg, #020e30 0%, #031F5C 45%, #0a3585 100%);
-  position: relative; overflow: hidden; padding: 5rem 2rem 4rem;
+  position: relative; overflow: hidden;
+  padding: 5rem 2rem 4rem;
 }
 .page-hero::before {
-  content: ''; position: absolute; inset: 0;
+  content: '';
+  position: absolute; inset: 0;
   background: radial-gradient(ellipse 55% 70% at 80% 50%, rgba(107,162,66,0.12) 0%, transparent 65%);
   pointer-events: none;
 }
 .page-hero::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
   background: linear-gradient(to bottom, transparent, var(--bg-page));
   pointer-events: none;
 }
 html.dark .page-hero::after { background: linear-gradient(to bottom, transparent, #080e1f); }
 
+/* Breadcrumb */
 .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-bottom: 1.5rem; }
 .breadcrumb a { color: rgba(255,255,255,0.55); transition: color 0.2s; }
 .breadcrumb a:hover { color: #72CD14; }
 .breadcrumb i { font-size: 0.6rem; }
 
-.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(107,162,66,0.18); border: 1px solid rgba(107,162,66,0.40); color: #b8e88a; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 18px; border-radius: 100px; margin-bottom: 1.75rem; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(107,162,66,0.18); border: 1px solid rgba(107,162,66,0.40);
+  color: #b8e88a; font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 7px 18px; border-radius: 100px; margin-bottom: 1.75rem;
+}
 
-.page-hero-h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(2.2rem, 5vw, 3.5rem); line-height: 1.1; color: #fff; font-weight: 400; }
+.page-hero-h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  line-height: 1.1; color: #fff; font-weight: 400;
+}
 .page-hero-h1 em { font-style: italic; color: #a0d860; }
 .page-hero-lead { font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.65; color: rgba(255,255,255,0.78); margin-top: 1.25rem; max-width: 640px; }
 
@@ -279,46 +294,73 @@ html.dark .page-hero::after { background: linear-gradient(to bottom, transparent
 .section-outer { padding: 5rem 2rem; }
 @media (max-width: 768px) { .section-outer { padding: 3.5rem 1.25rem; } }
 .section-divider { height: 1px; background: var(--border-card); margin: 0 2rem; }
+.section-alt-bg { background: var(--bg-page-alt); transition: background 0.3s; }
+
 .section-label { display: inline-block; font-size: 1rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 1rem; }
 .section-h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.9rem, 4vw, 2.8rem); line-height: 1.12; font-weight: 400; color: var(--text-heading); margin-bottom: 1.25rem; }
 .section-intro { font-size: clamp(1rem, 2vw, 1.1rem); color: var(--text-muted); line-height: 1.7; }
 
+/* ───── CARDS ───── */
 .proenergie-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 20px; }
-.why-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 20px; padding: 1.75rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+
+.why-card {
+  background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 20px;
+  padding: 1.75rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
 .why-card:hover { border-color: var(--secondary); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(107,162,66,0.10); }
 .why-card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.1rem; background: linear-gradient(135deg, rgba(3,31,92,0.08), rgba(107,162,66,0.10)); }
 html.dark .why-card-icon { background: linear-gradient(135deg, rgba(3,31,92,0.25), rgba(107,162,66,0.15)); }
 .why-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.55rem; color: var(--text-heading); }
 .why-card p { font-size: 0.875rem; line-height: 1.7; color: var(--text-muted); }
 
-/* ───── ANALYSIS AREAS ───── */
-.analysis-card {
-  background: var(--bg-card); border: 1px solid var(--border-card);
-  border-radius: 16px; padding: 1.5rem;
+/* ───── ADVANTAGE LIST ───── */
+.advantage-item {
   display: flex; align-items: flex-start; gap: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  padding: 1rem 0; border-bottom: 1px solid var(--border-card);
 }
-.analysis-card:hover { border-color: var(--secondary); box-shadow: 0 8px 24px rgba(107,162,66,0.08); }
-.analysis-icon {
-  width: 44px; height: 44px; border-radius: 11px; flex-shrink: 0;
+.advantage-item:last-child { border-bottom: none; }
+.advantage-icon {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, rgba(3,31,92,0.08), rgba(107,162,66,0.12));
-  font-size: 1.2rem;
+  background: linear-gradient(135deg, rgba(3,31,92,0.07), rgba(107,162,66,0.12));
+  color: var(--secondary); font-size: 0.9rem;
 }
-html.dark .analysis-icon { background: linear-gradient(135deg, rgba(3,31,92,0.3), rgba(107,162,66,0.18)); }
-.analysis-card h5 { font-size: 0.95rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.25rem; }
-.analysis-card p { font-size: 0.82rem; line-height: 1.6; color: var(--text-muted); }
+html.dark .advantage-icon { background: linear-gradient(135deg, rgba(3,31,92,0.3), rgba(107,162,66,0.18)); }
+.advantage-text h5 { font-size: 0.95rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.2rem; }
+.advantage-text p { font-size: 0.85rem; line-height: 1.65; color: var(--text-muted); }
 
-/* ───── USE CASE PILLS ───── */
-.usecase-pill {
-  display: flex; align-items: center; gap: 10px;
-  background: var(--bg-card); border: 1px solid var(--border-card);
-  border-radius: 14px; padding: 1rem 1.25rem;
-  transition: all 0.2s ease;
+/* ───── PROCESS STEPS ───── */
+.process-step {
+  position: relative; display: flex; gap: 1.5rem; align-items: flex-start;
+  padding-bottom: 2.5rem;
 }
-.usecase-pill:hover { border-color: var(--secondary); box-shadow: 0 6px 18px rgba(107,162,66,0.10); transform: translateX(4px); }
-.usecase-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--secondary); flex-shrink: 0; }
-.usecase-pill span { font-size: 0.875rem; font-weight: 500; color: var(--text-base); }
+.process-step:last-child { padding-bottom: 0; }
+.process-step::before {
+  content: ''; position: absolute; left: 23px; top: 48px; bottom: 0; width: 2px;
+  background: linear-gradient(to bottom, var(--secondary), transparent);
+}
+.process-step:last-child::before { display: none; }
+.step-num {
+  width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #031F5C, #1249B4);
+  color: #fff; font-weight: 700; font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(3,31,92,0.25); z-index: 1;
+}
+html.dark .step-num { box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+.step-content h4 { font-size: 1.05rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.4rem; }
+.step-content p { font-size: 0.875rem; line-height: 1.7; color: var(--text-muted); }
+
+/* ───── INDUSTRIES ───── */
+.industry-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--bg-card); border: 1px solid var(--border-card);
+  border-radius: 100px; padding: 9px 18px;
+  font-size: 0.875rem; font-weight: 500; color: var(--text-base);
+  transition: all 0.2s ease; text-decoration: none;
+}
+.industry-pill:hover { border-color: var(--secondary); color: var(--secondary); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(107,162,66,0.12); }
+.industry-pill i { font-size: 0.8rem; color: var(--secondary); }
 
 /* ───── HIGHLIGHT BANNER ───── */
 .highlight-banner {
@@ -326,10 +368,55 @@ html.dark .analysis-icon { background: linear-gradient(135deg, rgba(3,31,92,0.3)
   border-radius: 24px; overflow: hidden; position: relative; padding: 3rem 2.5rem;
 }
 html.dark .highlight-banner { background: linear-gradient(110deg, #010818 0%, #020e28 40%, #041840 100%); }
-.highlight-banner::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 75% at 100% 50%, rgba(107,162,66,0.12) 0%, transparent 65%); pointer-events: none; }
-.stat-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 18px; padding: 1.5rem 1.75rem; text-align: center; backdrop-filter: blur(8px); }
+.highlight-banner::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 55% 75% at 100% 50%, rgba(107,162,66,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* ───── STAT CARDS ───── */
+.stat-card {
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 18px; padding: 1.5rem 1.75rem; text-align: center;
+  backdrop-filter: blur(8px);
+}
 .stat-num { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 2.8rem); color: #a0d860; font-weight: 400; line-height: 1; }
 .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-top: 0.5rem; line-height: 1.4; }
+
+/* ───── QUOTE ───── */
+blockquote.big-quote {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 400; font-style: italic;
+  line-height: 1.4; color: var(--text-heading);
+  position: relative; padding: 0 2rem;
+}
+blockquote.big-quote::before {
+  content: '"'; font-size: 5rem; line-height: 0.5;
+  color: var(--secondary); opacity: 0.4; display: block; margin-bottom: 1rem;
+  font-family: 'DM Serif Display', serif;
+}
+
+/* ───── FORM ───── */
+.form-input {
+  width: 100%; border: 1.5px solid var(--border-card); background: var(--bg-card);
+  color: var(--text-base); border-radius: 12px; padding: 14px 18px;
+  font-size: 0.95rem; font-family: inherit; outline: none;
+}
+.form-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(107,162,66,0.1); }
+.form-label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-base); }
+
+/* ───── CTA BUTTON ───── */
+.cta-button {
+  background: linear-gradient(90deg, #031F5C, #1249B4);
+  transition: all 0.3s ease; border-radius: 100px;
+}
+.cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(3,31,92,0.45); }
+
+.link-arrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--primary); transition: gap 0.2s, color 0.2s; }
+.link-arrow:hover { gap: 14px; color: var(--accent-blue); }
+html.dark .link-arrow { color: #6BA242; }
+html.dark .link-arrow:hover { color: #9ad85a; }
 
 /* ───── CTA BANNER ───── */
 .cta-banner {
@@ -346,31 +433,11 @@ html.dark .cta-banner { background: linear-gradient(110deg, #010818 0%, #020e28 
 .cta-outline { background: rgba(255,255,255,0.10); border: 1.5px solid rgba(255,255,255,0.35); color: #fff; border-radius: 100px; transition: all 0.3s ease; }
 .cta-outline:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
 
-/* ───── FORM ───── */
-.form-input { width: 100%; border: 1.5px solid var(--border-card); background: var(--bg-card); color: var(--text-base); border-radius: 12px; padding: 14px 18px; font-size: 0.95rem; font-family: inherit; outline: none; }
-.form-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(107,162,66,0.1); }
-.form-label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-base); }
-
-.cta-button { background: linear-gradient(90deg, #031F5C, #1249B4); transition: all 0.3s ease; border-radius: 100px; }
-.cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(3,31,92,0.45); }
-.link-arrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--primary); transition: gap 0.2s, color 0.2s; }
-.link-arrow:hover { gap: 14px; }
-html.dark .link-arrow { color: #6BA242; }
-
+/* ───── ANIMATION ───── */
 .content-block { transition: opacity 0.6s cubic-bezier(0.34,1,0.64,1), transform 0.6s cubic-bezier(0.34,1,0.64,1); }
+
+/* ───── FOOTER ───── */
 footer { background: var(--bg-footer); }
-.prose-custom p { margin-bottom: 1.15rem; line-height: 1.75; color: var(--text-base); }
-
-/* Footer-spezifischer Toggle (noch höherer Kontrast) */
-#footer-theme-toggle.theme-toggle-btn {
-    background: rgba(255,255,255,0.15) !important;
-    border-color: rgba(255,255,255,0.55) !important;
-}
-
-html.dark #footer-theme-toggle.theme-toggle-btn {
-    background: rgba(107,162,66,0.35) !important;
-    border-color: #9ad85a !important;
-}
 
 /* Desktop contact info */
 .desktop-contact-info {
@@ -386,9 +453,87 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
 .desktop-contact-info a:hover { color: var(--primary); }
 .desktop-contact-info i { font-size: 10px; color: var(--primary); flex-shrink: 0; }
 html.dark .desktop-contact-info i { color: #6BA242; }
+
+/* Darkmode: Telefonnummer-Hover-Kontrast verbessern */
 html.dark .desktop-contact-info a:hover {
     color: #72CD14 !important;
 }
+
+/* THEME TOGGLE - Verbesserter Kontrast */
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 44px;
+    height: 26px;
+    border-radius: 13px;
+    background: rgba(3,31,92,0.18);
+    border: 2px solid rgba(3,31,92,0.45);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+html.dark .theme-toggle-btn {
+    background: rgba(107,162,66,0.22);
+    border: 2px solid rgba(107,162,66,0.55);
+}
+
+.toggle-knob {
+    position: absolute;
+    left: 4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.dark .toggle-knob {
+    transform: translateX(14px);
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.toggle-sun {
+    position: absolute;
+    right: 4px;
+    font-size: 11px;
+    color: #6BA242;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+html.dark .toggle-sun { opacity: 0; }
+
+.toggle-moon {
+    position: absolute;
+    left: 6px;
+    top: 5px;
+    font-size: 12px;
+    color: #6BA242;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+html.dark .toggle-moon { opacity: 1; }
+
+/* Footer-spezifischer Toggle (noch höherer Kontrast) */
+#footer-theme-toggle.theme-toggle-btn {
+    background: rgba(255,255,255,0.15) !important;
+    border-color: rgba(255,255,255,0.55) !important;
+}
+
+html.dark #footer-theme-toggle.theme-toggle-btn {
+    background: rgba(107,162,66,0.35) !important;
+    border-color: #9ad85a !important;
+}
+
+/* ───── PROSE ───── */
+.prose-custom p { margin-bottom: 1.15rem; line-height: 1.75; color: var(--text-base); }
+.prose-custom ul { color: var(--text-base); }
 
 @media (max-width: 1279px) {
   header { height: 72px !important; }
@@ -411,7 +556,7 @@ html.dark .desktop-contact-info a:hover {
         <img src="logo_projekt.png"
              alt="ProEnergie Logo"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <svg class="logo-svg-fallback" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" stroke="#72CD14" stroke-width="1.5" fill="rgba(114,205,20,0.15)"/>
           <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -465,7 +610,6 @@ html.dark .desktop-contact-info a:hover {
           <a href="projektleitung.html" class="block py-3">Projektleitung/Objektüberwachung</a>
         </div>
       </div>
-
       <div class="nav-item relative">
         <button onclick="toggleSubmenu('druckluft-effizienz')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
           Druckluft-Effizienz <i id="druckluft-effizienz-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
@@ -475,13 +619,11 @@ html.dark .desktop-contact-info a:hover {
           <a href="leckageortung.html" class="block py-3">Leckageortung</a>
         </div>
       </div>
-
       <div class="mt-6">
         <a href="index.html#anfrage" class="cta-button text-white w-full py-3.5 text-sm font-semibold flex items-center justify-center gap-2 shadow-md">
           <i class="fas fa-paper-plane text-xs"></i> Zum Kontaktformular
         </a>
       </div>
-
       <div class="mt-8 border-t border-[var(--border-card)] pt-7 space-y-4 text-sm">
         <p class="text-[10px] font-bold tracking-widest uppercase" style="color:var(--secondary)">Kontakt</p>
         <div class="flex items-center gap-3">
@@ -494,181 +636,89 @@ html.dark .desktop-contact-info a:hover {
         </div>
         <div class="flex items-start gap-3">
           <i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:var(--primary)"></i>
-          <p style="color:var(--text-muted)">Dittmannsdorfer Str. 44 · 09322 Penig</p>
+          <div style="color:var(--text-muted)">
+            <p>Dittmannsdorfer Str. 44 · 09322 Penig</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </header>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <div class="max-w-[1400px] mx-auto relative z-10">
-    <div class="hero-badge">Druckluft-Effizienz</div>
-    <h1 class="page-hero-h1">Druckluftverluste erkennen<br><em>Energie sparen, Kosten senken</em></h1>
-    <p class="page-hero-lead">Leckagen gehören zu den häufigsten und teuersten Schwachstellen in Druckluftanlagen. Wir helfen Ihnen, sie systematisch zu erkennen, zu bewerten und dauerhaft zu reduzieren.</p>
-    <div class="mt-8 flex flex-col sm:flex-row gap-3">
-      <a href="index.html#anfrage" class="cta-button text-white px-7 py-3.5 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg">
-        <i class="fas fa-arrow-right text-sm"></i> Jetzt Kontakt aufnehmen
-      </a>
-    </div>
-  </div>
-</section>
+<!-- MAIN CONTENT -->
+  <main class="w-full max-w-[1400px] mx-auto px-6 py-16 sm:py-24">
+    <div class="proenergie-card border border-[var(--border-card)] rounded-2xl p-8 sm:p-12">
+      <div class="max-w-3xl mx-auto">
+        <!-- <span class="section-label">Impressum</span> -->
+        <h1 class="section-h2 mb-8">Impressum</h1>
 
-<!-- MAIN -->
-<main class="w-full max-w-[1400px] mx-auto">
+        <div class="prose-custom space-y-6 text-sm">
+          <div>
+            <h2 class="font-bold text-lg mb-2">Angaben gemäß § 5 TMG</h2>
+            <p>
+              <strong>ProEnergie Versorgungstechnik</strong><br>
+              Dittmannsdorfer Str. 44<br>
+              09322 Penig<br>
+              Deutschland
+            </p>
+          </div>
 
-  <!-- INTRO -->
-  <div class="section-outer content-block">
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-      <div class="lg:col-span-2">
-        <span class="section-label">Unser Ansatz</span>
-        <h2 class="section-h2">Systematische Leckageortung für mehr Effizienz</h2>
-        <div class="prose-custom text-sm mt-4 space-y-4">
-          <p>Leckagen in Druckluftanlagen bleiben oft unbemerkt, verursachen aber dauerhaft unnötige Energiekosten. Schon kleine Undichtigkeiten können über das Jahr betrachtet hohe Verluste erzeugen und die Effizienz der gesamten Druckluftversorgung deutlich verschlechtern.</p>
-          <p>Mit unserem Druckluft-Effizienz-Service unterstützen wir Sie dabei, Druckluftverluste systematisch zu erkennen, zu bewerten und dauerhaft zu reduzieren. Durch eine strukturierte Begehung Ihrer Anlage erfassen wir auffällige Leckagen im Druckluftnetz, an Maschinen, Anschlüssen, Armaturen, Schläuchen, Kupplungen und Verbrauchern.</p>
-          <p>Die gefundenen Leckagen werden dokumentiert und nach ihrer Relevanz bewertet. So erhalten Sie eine transparente Übersicht darüber, wo Druckluft verloren geht, welche Verluste besonders kostenintensiv sind und welche Maßnahmen wirtschaftlich sinnvoll umgesetzt werden sollten.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+          <div>
+            <h2 class="font-bold text-lg mb-2">Kontakt</h2>
+            <p>
+              Telefon: <a href="tel:+4915228760622" class="text-[var(--primary)] hover:underline">+49 152 28760622</a><br>
+              E-Mail: <a href="mailto:info@proenergie-versorgungstechnik.de" class="text-[var(--primary)] hover:underline">info@proenergie-versorgungstechnik.de</a>
+            </p>
+          </div>
 
-  <div class="section-divider"></div>
+          <div>
+            <h2 class="font-bold text-lg mb-2">Vertreten durch</h2>
+            <p>David Michel</p>
+          </div>
 
-  <!-- TYPISCHE EINSATZBEREICHE -->
-  <div class="section-outer content-block">
-    <div class="max-w-3xl mx-auto">
-      <span class="section-label">Typische Einsatzbereiche</span>
-      <h2 class="section-h2">Wo wir Leckagen erkennen</h2>
-      <div class="mt-8 space-y-4">
-        <div class="usecase-pill">
-          <div class="usecase-dot"></div>
-          <span>Druckluftnetze in Produktionsbetrieben</span>
-        </div>
-        <div class="usecase-pill">
-          <div class="usecase-dot"></div>
-          <span>Kompressorstationen und Verteilnetze</span>
-        </div>
-        <div class="usecase-pill">
-          <div class="usecase-dot"></div>
-          <span>Maschinenanschlüsse und Verbraucher</span>
-        </div>
-        <div class="usecase-pill">
-          <div class="usecase-dot"></div>
-          <span>Schlauchleitungen, Kupplungen und Steckverbindungen</span>
-        </div>
-        <div class="usecase-pill">
-          <div class="usecase-dot"></div>
-          <span>Armaturen, Ventile und Wartungseinheiten</span>
-        </div>
-        <div class="usecase-pill">
-          <div class="usecase-dot"></div>
-          <span>Bestandsanlagen mit hohem Energieverbrauch</span>
-        </div>
-        <div class="usecase-pill">
-          <div class="usecase-dot"></div>
-          <span>Betriebe mit steigenden Druckluftkosten</span>
-        </div>
-        <div class="usecase-pill">
-          <div class="usecase-dot"></div>
-          <span>Anlagen mit häufig nachlaufenden Kompressoren</span>
-        </div>
-      </div>
-    </div>
-  </div>
+          <div>
+            <h2 class="font-bold text-lg mb-2">Berufliche Tätigkeit</h2>
+            <p>
+              Freiberufliche Beratung, Fachplanung und Projektleitung im Bereich Druckluft- und Gasversorgungssysteme sowie energieeffizienter Versorgungstechnik.
+            </p>
+          </div>
 
-  <div class="section-divider"></div>
+          <div>
+            <h2 class="font-bold text-lg mb-2">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+            <p>
+              David Michel<br>
+              Dittmannsdorfer Str. 44<br>
+              09322 Penig
+            </p>
+          </div>
 
-  <!-- VORGEHEN -->
-  <div class="section-outer content-block">
-    <div class="max-w-3xl mx-auto">
-      <span class="section-label">Unser Vorgehen</span>
-      <h2 class="section-h2">So gehen wir vor</h2>
-      <div class="space-y-0 mt-8">
-        <div class="flex gap-4 pb-7 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">1</div>
-          <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Aufnahme der Druckluftanlage vor Ort</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Wir analysieren Ihre Anlage und identifizieren potenzielle Schwachstellen für Leckagen.</p>
+          <div>
+            <h2 class="font-bold text-lg mb-2">Hinweis</h2>
+            <p>
+              Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr übernommen werden.
+            </p>
           </div>
-        </div>
-        <div class="flex gap-4 pb-7 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">2</div>
-          <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Systematische Begehung der relevanten Anlagenbereiche</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Wir durchsuchen systematisch alle relevanten Bereiche Ihrer Anlage nach Leckagen.</p>
-          </div>
-        </div>
-        <div class="flex gap-4 pb-7 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">3</div>
-          <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Erkennung und Kennzeichnung von Leckagen</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Gefundene Leckagen werden dokumentiert und für die weitere Analyse markiert.</p>
-          </div>
-        </div>
-        <div class="flex gap-4 pb-7 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">4</div>
-          <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Dokumentation der Fundstellen</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Alle Leckagen werden detailliert dokumentiert, um eine transparente Übersicht zu schaffen.</p>
-          </div>
-        </div>
-        <div class="flex gap-4 pb-7 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">5</div>
-          <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Bewertung der möglichen Einsparpotenziale</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Wir bewerten die Leckagen nach Größe, Kosten und Priorität, um die wirtschaftlich sinnvollsten Maßnahmen zu identifizieren.</p>
-          </div>
-        </div>
-        <div class="flex gap-4 pb-7 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">6</div>
-          <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Priorisierung der empfohlenen Maßnahmen</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Die Maßnahmen werden nach Dringlichkeit und Wirtschaftlichkeit priorisiert.</p>
-          </div>
-        </div>
-        <div class="flex gap-4 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">7</div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Übergabe einer verständlichen Auswertung</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Sie erhalten eine klare und verständliche Auswertung mit allen Ergebnissen und Empfehlungen.</p>
+
+          <div>
+            <h2 class="font-bold text-lg mb-2">Streitbeilegung</h2>
+            <p>
+              Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer" class="text-[var(--primary)] hover:underline">https://ec.europa.eu/consumers/odr/</a>.
+              Unsere E-Mail-Adresse finden Sie oben im Impressum.
+            </p>
+            <p>
+              Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- CTA BANNER -->
-  <div class="section-outer content-block">
-    <div class="cta-banner w-full mx-auto">
-      <div class="relative z-10">
-        <h2>Wo verliert Ihre Anlage Energie?</h2>
-        <p>Nehmen Sie gerne Kontakt mit uns auf, wenn Sie wissen möchten, wie viel Druckluft in Ihrem Betrieb ungenutzt verloren geht und wie sich Ihre Druckluftkosten gezielt senken lassen.</p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="tel:+49123456789" class="cta-outline px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5">
-            <i class="fas fa-phone text-sm"></i> +49 152 28760622
-          </a>
-          <a href="index.html#anfrage" class="cta-button text-white px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg">
-            <i class="fas fa-paper-plane text-sm"></i> Kontaktformular
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
+  </main>
 
 <!-- FOOTER -->
 <footer class="w-full mt-4">
   <div class="max-w-[1400px] mx-auto px-6 pt-14 pb-10">
     <div class="grid md:grid-cols-3 gap-10 md:gap-12">
+
       <div>
         <a href="index.html" class="logo-wrapper group mb-4">
           <div class="logo-img-box" style="width: 36px; height: 36px;">
@@ -723,9 +773,15 @@ html.dark .desktop-contact-info a:hover {
 </footer>
 
 <script>
-// --- Theme Handling (Standardmäßig Light Mode erzwingen) ---
-function getURLTheme() { return new URLSearchParams(window.location.search).get('erscheinungsbild'); }
-function setURLTheme(t) { const u = new URL(window.location.href); u.searchParams.set('erscheinungsbild', t); history.replaceState(null, '', u.toString()); }
+/* ─── THEME ─── */
+function getURLTheme() {
+  return new URLSearchParams(window.location.search).get('erscheinungsbild');
+}
+function setURLTheme(t) {
+  const u = new URL(window.location.href);
+  u.searchParams.set('erscheinungsbild', t);
+  history.replaceState(null, '', u.toString());
+}
 function patchLinks(theme) {
   document.querySelectorAll('a[href]').forEach(link => {
     const h = link.getAttribute('href');
@@ -800,20 +856,24 @@ function toggleSubmenu(id) {
   if (sub) { sub.classList.toggle('active'); icon.classList.toggle('fa-chevron-down'); icon.classList.toggle('fa-chevron-up'); }
 }
 
-/* ─── SMOOTH SCROLL FÜR ALLE LINKS ZU #ANFRAGE ─── */
-document.querySelectorAll('a[href="index.html#anfrage"]').forEach(anchor => {
+/* ─── SMOOTH SCROLL ─── */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
-
-    // Falls das Mobile-Menü geöffnet ist, schließe es zuerst
     if (mobileMenu.classList.contains('active')) {
       closeMobileMenu();
     }
-
-    // Scrollen nach dem Schließen des Menüs
-    setTimeout(() => {
-      window.location.href = "index.html#anfrage";
-    }, 10);
+    const targetId = this.getAttribute('href');
+    const target = document.querySelector(targetId);
+    if (target) {
+      const headerOffset = 72;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   });
 });
 
@@ -823,7 +883,7 @@ function animateOnScroll() {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
   }, { threshold: 0.08 });
-  blocks.forEach(b => { b.style.opacity='0'; b.style.transform='translateY(32px)'; obs.observe(b); });
+  blocks.forEach(b => { b.style.opacity='0'; b.style.transform='translateY(28px)'; obs.observe(b); });
 }
 
 window.onload = function() {

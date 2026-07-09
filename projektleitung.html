@@ -283,16 +283,6 @@ html.dark .page-hero::after { background: linear-gradient(to bottom, transparent
   letter-spacing: 0.12em; text-transform: uppercase;
   padding: 7px 18px; border-radius: 100px; margin-bottom: 1.75rem;
 }
-.hero-badge::before {
-  content: ''; width: 6px; height: 6px; border-radius: 50%;
-  background: #72CD14; flex-shrink: 0;
-  box-shadow: 0 0 0 3px rgba(114,205,20,0.3);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(114,205,20,0.3); }
-  50% { box-shadow: 0 0 0 6px rgba(114,205,20,0.1); }
-}
 
 .page-hero-h1 {
   font-family: 'DM Serif Display', Georgia, serif;
@@ -308,7 +298,7 @@ html.dark .page-hero::after { background: linear-gradient(to bottom, transparent
 .section-divider { height: 1px; background: var(--border-card); margin: 0 2rem; }
 .section-alt-bg { background: var(--bg-page-alt); transition: background 0.3s; }
 
-.section-label { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 1rem; }
+.section-label { display: inline-block; font-size: 1rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 1rem; }
 .section-h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.9rem, 4vw, 2.8rem); line-height: 1.12; font-weight: 400; color: var(--text-heading); margin-bottom: 1.25rem; }
 .section-intro { font-size: clamp(1rem, 2vw, 1.1rem); color: var(--text-muted); line-height: 1.7; }
 
@@ -587,17 +577,21 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
       <div class="nav-item relative">
         <a class="nav-link">Leistungen</a>
         <div class="submenu">
-          <a href="projektleitung.html">Projektleitung/Objektüberwachung</a>
           <a href="energieberatung.html">Energieberatung</a>
+          <a href="fachplanung.html">Fachplanung</a>
+          <a href="projektleitung.html">Projektleitung/Objektüberwachung</a>
         </div>
       </div>
       <div class="nav-item relative">
-        <a class="nav-link">Leckagemanagement</a>
+        <a class="nav-link">Druckluft-Effizienz</a>
         <div class="submenu">
           <a href="basischeck.html">BasisCheck</a>
           <a href="leckageortung.html">Leckageortung</a>
         </div>
       </div>
+      <!-- <div class="nav-item relative">
+        <a href="partner.html" class="nav-link">Partner</a>
+      </div> -->
     </nav>
 
     <div class="flex items-center gap-3 flex-shrink-0">
@@ -622,17 +616,18 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
         Leistungen <i id="leistungen-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
       </button>
       <div id="leistungen-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
-        <a href="projektleitung.html" class="block py-3">Projektleitung/Objektüberwachung</a>
         <a href="energieberatung.html" class="block py-3">Energieberatung</a>
+        <a href="fachplanung.html" class="block py-3">Fachplanung</a>
+        <a href="projektleitung.html" class="block py-3">Projektleitung/Objektüberwachung</a>
       </div>
     </div>
 
-    <!-- Leckagemanagement mit Unterpunkten (wie Desktop) -->
+    <!-- Druckluft-Effizienz mit Unterpunkten (wie Desktop) -->
     <div class="nav-item relative">
-      <button onclick="toggleSubmenu('leckagemanagement')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
-        Leckagemanagement <i id="leckagemanagement-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
+      <button onclick="toggleSubmenu('druckluft-effizienz')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
+        Druckluft-Effizienz <i id="druckluft-effizienz-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
       </button>
-      <div id="leckagemanagement-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
+      <div id="druckluft-effizienz-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
         <a href="basischeck.html" class="block py-3">BasisCheck</a>
         <a href="leckageortung.html" class="block py-3">Leckageortung</a>
       </div>
@@ -650,7 +645,7 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
       <p class="text-[10px] font-bold tracking-widest uppercase" style="color:var(--secondary)">Kontakt</p>
       <div class="flex items-center gap-3">
         <i class="fas fa-phone flex-shrink-0" style="color:var(--primary)"></i>
-        <a href="tel:+49123456789" style="color:var(--text-nav)">+49 123 456789</a>
+        <a href="tel:+49123456789" style="color:var(--text-nav)">+49 152 28760622</a>
       </div>
       <div class="flex items-center gap-3">
         <i class="fas fa-envelope flex-shrink-0" style="color:var(--primary)"></i>
@@ -672,7 +667,7 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
   <div class="max-w-[1400px] mx-auto relative z-10">
     <div class="hero-badge">Leistung</div>
     <h1 class="page-hero-h1">Projektleitung &amp;<br><em>Objektüberwachung</em></h1>
-    <p class="page-hero-lead">Strukturierte Umsetzung – zuverlässig von der Planung bis zur Übergabe. Wir begleiten Ihr Vorhaben als aktiver Partner auf der Baustelle.</p>
+    <p class="page-hero-lead">Strukturierte Umsetzung von der Planung bis zur Übergabe.</p>
     <div class="mt-8 flex flex-col sm:flex-row gap-3">
       <a href="index.html#anfrage" class="cta-button text-white px-7 py-3.5 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg">
         <i class="fas fa-arrow-right text-sm"></i> Jetzt Kontakt aufnehmen
@@ -689,11 +684,11 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
       <div class="lg:col-span-2">
         <span class="section-label">Unser Ansatz</span>
-        <h2 class="section-h2">Mehr als nur Überwachung – ein aktiver Partner auf der Baustelle</h2>
+        <h2 class="section-h2">Projektbegleitung mit Blick für Technik, Termine und Umsetzung</h2>
         <div class="prose-custom text-sm mt-4 space-y-4">
           <p>Ob anspruchsvolle TGA-Projekte, Druckluftanlagen, Reinstgasversorgung oder technische Versorgungsanlagen: Eine erfolgreiche Umsetzung braucht klare Abläufe, fachliche Erfahrung und eine zuverlässige Koordination aller Beteiligten.</p>
           <p>Als erfahrener Partner für Projektleitung und Objektüberwachung begleiten wir Ihr Vorhaben von der Vorbereitung über die Ausführung bis zur schlüsselfertigen Übergabe. Wir sorgen dafür, dass Termine, Kosten, Qualität und technische Anforderungen jederzeit im Blick bleiben.</p>
-          <p>Dabei verstehen wir uns nicht nur als Überwacher, sondern als aktiver Ansprechpartner auf der Baustelle und Schnittstelle zwischen Bauherr, Planung, ausführenden Firmen und Betreibern.</p>
+          <p>Dabei verstehen wir uns nicht nur als Überwacher, sondern als aktiver Ansprechpartner und Schnittstelle zwischen Bauherr, Planung, ausführenden Firmen und Betreibern.</p>
           <p>Unser Anspruch ist eine praxisnahe, lösungsorientierte und transparente Projektabwicklung. Wir erkennen Auffälligkeiten frühzeitig, koordinieren Gewerke, dokumentieren den Baufortschritt und unterstützen bei Nachträgen, Mängeln und technischen Abstimmungen.</p>
         </div>
       </div>
@@ -707,26 +702,22 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
     <div class="text-center max-w-xl mx-auto mb-12">
       <span class="section-label">Ihre Vorteile</span>
       <h2 class="section-h2">Was Sie von uns erwarten können</h2>
-      <p class="section-intro text-sm">Konkrete Leistungen, die Ihr Projekt absichern – von Anfang bis zur schlüsselfertigen Übergabe.</p>
+      <p class="section-intro text-sm">Konkrete Leistungen, die Ihr Projekt absichern, von Anfang bis zur schlüsselfertigen Übergabe.</p>
     </div>
     <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
       <div class="why-card">
-        <div class="why-card-icon">📅</div>
         <h4>Transparente Kosten- & Terminverfolgung</h4>
         <p>Laufende Kontrolle und Dokumentation von Budget und Zeitplan – jederzeit nachvollziehbar für alle Beteiligten.</p>
       </div>
       <div class="why-card">
-        <div class="why-card-icon">👁️</div>
         <h4>Praxisnahe Objektüberwachung</h4>
         <p>Regelmäßige Vor-Ort-Präsenz, direkte Kontrolle der Ausführungsqualität und sofortige Reaktion bei Abweichungen.</p>
       </div>
       <div class="why-card">
-        <div class="why-card-icon">⚙️</div>
         <h4>Technische Schnittstelle</h4>
         <p>Wir übersetzen zwischen Bauherr, Planer und ausführenden Firmen – fachlich fundiert und auf Augenhöhe mit allen Beteiligten.</p>
       </div>
       <div class="why-card">
-        <div class="why-card-icon">📋</div>
         <h4>Lückenlose Dokumentation</h4>
         <p>Baufortschritt, Mängel und Nachträge werden systematisch erfasst und archiviert – als belastbare Grundlage für Abnahmen und Gewährleistung.</p>
       </div>
@@ -735,53 +726,55 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
 
   <div class="section-divider"></div>
 
-  <!-- ABLAUF -->
-  <div class="section-outer content-block">
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-      <div>
-        <span class="section-label">Unser Vorgehen</span>
-        <h2 class="section-h2">Von der Planung bis zur Übergabe</h2>
-        <p class="section-intro text-sm">Strukturierte Phasen, die Sicherheit und Transparenz schaffen – von der ersten Besprechung bis zum Projektabschluss.</p>
+<!-- VORGEHEN -->
+<div class="section-outer content-block">
+  <div class="max-w-3xl mx-auto">
+    <span class="section-label">Unser Vorgehen</span>
+    <h2 class="section-h2">Von der Planung bis zur Übergabe</h2>
+    <p class="section-intro text-sm">Strukturierte Phasen, die Sicherheit und Transparenz schaffen – von der ersten Besprechung bis zum Projektabschluss.</p>
+    <div class="space-y-0 mt-8">
+      <div class="flex gap-4 pb-7 relative">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">1</div>
+        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+        <div class="pt-1.5">
+          <h4 class="font-bold text-[var(--text-heading)] mb-1">Projektvorbereitung & Analyse</h4>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Klärung der Anforderungen, Sichtung vorhandener Unterlagen, Definition von Zielen, Terminen und Verantwortlichkeiten. Aufbau der Projektstruktur.</p>
+        </div>
       </div>
-      <div class="space-y-0">
-        <div class="process-step content-block">
-          <div class="step-num">1</div>
-          <div class="step-content pt-2">
-            <h4>Projektvorbereitung & Analyse</h4>
-            <p>Klärung der Anforderungen, Sichtung vorhandener Unterlagen, Definition von Zielen, Terminen und Verantwortlichkeiten. Aufbau der Projektstruktur.</p>
-          </div>
+      <div class="flex gap-4 pb-7 relative">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">2</div>
+        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+        <div class="pt-1.5">
+          <h4 class="font-bold text-[var(--text-heading)] mb-1">Ausschreibung & Vergabe</h4>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Unterstützung bei Leistungsbeschreibungen, Einholung und Prüfung von Angeboten, Vorbereitung von Vergabeentscheidungen.</p>
         </div>
-        <div class="process-step content-block">
-          <div class="step-num">2</div>
-          <div class="step-content pt-2">
-            <h4>Ausschreibung & Vergabe</h4>
-            <p>Unterstützung bei Leistungsbeschreibungen, Einholung und Prüfung von Angeboten, Vorbereitung von Vergabeentscheidungen.</p>
-          </div>
+      </div>
+      <div class="flex gap-4 pb-7 relative">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">3</div>
+        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+        <div class="pt-1.5">
+          <h4 class="font-bold text-[var(--text-heading)] mb-1">Bauphase & Objektüberwachung</h4>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Regelmäßige Baustellenbegehungen, Kontrolle der Ausführungsqualität, Koordination der Gewerke, Protokollierung des Baufortschritts.</p>
         </div>
-        <div class="process-step content-block">
-          <div class="step-num">3</div>
-          <div class="step-content pt-2">
-            <h4>Bauphase & Objektüberwachung</h4>
-            <p>Regelmäßige Baustellenbegehungen, Kontrolle der Ausführungsqualität, Koordination der Gewerke, Protokollierung des Baufortschritts.</p>
-          </div>
+      </div>
+      <div class="flex gap-4 pb-7 relative">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">4</div>
+        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+        <div class="pt-1.5">
+          <h4 class="font-bold text-[var(--text-heading)] mb-1">Abnahme & Dokumentation</h4>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Durchführung von Teil- und Gesamtabnahmen, Mängelerfassung und -verfolgung, Aufbau einer vollständigen Projektdokumentation.</p>
         </div>
-        <div class="process-step content-block">
-          <div class="step-num">4</div>
-          <div class="step-content pt-2">
-            <h4>Abnahme & Dokumentation</h4>
-            <p>Durchführung von Teil- und Gesamtabnahmen, Mängelerfassung und -verfolgung, Aufbau einer vollständigen Projektdokumentation.</p>
-          </div>
-        </div>
-        <div class="process-step content-block">
-          <div class="step-num">5</div>
-          <div class="step-content pt-2">
-            <h4>Übergabe & Projektabschluss</h4>
-            <p>Schlüsselfertige Übergabe an den Betreiber, Abschlussdokumentation, Kostenfeststellung und Begleitung der Inbetriebnahme.</p>
-          </div>
+      </div>
+      <div class="flex gap-4 relative">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">5</div>
+        <div class="pt-1.5">
+          <h4 class="font-bold text-[var(--text-heading)] mb-1">Übergabe & Projektabschluss</h4>
+          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Schlüsselfertige Übergabe an den Betreiber, Abschlussdokumentation, Kostenfeststellung und Begleitung der Inbetriebnahme.</p>
         </div>
       </div>
     </div>
   </div>
+</div>
 
   <div class="section-divider"></div>
 
@@ -789,11 +782,11 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
   <div class="section-outer content-block">
     <div class="cta-banner w-full mx-auto">
       <div class="relative z-10">
-        <h2>Wo verliert Ihre Anlage Energie?</h2>
-        <p>Nehmen Sie gerne Kontakt mit uns auf, wenn Sie wissen möchten, wo Ihre Druckluftanlage Energie verliert und wie sich Ihre Versorgung wirtschaftlich optimieren lässt.</p>
+        <h2>Projektleitung mit technischem Verständnis</h2>
+        <p>Nehmen Sie gerne Kontakt mit uns auf, wenn Sie Unterstützung in der Projektleitung, Koordination oder technischen Abstimmung benötigen.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="tel:+49123456789" class="cta-outline px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5">
-            <i class="fas fa-phone text-sm"></i> +49 123 456789
+            <i class="fas fa-phone text-sm"></i> +49 152 28760622
           </a>
           <a href="index.html#anfrage" class="cta-button text-white px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg">
             <i class="fas fa-paper-plane text-sm"></i> Kontaktformular
@@ -827,7 +820,7 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
             <span class="logo-sub" style="color: #ffffff; font-size: 0.55rem;">— Versorgungstechnik —</span>
           </div>
         </a>
-        <p class="text-sm leading-relaxed" style="color:var(--text-footer-muted); max-width:260px;">Ihr Spezialist für zuverlässige, effiziente und zukunftssichere Druckluft- und Reinstgasversorgungen.</p>
+        <p class="text-sm leading-relaxed" style="color:var(--text-footer-muted); max-width:260px;">Ihr Spezialist für zuverlässige, effiziente und zukunftssichere Druckluft- und Gasversorgungssysteme.</p>
         <div class="mt-6 flex gap-4">
           <a href="#" class="w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all" style="background:rgba(255,255,255,0.07); color:var(--text-footer-muted);" onmouseover="this.style.color='#72CD14'" onmouseout="this.style.color=''"><i class="fab fa-instagram"></i></a>
         </div>
@@ -838,7 +831,7 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
         <div class="space-y-4 text-sm" style="color:var(--text-footer-muted)">
           <div class="flex items-center gap-3">
             <i class="fas fa-phone flex-shrink-0" style="color:#72CD14"></i>
-            <a href="tel:+49123456789" style="color:var(--text-footer-muted)" class="hover:text-[#72CD14] transition-colors">+49 123 456789</a>
+            <a href="tel:+49123456789" style="color:var(--text-footer-muted)" class="hover:text-[#72CD14] transition-colors">+49 152 28760622</a>
           </div>
           <div class="flex items-start gap-3">
             <i class="fas fa-envelope mt-0.5 flex-shrink-0" style="color:#72CD14"></i>
@@ -952,19 +945,15 @@ function toggleSubmenu(id) {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
-
-    // Falls das Mobile-Menü geöffnet ist, schließe es zuerst
     if (mobileMenu.classList.contains('active')) {
       closeMobileMenu();
     }
-
     const targetId = this.getAttribute('href');
     const target = document.querySelector(targetId);
     if (target) {
       const headerOffset = 72;
       const elementPosition = target.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
