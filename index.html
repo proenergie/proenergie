@@ -837,6 +837,9 @@ html.dark .desktop-contact-info a:hover {
   margin-top: 2px;
 }
 </style>
+</head>
+<body>
+<div id="page-blur-overlay"></div>
 
 <!-- HEADER -->
 <header class="w-full">
@@ -900,60 +903,50 @@ html.dark .desktop-contact-info a:hover {
 
   <!-- MOBILE MENU -->
   <div id="mobile-menu" class="xl:hidden">
-  <div class="flex flex-col px-5 pb-8 pt-5 text-base font-medium">
-    <!-- Leistungen mit Unterpunkten (wie Desktop) -->
-    <div class="nav-item relative">
-      <button onclick="toggleSubmenu('leistungen')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
-        Leistungen <i id="leistungen-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
-      </button>
-      <div id="leistungen-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
-        <a href="energieberatung.html" class="block py-3">Energieberatung</a>
-        <a href="fachplanung.html" class="block py-3">Fachplanung</a>
-        <a href="projektleitung.html" class="block py-3">Projektleitung/Objektüberwachung</a>
+    <div class="flex flex-col px-5 pb-8 pt-5 text-base font-medium">
+      <div class="nav-item relative">
+        <button onclick="toggleSubmenu('leistungen')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
+          Leistungen <i id="leistungen-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
+        </button>
+        <div id="leistungen-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
+          <a href="energieberatung.html" class="block py-3">Energieberatung</a>
+          <a href="fachplanung.html" class="block py-3">Fachplanung</a>
+          <a href="projektleitung.html" class="block py-3">Projektleitung/Objektüberwachung</a>
+        </div>
       </div>
-    </div>
-
-    <!-- Druckluft-Effizienz mit Unterpunkten (wie Desktop) -->
-    <div class="nav-item relative">
-      <button onclick="toggleSubmenu('druckluft-effizienz')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
-        Druckluft-Effizienz <i id="druckluft-effizienz-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
-      </button>
-      <div id="druckluft-effizienz-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
-        <a href="basischeck.html" class="block py-3">BasisCheck</a>
-        <a href="leckageortung.html" class="block py-3">Leckageortung</a>
+      <div class="nav-item relative">
+        <button onclick="toggleSubmenu('druckluft-effizienz')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
+          Druckluft-Effizienz <i id="druckluft-effizienz-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
+        </button>
+        <div id="druckluft-effizienz-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
+          <a href="basischeck.html" class="block py-3">BasisCheck</a>
+          <a href="leckageortung.html" class="block py-3">Leckageortung</a>
+        </div>
       </div>
-    </div>
-
-    <!-- Partner (keine Unterpunkte) -->
-    <!-- <a href="partner.html" class="py-4 border-b border-[var(--border-card)]" style="color:var(--text-nav)">Partner</a> -->
-
-    <!-- Kontakt-Button -->
-    <div class="mt-6">
-      <a href="#anfrage" class="cta-button text-white w-full py-3.5 text-sm font-semibold flex items-center justify-center gap-2 shadow-md">
-        <i class="fas fa-paper-plane text-xs"></i> Zum Kontaktformular
-      </a>
-    </div>
-
-    <!-- Kontaktinfos (unverändert) -->
-    <div class="mt-8 border-t border-[var(--border-card)] pt-7 space-y-4 text-sm">
-      <p class="text-[10px] font-bold tracking-widest uppercase" style="color:var(--secondary)">Kontakt</p>
-      <div class="flex items-center gap-3">
-        <i class="fas fa-phone flex-shrink-0" style="color:var(--primary)"></i>
-        <a href="tel:+49123456789" style="color:var(--text-nav)">+49 152 28760622</a>
+      <div class="mt-6">
+        <a href="#anfrage" class="cta-button text-white w-full py-3.5 text-sm font-semibold flex items-center justify-center gap-2 shadow-md">
+          <i class="fas fa-paper-plane text-xs"></i> Zum Kontaktformular
+        </a>
       </div>
-      <div class="flex items-center gap-3">
-        <i class="fas fa-envelope flex-shrink-0" style="color:var(--primary)"></i>
-        <a href="mailto:info@proenergie-versorgungstechnik.de" style="color:var(--text-nav)" class="break-all">info@proenergie-versorgungstechnik.de</a>
-      </div>
-      <div class="flex items-start gap-3">
-        <i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:var(--primary)"></i>
-        <div style="color:var(--text-muted)">
-          <p>Dittmannsdorfer Str. 44 · 09322 Penig</p>
+      <div class="mt-8 border-t border-[var(--border-card)] pt-7 space-y-4 text-sm">
+        <p class="text-[10px] font-bold tracking-widest uppercase" style="color:var(--secondary)">Kontakt</p>
+        <div class="flex items-center gap-3">
+          <i class="fas fa-phone flex-shrink-0" style="color:var(--primary)"></i>
+          <a href="tel:+49123456789" style="color:var(--text-nav)">+49 152 28760622</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <i class="fas fa-envelope flex-shrink-0" style="color:var(--primary)"></i>
+          <a href="mailto:info@proenergie-versorgungstechnik.de" style="color:var(--text-nav)" class="break-all">info@proenergie-versorgungstechnik.de</a>
+        </div>
+        <div class="flex items-start gap-3">
+          <i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:var(--primary)"></i>
+          <div style="color:var(--text-muted)">
+            <p>Dittmannsdorfer Str. 44 · 09322 Penig</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </header>
 
 <!-- HERO -->
@@ -1338,6 +1331,7 @@ html.dark .desktop-contact-info a:hover {
     return true;
   }
 </script>
+
 <script>
 /* ─── THEME ─── */
 function getURLTheme() {
@@ -1423,92 +1417,37 @@ function toggleSubmenu(id) {
 }
 
 /* ─── SMOOTH SCROLL ─── */
-document.querySelectorAll('a[href="#anfrage"]').forEach(anchor => {
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
-
-    // Falls das Mobile-Menü geöffnet ist, schließe es zuerst
-    const mobileMenu = document.getElementById('mobile-menu');
-    const blurOverlay = document.getElementById('page-blur-overlay');
-    const hamburgerIcon = document.getElementById('hamburger-icon');
-
     if (mobileMenu.classList.contains('active')) {
-      mobileMenu.classList.remove('active');
-      blurOverlay.classList.remove('active');
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.classList.remove('menu-open');
-      hamburgerIcon.classList.remove('is-open');
+      closeMobileMenu();
     }
-
-    // Scrollen nach dem Schließen des Menüs
-    setTimeout(() => {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        const headerOffset = 72;
-        const elementPosition = target.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    }, 10); // Kurze Verzögerung, um sicherzustellen, dass das Menü geschlossen ist
+    const targetId = this.getAttribute('href');
+    const target = document.querySelector(targetId);
+    if (target) {
+      const headerOffset = 72;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   });
 });
 
-/* ─── EFFIZIENZ-ANIMATION ─── */
-function runEffizienzAnimation() {
-  const IST = 75272, OPT = 48352, MAX = IST;
-  const barIst = document.getElementById('bar-ist');
-  const barOpt = document.getElementById('bar-opt');
-  const valIst = document.getElementById('val-ist');
-  const valOpt = document.getElementById('val-opt');
-  const lossHint = document.getElementById('loss-hint');
-  const chartH = document.getElementById('chartArea').clientHeight || 240;
-  const usableH = chartH - 80;
-  function fmtEur(v) { return Math.round(v).toLocaleString('de-DE') + ' €'; }
-  function scramble(el, target, dur, delay) {
-    const steps = Math.floor(dur / 55); let step = 0;
-    el.classList.add('scrambling');
-    setTimeout(() => {
-      const iv = setInterval(() => {
-        if (step >= steps) { clearInterval(iv); el.classList.remove('scrambling'); el.textContent = fmtEur(target); return; }
-        const p = step / steps;
-        const rv = target * p + Math.random() * target * 0.3;
-        el.textContent = Math.round(rv).toLocaleString('de-DE').slice(0,-1) + Math.floor(Math.random()*10) + ' €';
-        step++;
-      }, 55);
-    }, delay);
-  }
-  setTimeout(() => { barIst.style.height = Math.round(IST/MAX*usableH)+'px'; scramble(valIst,IST,1600,60); }, 300);
-  setTimeout(() => { barOpt.style.height = Math.round(OPT/MAX*usableH)+'px'; scramble(valOpt,OPT,1600,60); }, 1300);
-  setTimeout(() => document.getElementById('badge-1').classList.add('visible'), 2100);
-  setTimeout(() => document.getElementById('badge-2').classList.add('visible'), 2500);
-  setTimeout(() => document.getElementById('badge-3').classList.add('visible'), 2900);
-  setTimeout(() => lossHint.classList.add('visible'), 2800);
-}
-
-function initEfficiencyTrigger() {
-  const wrapper = document.getElementById('efficiency-widget-wrapper');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { wrapper.classList.add('visible'); runEffizienzAnimation(); obs.unobserve(wrapper); } });
-  }, { threshold: 0.35 });
-  obs.observe(wrapper);
-}
-
+/* ─── SCROLL ANIMATIONS ─── */
 function animateOnScroll() {
   const blocks = document.querySelectorAll('.content-block');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
   }, { threshold: 0.08 });
-  blocks.forEach(b => { b.style.opacity='0'; b.style.transform='translateY(32px)'; obs.observe(b); });
+  blocks.forEach(b => { b.style.opacity='0'; b.style.transform='translateY(28px)'; obs.observe(b); });
 }
 
 window.onload = function() {
   animateOnScroll();
-  initEfficiencyTrigger();
   patchLinks(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
   updateToggleState();
 };
