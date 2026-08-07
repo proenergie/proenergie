@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Energieeinsparung & Effizienzoptimierung – ProEnergie</title>
+
+<!-- Preload für das Logo (LCP-Optimierung) -->
+<link rel="preload" as="image" href="bilder/logo_projekt-512.png" fetchpriority="high">
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -106,6 +110,10 @@ header {
   height: 100%;
   object-fit: contain;
   padding: 0;
+}
+.logo-img-box .logo-svg-fallback {
+  width: 30px;
+  height: 30px;
 }
 .logo-text-block {
   display: flex;
@@ -460,21 +468,24 @@ footer { background: var(--bg-footer); }
 <header class="w-full">
   <div class="px-6 flex justify-between items-center max-w-[1400px] mx-auto w-full h-full gap-8">
 
-    <!-- Logo + Schriftzug -->
+    <!-- Logo + Schriftzug mit responsiven Größen -->
     <a href="index.html" class="logo-wrapper group">
-      <!-- Quadratisches Logo-Bild -->
       <div class="logo-img-box">
-        <!-- Musterlink – später ersetzen durch echtes Logo -->
-        <img src="logo_projekt.png"
-             alt="ProEnergie Logo"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <!-- SVG-Fallback -->
+        <img 
+          src="bilder/logo_projekt-512.png"
+          srcset="bilder/logo_projekt-16.png 16w, bilder/logo_projekt-32.png 32w, bilder/logo_projekt-64.png 64w, bilder/logo_projekt-128.png 128w, bilder/logo_projekt-256.png 256w, bilder/logo_projekt-512.png 512w"
+          sizes="(max-width: 768px) 46px, 46px"
+          alt="ProEnergie Logo"
+          width="46" 
+          height="46"
+          fetchpriority="high"
+          decoding="async"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" stroke="#72CD14" stroke-width="1.5" fill="rgba(114,205,20,0.15)"/>
           <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <!-- Schriftzug -->
       <div class="logo-text-block">
         <span class="logo-brand"><span class="pro">Pro</span><span class="energie">Energie</span></span>
         <span class="logo-sub">— Versorgungstechnik —</span>
@@ -715,12 +726,19 @@ footer { background: var(--bg-footer); }
     <div class="grid md:grid-cols-3 gap-10 md:gap-12">
 
       <div>
-        <!-- Footer Logo -->
+        <!-- Footer Logo (kleinere Version) -->
         <a href="index.html" class="logo-wrapper group mb-4">
           <div class="logo-img-box" style="width: 36px; height: 36px;">
-            <img src="logo_projekt.png"
-                 alt="ProEnergie Logo"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img 
+              src="bilder/logo_projekt-128.png"
+              srcset="bilder/logo_projekt-16.png 16w, bilder/logo_projekt-32.png 32w, bilder/logo_projekt-64.png 64w, bilder/logo_projekt-128.png 128w, bilder/logo_projekt-256.png 256w, bilder/logo_projekt-512.png 512w"
+              sizes="36px"
+              alt="ProEnergie Logo"
+              width="36" 
+              height="36"
+              loading="lazy"
+              decoding="async"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" stroke="#72CD14" stroke-width="1.5" fill="rgba(114,205,20,0.15)"/>
               <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
