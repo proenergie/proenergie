@@ -4,464 +4,328 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Basischeck Druckluftanlagen – ProEnergie</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com">
+</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-:root {
-  /* Neues Farbschema: Dunkelblau #03 1F 5C + Grün #6B A2 42 */
-  --primary: #031F5C;
-  --primary-mid: #1249B4;
-  --secondary: #6BA242;
-  --secondary-light: #72CD14;
-  --accent-green: #72CD14;
-  --accent-blue: #1249B4;
-  --turquoise: #6BA242;
-  --dark: #1a1f2e;
-  --light: #e8edf5;
-  --bg-page: #ffffff;
-  --bg-page-alt: #f3f6fb;
-  --bg-header: #ffffff;
-  --bg-footer: #07163a;
-  --bg-card: #ffffff;
-  --bg-hint: #e4eaf5;
-  --text-base: #1e2535;
-  --text-muted: rgba(30,37,53,0.58);
-  --text-heading: #031F5C;
-  --text-nav: #1e2535;
-  --text-footer: #dde5f5;
-  --text-footer-muted: #7a96c4;
-  --border-card: #dde4f0;
-  --shadow-header: 0 1px 0 rgba(3,31,92,0.10);
-}
-html.dark {
-  --bg-page: #080e1f;
-  --bg-page-alt: #0d1528;
-  --bg-header: #0a1122;
-  --bg-footer: #040a18;
-  --bg-card: #0f1a30;
-  --bg-hint: #131f38;
-  --text-base: #c8d5ee;
-  --text-muted: rgba(180,200,235,0.60);
-  --text-heading: #6BA242;
-  --text-nav: #b0c5e8;
-  --text-footer: #c8d5ee;
-  --text-footer-muted: #5a78b0;
-  --border-card: #1a2845;
-  --shadow-header: 0 1px 0 rgba(0,0,0,0.35);
-}
+  :root {
+    --primary: #031F5C;
+    --primary-mid: #1249B4;
+    --secondary: #6BA242;
+    --secondary-light: #72CD14;
+    --accent-green: #72CD14;
+    --accent-blue: #1249B4;
+    --turquoise: #6BA242;
+    --dark: #1a1f2e;
+    --light: #e8edf5;
+    --bg-page: #ffffff;
+    --bg-page-alt: #f3f6fb;
+    --bg-header: #ffffff;
+    --bg-footer: #07163a;
+    --bg-card: #ffffff;
+    --bg-hint: #e4eaf5;
+    --text-base: #1e2535;
+    --text-muted: rgba(30, 37, 53, 0.58);
+    --text-heading: #031F5C;
+    --text-nav: #1e2535;
+    --text-footer: #dde5f5;
+    --text-footer-muted: #7a96c4;
+    --border-card: #dde4f0;
+    --shadow-header: 0 1px 0 rgba(3, 31, 92, 0.10);
+  }
+  html.dark {
+    --bg-page: #080e1f;
+    --bg-page-alt: #0d1528;
+    --bg-header: #0a1122;
+    --bg-footer: #040a18;
+    --bg-card: #0f1a30;
+    --bg-hint: #131f38;
+    --text-base: #c8d5ee;
+    --text-muted: rgba(180, 200, 235, 0.60);
+    --text-heading: #6BA242;
+    --text-nav: #b0c5e8;
+    --text-footer: #c8d5ee;
+    --text-footer-muted: #5a78b0;
+    --border-card: #1a2845;
+    --shadow-header: 0 1px 0 rgba(0, 0, 0, 0.35);
+  }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  html {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-base);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    padding-top: 72px;
+  }
+  body.menu-open {
+    overflow: hidden;
+  }
 
-*, *::before, *::after { box-sizing: border-box; }
-html { overflow-x: hidden; width: 100%; }
-body {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  background-color: var(--bg-page);
-  color: var(--text-base);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100vw;
-  padding-top: 72px;
-}
-body.menu-open { overflow: hidden; }
+  /* ───── HEADER ───── */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-header);
+    border-bottom: 1px solid var(--border-card);
+    box-shadow: var(--shadow-header);
+    transition: background-color 0.3s, border-color 0.3s;
+    width: 100%;
+    z-index: 99;
+    height: 72px;
+  }
+  #page-blur-overlay {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(4px);
+    z-index: 45;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  #page-blur-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
 
-/* ───── HEADER ───── */
-header {
-  position: fixed; top: 0; left: 0; right: 0;
-  background-color: var(--bg-header);
-  border-bottom: 1px solid var(--border-card);
-  box-shadow: var(--shadow-header);
-  transition: background-color 0.3s, border-color 0.3s;
-  width: 100%; z-index: 99; height: 72px;
-}
-#page-blur-overlay {
-  position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.18);
-  backdrop-filter: blur(4px);
-  z-index: 45; opacity: 0; pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-#page-blur-overlay.active { opacity: 1; pointer-events: all; }
+  /* ───── LOGO BEREICH ───── */
+  .logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+  .logo-img-box {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0;
+    overflow: visible;
+  }
+  .logo-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0;
+  }
+  .logo-img-box .logo-svg-fallback {
+    width: 30px;
+    height: 30px;
+  }
+  .logo-text-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .logo-brand {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .logo-brand .pro {
+    color: #1249B4;
+  }
+  .logo-brand .energie {
+    color: #72CD14;
+  }
+  .logo-sub {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    margin-top: 1px;
+    text-align: center;
+  }
 
-/* ───── LOGO BEREICH ───── */
-.logo-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-  text-decoration: none;
-}
-.logo-img-box {
-  width: 46px;
-  height: 46px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Hintergrund und Shadow entfernen */
-  background: transparent !important;
-  box-shadow: none !important;
-  border-radius: 0; /* Optional: Falls du keine abgerundeten Ecken möchtest */
-  overflow: visible; /* Falls das Logo über den Container hinausragen soll */
-}
-.logo-img-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 0; /* Falls du den inneren Abstand entfernen möchtest */
-}
-/* Fallback SVG wenn kein Bild vorhanden */
-.logo-img-box .logo-svg-fallback {
-  width: 30px;
-  height: 30px;
-}
-.logo-text-block {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.logo-brand {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-.logo-brand .pro { color: #1249B4; }
-.logo-brand .energie { color: #72CD14; }
-.logo-sub {
-  font-size: 0.68rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  margin-top: 1px;
-  text-align: center;
-}
+  /* NAV */
+  .nav-link {
+    position: relative;
+    color: var(--text-nav);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    padding-bottom: 2px;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background: var(--primary);
+    transition: width 0.25s ease;
+    border-radius: 2px;
+  }
+  .nav-link:hover {
+    color: var(--primary);
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  html.dark .nav-link:hover {
+    color: #72CD14;
+  }
+  html.dark .nav-link:hover::after {
+    background: #72CD14;
+  }
 
-/* NAV */
-.nav-link {
-  position: relative; color: var(--text-nav);
-  font-size: 0.9375rem; font-weight: 500;
-  transition: color 0.2s ease; white-space: nowrap; padding-bottom: 2px;
-}
-.nav-link::after {
-  content: ''; position: absolute; width: 0; height: 2px;
-  bottom: -2px; left: 0; background: var(--primary);
-  transition: width 0.25s ease; border-radius: 2px;
-}
-.nav-link:hover { color: var(--primary); }
-.nav-link:hover::after { width: 100%; }
-html.dark .nav-link:hover { color: #72CD14; }
-html.dark .nav-link:hover::after { background: #72CD14; }
+  .submenu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: -16px;
+    background-color: var(--bg-header);
+    border: 1px solid var(--border-card);
+    border-radius: 14px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+    min-width: 210px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 9999;
+    padding: 8px 0;
+    transform: translateY(6px);
+  }
+  .nav-item:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .submenu a {
+    display: block;
+    padding: 9px 20px;
+    color: var(--text-nav);
+    font-size: 0.9rem;
+    transition: all 0.15s ease;
+  }
+  .submenu a:hover {
+    background: rgba(3, 31, 92, 0.06);
+    color: var(--primary);
+    padding-left: 26px;
+  }
+  html.dark .submenu a:hover {
+    background: rgba(107, 162, 66, 0.08);
+    color: #72CD14;
+  }
 
-.submenu {
-  position: absolute; top: calc(100% + 12px); left: -16px;
-  background-color: var(--bg-header);
-  border: 1px solid var(--border-card);
-  border-radius: 14px;
-  box-shadow: 0 12px 36px rgba(0,0,0,0.12);
-  min-width: 210px; opacity: 0; visibility: hidden;
-  transition: all 0.2s ease; z-index: 9999; padding: 8px 0;
-  transform: translateY(6px);
-}
-.nav-item:hover .submenu { opacity: 1; visibility: visible; transform: translateY(0); }
-.submenu a {
-  display: block; padding: 9px 20px;
-  color: var(--text-nav); font-size: 0.9rem;
-  transition: all 0.15s ease;
-}
-.submenu a:hover { background: rgba(3,31,92,0.06); color: var(--primary); padding-left: 26px; }
-html.dark .submenu a:hover { background: rgba(107,162,66,0.08); color: #72CD14; }
+  /* MOBILE MENU */
+  #mobile-menu {
+    position: fixed;
+    top: 72px;
+    right: 0;
+    width: 82%;
+    max-width: 340px;
+    height: calc(100dvh - 72px);
+    background-color: var(--bg-header);
+    border-left: 1px solid var(--border-card);
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 55;
+    overflow-y: auto;
+    padding-bottom: 48px;
+  }
+  #mobile-menu.active {
+    transform: translateX(0);
+  }
+  #mobile-menu a {
+    color: var(--text-nav);
+  }
+  .mobile-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .mobile-submenu.active {
+    max-height: 500px;
+  }
 
-/* MOBILE MENU */
-#mobile-menu {
-  position: fixed; top: 72px; right: 0;
-  width: 82%; max-width: 340px;
-  height: calc(100dvh - 72px);
-  background-color: var(--bg-header);
-  border-left: 1px solid var(--border-card);
-  transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-  z-index: 55; overflow-y: auto; padding-bottom: 48px;
-}
-#mobile-menu.active { transform: translateX(0); }
-#mobile-menu a { color: var(--text-nav); }
-.mobile-submenu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-.mobile-submenu.active { max-height: 500px; }
-
-/* MOBILE MENU - Kontaktbutton */
-#mobile-menu .cta-button {
+  /* MOBILE MENU - Kontaktbutton */
+  #mobile-menu .cta-button {
     background: linear-gradient(90deg, var(--primary), var(--primary-mid)) !important;
     color: #ffffff !important;
     box-shadow: 0 4px 15px rgba(3, 31, 92, 0.35) !important;
     border: none !important;
-}
-
-html.dark #mobile-menu .cta-button {
+  }
+  html.dark #mobile-menu .cta-button {
     background: linear-gradient(90deg, #6BA242, #72CD14) !important;
     box-shadow: 0 4px 15px rgba(107, 162, 66, 0.45) !important;
-}
+  }
 
-/* HAMBURGER */
-#hamburger-icon {
-  width: 26px; height: 18px; position: relative;
-  display: flex; flex-direction: column;
-  justify-content: space-between; cursor: pointer;
-}
-#hamburger-icon span {
-  display: block; width: 100%; height: 2px;
-  background: var(--primary); border-radius: 2px;
-  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), opacity 0.3s ease;
-  position: absolute; left: 0;
-}
-#hamburger-icon span:nth-child(1) { top: 0; }
-#hamburger-icon span:nth-child(2) { top: 50%; transform: translateY(-50%); }
-#hamburger-icon span:nth-child(3) { bottom: 0; }
-#hamburger-icon.is-open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
-#hamburger-icon.is-open span:nth-child(2) { opacity: 0; transform: translateY(-50%) scaleX(0); }
-#hamburger-icon.is-open span:nth-child(3) { top: 50%; bottom: auto; transform: translateY(-50%) rotate(-45deg); }
+  /* HAMBURGER */
+  #hamburger-icon {
+    width: 26px;
+    height: 18px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  #hamburger-icon span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+    border-radius: 2px;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease;
+    position: absolute;
+    left: 0;
+  }
+  #hamburger-icon span:nth-child(1) {
+    top: 0;
+  }
+  #hamburger-icon span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  #hamburger-icon span:nth-child(3) {
+    bottom: 0;
+  }
+  #hamburger-icon.is-open span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  #hamburger-icon.is-open span:nth-child(2) {
+    opacity: 0;
+    transform: translateY(-50%) scaleX(0);
+  }
+  #hamburger-icon.is-open span:nth-child(3) {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%) rotate(-45deg);
+  }
 
-/* THEME TOGGLE */
-.theme-toggle-btn {
-  display: flex; align-items: center; justify-content: center;
-  position: relative; width: 44px; height: 26px; border-radius: 13px;
-  background: rgba(3,31,92,0.10);
-  border: 1.5px solid rgba(3,31,92,0.22);
-  cursor: pointer; transition: background 0.3s; flex-shrink: 0;
-}
-html.dark .theme-toggle-btn { background: rgba(107,162,66,0.12); border-color: rgba(107,162,66,0.28); }
-.toggle-knob {
-  position: absolute; left: 3px; width: 20px; height: 20px;
-  border-radius: 50%; background: var(--primary);
-  transition: transform 0.3s ease, background 0.3s;
-}
-html.dark .toggle-knob { transform: translateX(16px); background: #6BA242; }
-.toggle-sun {
-  position: absolute; right: 5px; font-size: 10px;
-  color: var(--primary); transition: opacity 0.3s; pointer-events: none;
-}
-html.dark .toggle-sun { opacity: 0; }
-.toggle-moon {
-  position: absolute; left: 7px; top: 7px; font-size: 10px;
-  color: #6BA242; opacity: 0; transition: opacity 0.3s;
-}
-html.dark .toggle-moon { opacity: 1; }
-
-/* ───── HERO ───── */
-.page-hero {
-  background: linear-gradient(135deg, #020e30 0%, #031F5C 45%, #0a3585 100%);
-  position: relative; overflow: hidden;
-  padding: 5rem 2rem 4rem;
-}
-.page-hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 55% 70% at 80% 50%, rgba(107,162,66,0.12) 0%, transparent 65%);
-  pointer-events: none;
-}
-.page-hero::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
-  background: linear-gradient(to bottom, transparent, var(--bg-page));
-  pointer-events: none;
-}
-html.dark .page-hero::after { background: linear-gradient(to bottom, transparent, #080e1f); }
-
-/* Breadcrumb */
-.breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-bottom: 1.5rem; }
-.breadcrumb a { color: rgba(255,255,255,0.55); transition: color 0.2s; }
-.breadcrumb a:hover { color: #72CD14; }
-.breadcrumb i { font-size: 0.6rem; }
-
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(107,162,66,0.18); border: 1px solid rgba(107,162,66,0.40);
-  color: #b8e88a; font-size: 0.75rem; font-weight: 600;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 7px 18px; border-radius: 100px; margin-bottom: 1.75rem;
-}
-
-.page-hero-h1 {
-  font-family: 'DM Serif Display', Georgia, serif;
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
-  line-height: 1.1; color: #fff; font-weight: 400;
-}
-.page-hero-h1 em { font-style: italic; color: #a0d860; }
-.page-hero-lead { font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.65; color: rgba(255,255,255,0.78); margin-top: 1.25rem; max-width: 640px; }
-
-/* ───── LAYOUT ───── */
-.section-outer { padding: 5rem 2rem; }
-@media (max-width: 768px) { .section-outer { padding: 3.5rem 1.25rem; } }
-.section-divider { height: 1px; background: var(--border-card); margin: 0 2rem; }
-.section-alt-bg { background: var(--bg-page-alt); transition: background 0.3s; }
-
-.section-label { display: inline-block; font-size: 1rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 1rem; }
-.section-h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.9rem, 4vw, 2.8rem); line-height: 1.12; font-weight: 400; color: var(--text-heading); margin-bottom: 1.25rem; }
-.section-intro { font-size: clamp(1rem, 2vw, 1.1rem); color: var(--text-muted); line-height: 1.7; }
-
-/* ───── CARDS ───── */
-.proenergie-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 20px; }
-
-.why-card {
-  background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 20px;
-  padding: 1.75rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-.why-card:hover { border-color: var(--secondary); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(107,162,66,0.10); }
-.why-card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.1rem; background: linear-gradient(135deg, rgba(3,31,92,0.08), rgba(107,162,66,0.10)); }
-html.dark .why-card-icon { background: linear-gradient(135deg, rgba(3,31,92,0.25), rgba(107,162,66,0.15)); }
-.why-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.55rem; color: var(--text-heading); }
-.why-card p { font-size: 0.875rem; line-height: 1.7; color: var(--text-muted); }
-
-/* ───── ADVANTAGE LIST ───── */
-.advantage-item {
-  display: flex; align-items: flex-start; gap: 1rem;
-  padding: 1rem 0; border-bottom: 1px solid var(--border-card);
-}
-.advantage-item:last-child { border-bottom: none; }
-.advantage-icon {
-  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, rgba(3,31,92,0.07), rgba(107,162,66,0.12));
-  color: var(--secondary); font-size: 0.9rem;
-}
-html.dark .advantage-icon { background: linear-gradient(135deg, rgba(3,31,92,0.3), rgba(107,162,66,0.18)); }
-.advantage-text h5 { font-size: 0.95rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.2rem; }
-.advantage-text p { font-size: 0.85rem; line-height: 1.65; color: var(--text-muted); }
-
-/* ───── PROCESS STEPS ───── */
-.process-step {
-  position: relative; display: flex; gap: 1.5rem; align-items: flex-start;
-  padding-bottom: 2.5rem;
-}
-.process-step:last-child { padding-bottom: 0; }
-.process-step::before {
-  content: ''; position: absolute; left: 23px; top: 48px; bottom: 0; width: 2px;
-  background: linear-gradient(to bottom, var(--secondary), transparent);
-}
-.process-step:last-child::before { display: none; }
-.step-num {
-  width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #031F5C, #1249B4);
-  color: #fff; font-weight: 700; font-size: 0.9rem;
-  box-shadow: 0 4px 12px rgba(3,31,92,0.25); z-index: 1;
-}
-html.dark .step-num { box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
-.step-content h4 { font-size: 1.05rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.4rem; }
-.step-content p { font-size: 0.875rem; line-height: 1.7; color: var(--text-muted); }
-
-/* ───── INDUSTRIES ───── */
-.industry-pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--bg-card); border: 1px solid var(--border-card);
-  border-radius: 100px; padding: 9px 18px;
-  font-size: 0.875rem; font-weight: 500; color: var(--text-base);
-  transition: all 0.2s ease; text-decoration: none;
-}
-.industry-pill:hover { border-color: var(--secondary); color: var(--secondary); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(107,162,66,0.12); }
-.industry-pill i { font-size: 0.8rem; color: var(--secondary); }
-
-/* ───── HIGHLIGHT BANNER ───── */
-.highlight-banner {
-  background: linear-gradient(110deg, #020f30 0%, #031F5C 40%, #0a3585 100%);
-  border-radius: 24px; overflow: hidden; position: relative; padding: 3rem 2.5rem;
-}
-html.dark .highlight-banner { background: linear-gradient(110deg, #010818 0%, #020e28 40%, #041840 100%); }
-.highlight-banner::after {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 55% 75% at 100% 50%, rgba(107,162,66,0.12) 0%, transparent 65%);
-  pointer-events: none;
-}
-
-/* ───── STAT CARDS ───── */
-.stat-card {
-  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 18px; padding: 1.5rem 1.75rem; text-align: center;
-  backdrop-filter: blur(8px);
-}
-.stat-num { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 2.8rem); color: #a0d860; font-weight: 400; line-height: 1; }
-.stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-top: 0.5rem; line-height: 1.4; }
-
-/* ───── QUOTE ───── */
-blockquote.big-quote {
-  font-family: 'DM Serif Display', Georgia, serif;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 400; font-style: italic;
-  line-height: 1.4; color: var(--text-heading);
-  position: relative; padding: 0 2rem;
-}
-blockquote.big-quote::before {
-  content: '"'; font-size: 5rem; line-height: 0.5;
-  color: var(--secondary); opacity: 0.4; display: block; margin-bottom: 1rem;
-  font-family: 'DM Serif Display', serif;
-}
-
-/* ───── FORM ───── */
-.form-input {
-  width: 100%; border: 1.5px solid var(--border-card); background: var(--bg-card);
-  color: var(--text-base); border-radius: 12px; padding: 14px 18px;
-  font-size: 0.95rem; font-family: inherit; outline: none;
-}
-.form-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(107,162,66,0.1); }
-.form-label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-base); }
-
-/* ───── CTA BUTTON ───── */
-.cta-button {
-  background: linear-gradient(90deg, #031F5C, #1249B4);
-  transition: all 0.3s ease; border-radius: 100px;
-}
-.cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(3,31,92,0.45); }
-
-.link-arrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--primary); transition: gap 0.2s, color 0.2s; }
-.link-arrow:hover { gap: 14px; color: var(--accent-blue); }
-html.dark .link-arrow { color: #6BA242; }
-html.dark .link-arrow:hover { color: #9ad85a; }
-
-/* ───── CTA BANNER ───── */
-.cta-banner {
-  background: linear-gradient(110deg, #020f30 0%, #031F5C 40%, #0a3585 100%);
-  border-radius: 24px; overflow: hidden; position: relative;
-  padding: 4rem 2rem; text-align: center;
-}
-html.dark .cta-banner { background: linear-gradient(110deg, #010818 0%, #020e28 40%, #041840 100%); }
-.cta-banner::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 75% at 100% 50%, rgba(107,162,66,0.12) 0%, transparent 65%); pointer-events: none; }
-.cta-banner h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); color: #fff; margin-bottom: 1rem; }
-.cta-banner p { color: rgba(255,255,255,0.85); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
-@media (max-width: 768px) { .cta-banner { padding: 2rem 1.25rem !important; border-radius: 16px; } }
-
-.cta-outline { background: rgba(255,255,255,0.10); border: 1.5px solid rgba(255,255,255,0.35); color: #fff; border-radius: 100px; transition: all 0.3s ease; }
-.cta-outline:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
-
-/* ───── ANIMATION ───── */
-.content-block { transition: opacity 0.6s cubic-bezier(0.34,1,0.64,1), transform 0.6s cubic-bezier(0.34,1,0.64,1); }
-
-/* ───── FOOTER ───── */
-footer { background: var(--bg-footer); }
-
-/* Desktop contact info */
-.desktop-contact-info {
-  display: none; flex-direction: column; gap: 3px;
-  font-size: 0.78rem; color: var(--text-muted);
-}
-@media (min-width: 1280px) { .desktop-contact-info { display: flex; } }
-.desktop-contact-info a, .desktop-contact-info p {
-  display: flex; align-items: center; gap: 5px;
-  color: var(--text-muted); transition: color 0.2s;
-  white-space: nowrap; line-height: 1.5;
-}
-.desktop-contact-info a:hover { color: var(--primary); }
-.desktop-contact-info i { font-size: 10px; color: var(--primary); flex-shrink: 0; }
-html.dark .desktop-contact-info i { color: #6BA242; }
-/* Darkmode: Telefonnummer-Hover-Kontrast verbessern */
-html.dark .desktop-contact-info a:hover {
-    color: #72CD14 !important;
-}
-
-/* THEME TOGGLE - Verbesserter Kontrast */
-.theme-toggle-btn {
+  /* THEME TOGGLE */
+  .theme-toggle-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -469,47 +333,538 @@ html.dark .desktop-contact-info a:hover {
     width: 44px;
     height: 26px;
     border-radius: 13px;
-    background: rgba(3,31,92,0.18);
-    border: 2px solid rgba(3,31,92,0.45);
+    background: rgba(3, 31, 92, 0.10);
+    border: 1.5px solid rgba(3, 31, 92, 0.22);
+    cursor: pointer;
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+  html.dark .theme-toggle-btn {
+    background: rgba(107, 162, 66, 0.12);
+    border-color: rgba(107, 162, 66, 0.28);
+  }
+  .toggle-knob {
+    position: absolute;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary);
+    transition: transform 0.3s ease, background 0.3s;
+  }
+  html.dark .toggle-knob {
+    transform: translateX(16px);
+    background: #6BA242;
+  }
+  .toggle-sun {
+    position: absolute;
+    right: 5px;
+    font-size: 10px;
+    color: var(--primary);
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  html.dark .toggle-sun {
+    opacity: 0;
+  }
+  .toggle-moon {
+    position: absolute;
+    left: 7px;
+    top: 7px;
+    font-size: 10px;
+    color: #6BA242;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  html.dark .toggle-moon {
+    opacity: 1;
+  }
+
+  /* ───── HERO ───── */
+  .page-hero {
+    background: linear-gradient(135deg, #020e30 0%, #031F5C 45%, #0a3585 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 2rem 4rem;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 55% 70% at 80% 50%, rgba(107, 162, 66, 0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--bg-page));
+    pointer-events: none;
+  }
+  html.dark .page-hero::after {
+    background: linear-gradient(to bottom, transparent, #080e1f);
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 1.5rem;
+  }
+  .breadcrumb a {
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.2s;
+  }
+  .breadcrumb a:hover {
+    color: #72CD14;
+  }
+  .breadcrumb i {
+    font-size: 0.6rem;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(107, 162, 66, 0.18);
+    border: 1px solid rgba(107, 162, 66, 0.40);
+    color: #b8e88a;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 7px 18px;
+    border-radius: 100px;
+    margin-bottom: 1.75rem;
+  }
+
+  .page-hero-h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    color: #fff;
+    font-weight: 400;
+  }
+  .page-hero-h1 em {
+    font-style: italic;
+    color: #a0d860;
+  }
+  .page-hero-lead {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.78);
+    margin-top: 1.25rem;
+    max-width: 640px;
+  }
+
+  /* ───── LAYOUT ───── */
+  .section-outer {
+    padding: 5rem 2rem;
+  }
+  @media (max-width: 768px) {
+    .section-outer {
+      padding: 3.5rem 1.25rem;
+    }
+  }
+  .section-divider {
+    height: 1px;
+    background: var(--border-card);
+    margin: 0 2rem;
+  }
+  .section-alt-bg {
+    background: var(--bg-page-alt);
+    transition: background 0.3s;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+  }
+  .section-h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    line-height: 1.12;
+    font-weight: 400;
+    color: var(--text-heading);
+    margin-bottom: 1.25rem;
+  }
+  .section-intro {
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ───── CARDS ───── */
+  .proenergie-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 20px;
+  }
+
+  .why-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 20px;
+    padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .why-card:hover {
+    border-color: var(--secondary);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(107, 162, 66, 0.10);
+  }
+  .why-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.1rem;
+    background: linear-gradient(135deg, rgba(3, 31, 92, 0.08), rgba(107, 162, 66, 0.10));
+  }
+  html.dark .why-card-icon {
+    background: linear-gradient(135deg, rgba(3, 31, 92, 0.25), rgba(107, 162, 66, 0.15));
+  }
+  .why-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.55rem;
+    color: var(--text-heading);
+  }
+  .why-card p {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  /* ───── PROCESS STEPS ───── */
+  .process-step {
+    position: relative;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding-bottom: 2.5rem;
+  }
+  .process-step:last-child {
+    padding-bottom: 0;
+  }
+  .process-step::before {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 48px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--secondary), transparent);
+  }
+  .process-step:last-child::before {
+    display: none;
+  }
+  .step-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #031F5C, #1249B4);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(3, 31, 92, 0.25);
+    z-index: 1;
+  }
+  html.dark .step-num {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+  .step-content h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    margin-bottom: 0.4rem;
+  }
+  .step-content p {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  /* ───── HIGHLIGHT BANNER ───── */
+  .highlight-banner {
+    background: linear-gradient(110deg, #020f30 0%, #031F5C 40%, #0a3585 100%);
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    padding: 3rem 2.5rem;
+  }
+  html.dark .highlight-banner {
+    background: linear-gradient(110deg, #010818 0%, #020e28 40%, #041840 100%);
+  }
+  .highlight-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 55% 75% at 100% 50%, rgba(107, 162, 66, 0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* ───── STAT CARDS ───── */
+  .stat-card {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    padding: 1.5rem 1.75rem;
+    text-align: center;
+    backdrop-filter: blur(8px);
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: #a0d860;
+    font-weight: 400;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin-top: 0.5rem;
+    line-height: 1.4;
+  }
+
+  /* ───── QUOTE ───── */
+  blockquote.big-quote {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--text-heading);
+    position: relative;
+    padding: 0 2rem;
+  }
+  blockquote.big-quote::before {
+    content: '"';
+    font-size: 5rem;
+    line-height: 0.5;
+    color: var(--secondary);
+    opacity: 0.4;
+    display: block;
+    margin-bottom: 1rem;
+    font-family: 'DM Serif Display', serif;
+  }
+
+  /* ───── FORM ───── */
+  .form-input {
+    width: 100%;
+    border: 1.5px solid var(--border-card);
+    background: var(--bg-card);
+    color: var(--text-base);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+  }
+  .form-input:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(107, 162, 66, 0.1);
+  }
+  .form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-base);
+  }
+
+  /* ───── CTA BUTTON ───── */
+  .cta-button {
+    background: linear-gradient(90deg, #031F5C, #1249B4);
+    transition: all 0.3s ease;
+    border-radius: 100px;
+  }
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(3, 31, 92, 0.45);
+  }
+
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--primary);
+    transition: gap 0.2s, color 0.2s;
+  }
+  .link-arrow:hover {
+    gap: 14px;
+    color: var(--accent-blue);
+  }
+  html.dark .link-arrow {
+    color: #6BA242;
+  }
+  html.dark .link-arrow:hover {
+    color: #9ad85a;
+  }
+
+  /* ───── CTA BANNER ───── */
+  .cta-banner {
+    background: linear-gradient(110deg, #020f30 0%, #031F5C 40%, #0a3585 100%);
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  html.dark .cta-banner {
+    background: linear-gradient(110deg, #010818 0%, #020e28 40%, #041840 100%);
+  }
+  .cta-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 55% 75% at 100% 50%, rgba(107, 162, 66, 0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta-banner h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .cta-banner p {
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (max-width: 768px) {
+    .cta-banner {
+      padding: 2rem 1.25rem !important;
+      border-radius: 16px;
+    }
+  }
+
+  .cta-outline {
+    background: rgba(255, 255, 255, 0.10);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    color: #fff;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+  }
+  .cta-outline:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+  }
+
+  /* ───── ANIMATION ───── */
+  .content-block {
+    transition: opacity 0.6s cubic-bezier(0.34, 1, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1, 0.64, 1);
+  }
+
+  /* ───── FOOTER ───── */
+  footer {
+    background: var(--bg-footer);
+  }
+
+  /* Desktop contact info */
+  .desktop-contact-info {
+    display: none;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  @media (min-width: 1280px) {
+    .desktop-contact-info {
+      display: flex;
+    }
+  }
+  .desktop-contact-info a,
+  .desktop-contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    white-space: nowrap;
+    line-height: 1.5;
+  }
+  .desktop-contact-info a:hover {
+    color: var(--primary);
+  }
+  .desktop-contact-info i {
+    font-size: 10px;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+  html.dark .desktop-contact-info i {
+    color: #6BA242;
+  }
+  html.dark .desktop-contact-info a:hover {
+    color: #72CD14 !important;
+  }
+
+  /* THEME TOGGLE - Verbesserter Kontrast */
+  .theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 44px;
+    height: 26px;
+    border-radius: 13px;
+    background: rgba(3, 31, 92, 0.18);
+    border: 2px solid rgba(3, 31, 92, 0.45);
     cursor: pointer;
     transition: all 0.3s ease;
     flex-shrink: 0;
-}
-
-html.dark .theme-toggle-btn {
-    background: rgba(107,162,66,0.22);
-    border: 2px solid rgba(107,162,66,0.55);
-}
-
-.toggle-knob {
+  }
+  html.dark .theme-toggle-btn {
+    background: rgba(107, 162, 66, 0.22);
+    border: 2px solid rgba(107, 162, 66, 0.55);
+  }
+  .toggle-knob {
     position: absolute;
     left: 4px;
     width: 18px;
     height: 18px;
     border-radius: 50%;
     background: #ffffff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-html.dark .toggle-knob {
+  }
+  html.dark .toggle-knob {
     transform: translateX(14px);
     background: #ffffff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
-
-.toggle-sun {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+  .toggle-sun {
     position: absolute;
     right: 4px;
     font-size: 11px;
     color: #6BA242;
     transition: opacity 0.3s;
     pointer-events: none;
-}
-
-html.dark .toggle-sun { opacity: 0; }
-
-.toggle-moon {
+  }
+  html.dark .toggle-sun {
+    opacity: 0;
+  }
+  .toggle-moon {
     position: absolute;
     left: 6px;
     top: 5px;
@@ -517,519 +872,494 @@ html.dark .toggle-sun { opacity: 0; }
     color: #6BA242;
     opacity: 0;
     transition: opacity 0.3s;
-}
+  }
+  html.dark .toggle-moon {
+    opacity: 1;
+  }
 
-html.dark .toggle-moon { opacity: 1; }
-
-/* Footer-spezifischer Toggle (noch höherer Kontrast) */
-#footer-theme-toggle.theme-toggle-btn {
-    background: rgba(255,255,255,0.15) !important;
-    border-color: rgba(255,255,255,0.55) !important;
-}
-
-html.dark #footer-theme-toggle.theme-toggle-btn {
-    background: rgba(107,162,66,0.35) !important;
+  /* Footer-spezifischer Toggle (noch höherer Kontrast) */
+  #footer-theme-toggle.theme-toggle-btn {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.55) !important;
+  }
+  html.dark #footer-theme-toggle.theme-toggle-btn {
+    background: rgba(107, 162, 66, 0.35) !important;
     border-color: #9ad85a !important;
-}
+  }
 
-/* ───── PROSE ───── */
-.prose-custom p { margin-bottom: 1.15rem; line-height: 1.75; color: var(--text-base); }
-.prose-custom ul { color: var(--text-base); }
+  /* ───── PROSE ───── */
+  .prose-custom p {
+    margin-bottom: 1.15rem;
+    line-height: 1.75;
+    color: var(--text-base);
+  }
+  .prose-custom ul {
+    color: var(--text-base);
+  }
 
-@media (max-width: 1279px) {
-  header { height: 72px !important; }
-  body { padding-top: 72px !important; }
-  #mobile-menu { top: 72px !important; height: calc(100dvh - 72px) !important; }
-  #page-blur-overlay { top: 72px !important; }
-}
+  @media (max-width: 1279px) {
+    header {
+      height: 72px !important;
+    }
+    body {
+      padding-top: 72px !important;
+    }
+    #mobile-menu {
+      top: 72px !important;
+      height: calc(100dvh - 72px) !important;
+    }
+    #page-blur-overlay {
+      top: 72px !important;
+    }
+  }
 </style>
 </head>
 <body>
-<div id="page-blur-overlay"></div>
+  <div id="page-blur-overlay"></div>
 
-<!-- HEADER -->
-<header class="w-full">
-  <div class="px-6 flex justify-between items-center max-w-[1400px] mx-auto w-full h-full gap-8">
+  <!-- HEADER -->
+  <header class="w-full">
+    <div class="px-6 flex justify-between items-center max-w-[1400px] mx-auto w-full h-full gap-8">
 
-    <!-- Logo + Schriftzug -->
-    <a href="index.html" class="logo-wrapper group">
-      <!-- Quadratisches Logo-Bild -->
-      <div class="logo-img-box">
-        <!-- Musterlink – später ersetzen durch echtes Logo -->
-        <img src="logo_projekt.png"
-             alt="ProEnergie Logo"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <!-- SVG-Fallback -->
-        <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" stroke="#72CD14" stroke-width="1.5" fill="rgba(114,205,20,0.15)"/>
-          <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <!-- Schriftzug -->
-      <div class="logo-text-block">
-        <span class="logo-brand"><span class="pro">Pro</span><span class="energie">Energie</span></span>
-        <span class="logo-sub">— Versorgungstechnik —</span>
-      </div>
-    </a>
-
-    <!-- Desktop Nav -->
-    <nav class="hidden xl:flex items-center gap-9 flex-shrink-0">
-      <div class="nav-item relative">
-        <a class="nav-link">Leistungen</a>
-        <div class="submenu">
-          <a href="energieberatung.html">Energieberatung</a>
-          <a href="fachplanung.html">Fachplanung</a>
-          <a href="projektleitung.html">Projektleitung/Objektüberwachung</a>
+      <!-- Logo + Schriftzug -->
+      <a href="index.html" class="logo-wrapper group">
+        <div class="logo-img-box">
+          <img src="logo_projekt.png" alt="ProEnergie Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" stroke="#72CD14" stroke-width="1.5" fill="rgba(114,205,20,0.15)" />
+            <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
         </div>
-      </div>
-      <div class="nav-item relative">
-        <a class="nav-link">Druckluft-Effizienz</a>
-        <div class="submenu">
-          <a href="basischeck.html">BasisCheck</a>
-          <a href="leckageortung.html">Leckageortung</a>
+        <div class="logo-text-block">
+          <span class="logo-brand"><span class="pro">Pro</span><span class="energie">Energie</span></span>
+          <span class="logo-sub">— Versorgungstechnik —</span>
         </div>
-      </div>
-    </nav>
-
-    <div class="flex items-center gap-3 flex-shrink-0">
-      <!-- CTA Desktop -->
-      <a href="index.html#anfrage" class="cta-button text-white px-5 py-2.5 text-sm font-semibold shadow-md hidden xl:inline-flex items-center gap-2">
-        <i class="fas fa-paper-plane text-xs"></i>
-        <span>Kontaktformular</span>
       </a>
-      <!-- Hamburger -->
-      <button id="mobile-menu-btn" class="xl:hidden p-2 flex items-center justify-center" aria-label="Menü öffnen">
-        <div id="hamburger-icon"><span></span><span></span><span></span></div>
-      </button>
-    </div>
-  </div>
 
-  <!-- MOBILE MENU -->
-  <div id="mobile-menu" class="xl:hidden">
-    <div class="flex flex-col px-5 pb-8 pt-5 text-base font-medium">
-      <!-- Leistungen mit Unterpunkten -->
-      <div class="nav-item relative">
-        <button onclick="toggleSubmenu('leistungen')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
-          Leistungen <i id="leistungen-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
-        </button>
-        <div id="leistungen-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
-          <a href="energieberatung.html" class="block py-3">Energieberatung</a>
-          <a href="fachplanung.html" class="block py-3">Fachplanung</a>
-          <a href="projektleitung.html" class="block py-3">Projektleitung/Objektüberwachung</a>
-        </div>
-      </div>
-
-      <!-- Druckluft-Effizienz mit Unterpunkten -->
-      <div class="nav-item relative">
-        <button onclick="toggleSubmenu('druckluft-effizienz')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
-          Druckluft-Effizienz <i id="druckluft-effizienz-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
-        </button>
-        <div id="druckluft-effizienz-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
-          <a href="basischeck.html" class="block py-3">BasisCheck</a>
-          <a href="leckageortung.html" class="block py-3">Leckageortung</a>
-        </div>
-      </div>
-
-      <!-- Kontakt-Button -->
-      <div class="mt-6">
-        <a href="index.html#anfrage" class="cta-button text-white w-full py-3.5 text-sm font-semibold flex items-center justify-center gap-2 shadow-md">
-          <i class="fas fa-paper-plane text-xs"></i> Zum Kontaktformular
-        </a>
-      </div>
-
-      <!-- Kontaktinfos -->
-      <div class="mt-8 border-t border-[var(--border-card)] pt-7 space-y-4 text-sm">
-        <p class="text-[10px] font-bold tracking-widest uppercase" style="color:var(--secondary)">Kontakt</p>
-        <div class="flex items-center gap-3">
-          <i class="fas fa-phone flex-shrink-0" style="color:var(--primary)"></i>
-          <a href="tel:+49123456789" style="color:var(--text-nav)">+49 152 28760622</a>
-        </div>
-        <div class="flex items-center gap-3">
-          <i class="fas fa-envelope flex-shrink-0" style="color:var(--primary)"></i>
-          <a href="mailto:info@proenergie-versorgungstechnik.de" style="color:var(--text-nav)" class="break-all">info@proenergie-versorgungstechnik.de</a>
-        </div>
-        <div class="flex items-start gap-3">
-          <i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:var(--primary)"></i>
-          <div style="color:var(--text-muted)">
-            <p>Dittmannsdorfer Str. 44 · 09322 Penig</p>
+      <!-- Desktop Nav -->
+      <nav class="hidden xl:flex items-center gap-9 flex-shrink-0">
+        <div class="nav-item relative">
+          <a class="nav-link">Leistungen</a>
+          <div class="submenu">
+            <a href="energieberatung.html">Energieberatung</a>
+            <a href="fachplanung.html">Fachplanung</a>
+            <a href="projektleitung.html">Projektleitung/Objektüberwachung</a>
           </div>
         </div>
+        <div class="nav-item relative">
+          <a class="nav-link">Druckluft-Effizienz</a>
+          <div class="submenu">
+            <a href="basischeck.html">BasisCheck</a>
+            <a href="leckageortung.html">Leckageortung</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <a href="index.html#anfrage" class="cta-button text-white px-5 py-2.5 text-sm font-semibold shadow-md hidden xl:inline-flex items-center gap-2">
+          <i class="fas fa-paper-plane text-xs"></i>
+          <span>Kontaktformular</span>
+        </a>
+        <button id="mobile-menu-btn" class="xl:hidden p-2 flex items-center justify-center" aria-label="Menü öffnen">
+          <div id="hamburger-icon"><span></span><span></span><span></span></div>
+        </button>
       </div>
     </div>
-  </div>
-</header>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <div class="max-w-[1400px] mx-auto relative z-10">
-    <div class="hero-badge">Druckluft-Effizienz</div>
-    <h1 class="page-hero-h1">Basischeck <em>Druckluftanlagen</em></h1>
-    <p class="page-hero-lead">Potenziale erkennen – Betriebskosten senken, Versorgungssicherheit verbessern</p>
-    <div class="mt-8 flex flex-col sm:flex-row gap-3">
-      <a href="index.html#anfrage" class="cta-button text-white px-7 py-3.5 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg">
-        <i class="fas fa-arrow-right text-sm"></i> Jetzt Kontakt aufnehmen
-      </a>
-    </div>
-  </div>
-</section>
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="xl:hidden">
+      <div class="flex flex-col px-5 pb-8 pt-5 text-base font-medium">
+        <div class="nav-item relative">
+          <button onclick="toggleSubmenu('leistungen')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
+            Leistungen <i id="leistungen-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
+          </button>
+          <div id="leistungen-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
+            <a href="energieberatung.html" class="block py-3">Energieberatung</a>
+            <a href="fachplanung.html" class="block py-3">Fachplanung</a>
+            <a href="projektleitung.html" class="block py-3">Projektleitung/Objektüberwachung</a>
+          </div>
+        </div>
 
-<!-- MAIN -->
-<main class="w-full max-w-[1400px] mx-auto">
+        <div class="nav-item relative">
+          <button onclick="toggleSubmenu('druckluft-effizienz')" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" style="color:var(--text-nav)">
+            Druckluft-Effizienz <i id="druckluft-effizienz-icon" class="fas fa-chevron-down text-xs transition-transform" style="color:var(--text-muted)"></i>
+          </button>
+          <div id="druckluft-effizienz-submenu" class="mobile-submenu pl-4 text-sm" style="color:var(--text-muted)">
+            <a href="basischeck.html" class="block py-3">BasisCheck</a>
+            <a href="leckageortung.html" class="block py-3">Leckageortung</a>
+          </div>
+        </div>
 
-  <!-- INTRO -->
-  <div class="section-outer content-block">
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-      <div class="lg:col-span-2">
-        <span class="section-label">Einführung</span>
-        <h2 class="section-h2">Warum ein Basischeck für Ihre Druckluftanlage?</h2>
-        <div class="prose-custom text-sm mt-4 space-y-4">
-          <p>Druckluft ist in vielen Betrieben unverzichtbar, verursacht aber oft hohe laufende Energiekosten. Häufig bleiben Schwachstellen im Alltag unbemerkt: zu hohe Druckniveaus, unnötige Leerlaufzeiten, auffällige Laufzeiten, Leckageverdacht, ungünstige Anlagenkonfigurationen oder fehlende Transparenz beim tatsächlichen Verbrauch.</p>
-          <p>Mit unserem Basischeck erhalten Sie eine erste fachliche Einschätzung Ihrer Druckluftanlage. Ziel ist es, Auffälligkeiten sichtbar zu machen, Einsparpotenziale grob zu bewerten und sinnvolle nächste Schritte aufzuzeigen – ohne sofort eine umfangreiche Messkampagne oder große Investition auszulösen.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- VORTEILE -->
-  <div class="section-outer content-block" style="background: var(--bg-page-alt);">
-    <div class="text-center max-w-xl mx-auto mb-12">
-      <span class="section-label">Ihre Vorteile</span>
-      <h2 class="section-h2">Was Sie von uns erwarten können</h2>
-      <p class="section-intro text-sm">Konkrete Leistungen, die Ihre Druckluftanlage wirtschaftlicher, transparenter und betriebssicherer machen.</p>
-    </div>
-    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-      <div class="why-card">
-        <h4>Erste fachliche Einschätzung</h4>
-        <p>Professionelle Bewertung Ihrer Druckluftanlage durch erfahrene Experten.</p>
-      </div>
-      <div class="why-card">
-        <h4>Bewertung von Druckniveau & Laufzeiten</h4>
-        <p>Analyse der Betriebsparameter für eine optimale Anlageneinstellung.</p>
-      </div>
-      <div class="why-card">
-        <h4>Betrachtung aller Komponenten</h4>
-        <p>Umfassende Prüfung von Kompressorstation, Aufbereitung, Speicher und Netz.</p>
-      </div>
-      <div class="why-card">
-        <h4>Überschlägige Einschätzung der Einsparungen</h4>
-        <p>Bewertung möglicher Betriebskosteneinsparungen durch Optimierungen.</p>
-      </div>
-      <div class="why-card">
-        <h4>Klare Empfehlungen für nächste Schritte</h4>
-        <p>Praktische Handlungsempfehlungen für eine wirtschaftliche Optimierung.</p>
-      </div>
-      <div class="why-card">
-        <h4>Praxisnahe & herstellerunabhängige Betrachtung</h4>
-        <p>Neutrale und praxisorientierte Analyse ohne Herstellerbindung.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- VORGEHEN -->
-<div class="section-outer content-block">
-  <div class="max-w-3xl mx-auto">
-    <span class="section-label">Unser Vorgehen</span>
-    <h2 class="section-h2">So führen wir den Basischeck durch</h2>
-    <p class="section-intro text-sm">Strukturierte Schritte für eine umfassende Analyse Ihrer Druckluftanlage.</p>
-    <div class="space-y-0 mt-8">
-      <div class="flex gap-4 pb-7 relative">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">1</div>
-        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-        <div class="pt-1.5">
-          <h4 class="font-bold text-[var(--text-heading)] mb-1">Aufnahme der Druckluftanlage vor Ort</h4>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Detaillierte Erfassung der Anlage und ihrer Komponenten direkt bei Ihnen im Betrieb.</p>
-        </div>
-      </div>
-      <div class="flex gap-4 pb-7 relative">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">2</div>
-        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-        <div class="pt-1.5">
-          <h4 class="font-bold text-[var(--text-heading)] mb-1">Sichtung der Kompressorstation und Hauptkomponenten</h4>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Überprüfung der zentralen Elemente Ihrer Druckluftversorgung auf Funktionalität und Effizienz.</p>
-        </div>
-      </div>
-      <div class="flex gap-4 pb-7 relative">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">3</div>
-        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-        <div class="pt-1.5">
-          <h4 class="font-bold text-[var(--text-heading)] mb-1">Bewertung von Druckniveau, Aufbereitung und Speicher</h4>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Analyse der wichtigsten Betriebsparameter für eine optimale Anlageneinstellung.</p>
-        </div>
-      </div>
-      <div class="flex gap-4 pb-7 relative">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">4</div>
-        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-        <div class="pt-1.5">
-          <h4 class="font-bold text-[var(--text-heading)] mb-1">Betrachtung des Leitungsnetzes und typischer Schwachstellen</h4>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Identifikation von potenziellen Energieverlusten im Leitungsnetz und an kritischen Punkten.</p>
-        </div>
-      </div>
-      <div class="flex gap-4 pb-7 relative">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">5</div>
-        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-        <div class="pt-1.5">
-          <h4 class="font-bold text-[var(--text-heading)] mb-1">Erfassung auffälliger Betriebszustände</h4>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Dokumentation von Unregelmäßigkeiten und ungewöhnlichen Betriebszuständen.</p>
-        </div>
-      </div>
-      <div class="flex gap-4 pb-7 relative">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">6</div>
-        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-        <div class="pt-1.5">
-          <h4 class="font-bold text-[var(--text-heading)] mb-1">Überschlägige Einschätzung möglicher Einsparpotenziale</h4>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Bewertung der identifizierten Potenziale für eine wirtschaftliche Optimierung.</p>
-        </div>
-      </div>
-      <div class="flex gap-4 pb-7 relative">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">7</div>
-        <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-        <div class="pt-1.5">
-          <h4 class="font-bold text-[var(--text-heading)] mb-1">Empfehlung der nächsten sinnvollen Schritte</h4>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Konkrete Handlungsempfehlungen für die weitere Vorgehensweise.</p>
-        </div>
-      </div>
-      <div class="flex gap-4 relative">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">8</div>
-        <div class="pt-1.5">
-          <h4 class="font-bold text-[var(--text-heading)] mb-1">Übergabe einer verständlichen Kurzauswertung</h4>
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed">Zusammenfassung der Ergebnisse in einer klaren und verständlichen Dokumentation.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section-divider"></div>
-
-  <!-- CTA BANNER -->
-  <div class="section-outer content-block">
-    <div class="cta-banner w-full mx-auto">
-      <div class="relative z-10">
-        <h2>Wo verliert Ihre Druckluftanlage Energie?</h2>
-        <p>Nehmen Sie gerne Kontakt mit uns auf, wenn Sie wissen möchten, ob Ihre Druckluftanlage wirtschaftlich arbeitet und wo mögliche Einsparpotenziale liegen.</p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="tel:+49123456789" class="cta-outline px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5">
-            <i class="fas fa-phone text-sm"></i> +49 152 28760622
-          </a>
-          <a href="index.html#anfrage" class="cta-button text-white px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg">
-            <i class="fas fa-paper-plane text-sm"></i> Kontaktformular
+        <div class="mt-6">
+          <a href="index.html#anfrage" class="cta-button text-white w-full py-3.5 text-sm font-semibold flex items-center justify-center gap-2 shadow-md">
+            <i class="fas fa-paper-plane text-xs"></i> Zum Kontaktformular
           </a>
         </div>
-      </div>
-    </div>
-  </div>
 
-</main>
-
-<!-- FOOTER -->
-<footer class="w-full mt-4">
-  <div class="max-w-[1400px] mx-auto px-6 pt-14 pb-10">
-    <div class="grid md:grid-cols-3 gap-10 md:gap-12">
-
-      <div>
-        <!-- Footer Logo (kleineres Bild, kleinerer Text, "Versorgungstechnik" in Weiß) -->
-        <a href="index.html" class="logo-wrapper group mb-4">
-          <div class="logo-img-box" style="width: 36px; height: 36px;">
-            <img src="logo_projekt.png"
-                 alt="ProEnergie Logo"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" stroke="#72CD14" stroke-width="1.5" fill="rgba(114,205,20,0.15)"/>
-              <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="logo-text-block">
-            <span class="logo-brand" style="font-size: 1.1rem;"><span class="pro">Pro</span><span class="energie">Energie</span></span>
-            <span class="logo-sub" style="color: #ffffff; font-size: 0.55rem;">— Versorgungstechnik —</span>
-          </div>
-        </a>
-        <p class="text-sm leading-relaxed" style="color:var(--text-footer-muted); max-width:260px;">Ihr Spezialist für zuverlässige, effiziente und zukunftssichere Druckluft- und Gasversorgungssysteme.</p>
-        <div class="mt-6 flex gap-4">
-          <a href="#" class="w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all" style="background:rgba(255,255,255,0.07); color:var(--text-footer-muted);" onmouseover="this.style.color='#72CD14'" onmouseout="this.style.color=''"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-
-      <div>
-        <h5 class="text-[10px] font-bold tracking-widest uppercase mb-5" style="color:#72CD14">Kontakt</h5>
-        <div class="space-y-4 text-sm" style="color:var(--text-footer-muted)">
+        <div class="mt-8 border-t border-[var(--border-card)] pt-7 space-y-4 text-sm">
+          <p class="text-[10px] font-bold tracking-widest uppercase" style="color:var(--secondary)">Kontakt</p>
           <div class="flex items-center gap-3">
-            <i class="fas fa-phone flex-shrink-0" style="color:#72CD14"></i>
-            <a href="tel:+49123456789" style="color:var(--text-footer-muted)" class="hover:text-[#72CD14] transition-colors">+49 152 28760622</a>
+            <i class="fas fa-phone flex-shrink-0" style="color:var(--primary)"></i>
+            <a href="tel:+49123456789" style="color:var(--text-nav)">+49 152 28760622</a>
+          </div>
+          <div class="flex items-center gap-3">
+            <i class="fas fa-envelope flex-shrink-0" style="color:var(--primary)"></i>
+            <a href="mailto:info@proenergie-versorgungstechnik.de" style="color:var(--text-nav)" class="break-all">info@proenergie-versorgungstechnik.de</a>
           </div>
           <div class="flex items-start gap-3">
-            <i class="fas fa-envelope mt-0.5 flex-shrink-0" style="color:#72CD14"></i>
-            <span style="color:var(--text-footer-muted)" class="break-all">info@proenergie-versorgungstechnik.de</span>
-          </div>
-          <div class="flex items-start gap-3">
-            <i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:#72CD14"></i>
-            <div>
+            <i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:var(--primary)"></i>
+            <div style="color:var(--text-muted)">
               <p>Dittmannsdorfer Str. 44 · 09322 Penig</p>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </header>
 
-    <div class="border-t mt-12 pt-7 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs" style="border-color:rgba(255,255,255,0.08); color:var(--text-footer-muted)">
-      <p>© 2026 ProEnergie – Alle Rechte vorbehalten</p>
-      <div class="flex gap-6">
-        <a href="impressum.html" class="hover:text-[#72CD14] transition-colors">Impressum</a>
-        <a href="datenschutz.html" class="hover:text-[#72CD14] transition-colors">Datenschutz</a>
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="max-w-[1400px] mx-auto relative z-10">
+      <div class="hero-badge">Druckluft-Effizienz</div>
+      <h1 class="page-hero-h1">Basischeck <em>Druckluftanlagen</em></h1>
+      <p class="page-hero-lead">Energieverluste erkennen, Betriebskosten senken und die Versorgungssicherheit gezielt verbessern.</p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3">
+        <a href="index.html#anfrage" class="cta-button text-white px-7 py-3.5 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg">
+          <i class="fas fa-arrow-right text-sm"></i> Jetzt Kontakt aufnehmen
+        </a>
       </div>
     </div>
-  </div>
-</footer>
+  </section>
 
-<script>
-/* ─── THEME ─── */
-function getURLTheme() {
-  return new URLSearchParams(window.location.search).get('erscheinungsbild');
-}
-function setURLTheme(t) {
-  const u = new URL(window.location.href);
-  u.searchParams.set('erscheinungsbild', t);
-  history.replaceState(null, '', u.toString());
-}
-function patchLinks(theme) {
-  document.querySelectorAll('a[href]').forEach(link => {
-    const h = link.getAttribute('href');
-    if (!h || h.startsWith('#') || h.startsWith('mailto:') || h.startsWith('tel:')) return;
-    try {
-      const u = new URL(h, window.location.href);
-      if (u.origin === window.location.origin) {
-        u.searchParams.set('erscheinungsbild', theme);
-        link.setAttribute('href', u.pathname + u.search + u.hash);
-      }
-    } catch(e) {}
-  });
-}
+  <!-- MAIN -->
+  <main class="w-full max-w-[1400px] mx-auto">
 
-// Standardmäßig Light Mode erzwingen
-document.documentElement.classList.remove('dark');
-localStorage.setItem('proenergie-theme', 'light');
-setURLTheme('light');
-patchLinks('light');
+    <!-- INTRO – NEUER TEXT -->
+    <div class="section-outer content-block">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-2">
+          <span class="section-label">Einführung</span>
+          <h2 class="section-h2">Warum ein Basischeck für Ihre Druckluftanlage?</h2>
+          <div class="prose-custom text-sm mt-4 space-y-4">
+            <p>Druckluft ist für viele Produktionsprozesse unverzichtbar, zählt jedoch zugleich zu den kostenintensivsten Energieformen im Betrieb. Bereits kleinere Schwachstellen können dauerhaft hohe Mehrkosten verursachen. Dazu gehören überhöhte Druckniveaus, unnötige Leerlaufzeiten, ungünstige Schaltzyklen, eine nicht bedarfsgerechte Anlagenkonfiguration, Druckverluste im Netz oder ein erhöhter Verbrauch durch Leckagen.</p>
+            <p>Im laufenden Betrieb bleiben diese Auffälligkeiten häufig unbemerkt, da belastbare Betriebsdaten fehlen oder einzelne Komponenten nicht im Zusammenhang betrachtet werden.</p>
+            <p>Mit unserem Basischeck erhalten Sie eine fachlich fundierte Ersteinschätzung Ihrer Druckluftanlage. Wir betrachten Erzeugung, Aufbereitung, Speicherung und Verteilung unter realen Betriebsbedingungen. Ziel ist es, Schwachstellen sichtbar zu machen, Einsparpotenziale zu bewerten und konkrete Handlungsempfehlungen abzuleiten.</p>
+            <p>So erhalten Sie eine klare Entscheidungsgrundlage für sinnvolle Optimierungen, ohne unmittelbar eine umfangreiche Messkampagne oder größere Investitionen auszulösen. Bei der weiteren Umsetzung unterstützen wir Sie auf Wunsch von der vertiefenden Analyse und Planung bis zur technischen Begleitung der Optimierungsmaßnahmen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-function updateToggleState() {
-  const dark = document.documentElement.classList.contains('dark');
-  const label = document.getElementById('footer-theme-label');
-  if (label) label.textContent = dark ? 'Dark' : 'Light';
-}
-function applyTheme(dark) {
-  if (dark) { document.documentElement.classList.add('dark'); localStorage.setItem('proenergie-theme', 'dark'); }
-  else { document.documentElement.classList.remove('dark'); localStorage.setItem('proenergie-theme', 'light'); }
-  setURLTheme(dark ? 'dark' : 'light');
-  patchLinks(dark ? 'dark' : 'light');
-  updateToggleState();
-}
+    <div class="section-divider"></div>
 
-['mobile-theme-toggle','footer-theme-toggle','desktop-theme-toggle'].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener('click', () => applyTheme(!document.documentElement.classList.contains('dark')));
-});
+    <!-- VORGEHEN – BEIBEHALTEN (8 Schritte) -->
+    <div class="section-outer content-block">
+      <div class="max-w-3xl mx-auto">
+        <span class="section-label">Unser Vorgehen</span>
+        <h2 class="section-h2">So führen wir den Basischeck durch</h2>
+        <p class="section-intro text-sm">Strukturierte Schritte für eine umfassende Analyse Ihrer Druckluftanlage.</p>
+        <div class="space-y-0 mt-8">
+          <div class="flex gap-4 pb-7 relative">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">1</div>
+            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+            <div class="pt-1.5">
+              <h4 class="font-bold text-[var(--text-heading)] mb-1">Aufnahme der Druckluftanlage vor Ort</h4>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Detaillierte Erfassung der Anlage und ihrer Komponenten direkt bei Ihnen im Betrieb.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 pb-7 relative">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">2</div>
+            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+            <div class="pt-1.5">
+              <h4 class="font-bold text-[var(--text-heading)] mb-1">Sichtung der Kompressorstation und Hauptkomponenten</h4>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Überprüfung der zentralen Elemente Ihrer Druckluftversorgung auf Funktionalität und Effizienz.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 pb-7 relative">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">3</div>
+            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+            <div class="pt-1.5">
+              <h4 class="font-bold text-[var(--text-heading)] mb-1">Bewertung von Druckniveau, Aufbereitung und Speicher</h4>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Analyse der wichtigsten Betriebsparameter für eine optimale Anlageneinstellung.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 pb-7 relative">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">4</div>
+            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+            <div class="pt-1.5">
+              <h4 class="font-bold text-[var(--text-heading)] mb-1">Betrachtung des Leitungsnetzes und typischer Schwachstellen</h4>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Identifikation von potenziellen Energieverlusten im Leitungsnetz und an kritischen Punkten.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 pb-7 relative">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">5</div>
+            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+            <div class="pt-1.5">
+              <h4 class="font-bold text-[var(--text-heading)] mb-1">Erfassung auffälliger Betriebszustände</h4>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Dokumentation von Unregelmäßigkeiten und ungewöhnlichen Betriebszuständen.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 pb-7 relative">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">6</div>
+            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+            <div class="pt-1.5">
+              <h4 class="font-bold text-[var(--text-heading)] mb-1">Überschlägige Einschätzung möglicher Einsparpotenziale</h4>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Bewertung der identifizierten Potenziale für eine wirtschaftliche Optimierung.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 pb-7 relative">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">7</div>
+            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
+            <div class="pt-1.5">
+              <h4 class="font-bold text-[var(--text-heading)] mb-1">Empfehlung der nächsten sinnvollen Schritte</h4>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Konkrete Handlungsempfehlungen für die weitere Vorgehensweise.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 relative">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">8</div>
+            <div class="pt-1.5">
+              <h4 class="font-bold text-[var(--text-heading)] mb-1">Übergabe einer verständlichen Kurzauswertung</h4>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Zusammenfassung der Ergebnisse in einer klaren und verständlichen Dokumentation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-updateToggleState();
+    <div class="section-divider"></div>
 
-/* ─── MOBILE MENU ─── */
-const mobileBtn = document.getElementById('mobile-menu-btn');
-const hamburgerIcon = document.getElementById('hamburger-icon');
-const mobileMenu = document.getElementById('mobile-menu');
-const blurOverlay = document.getElementById('page-blur-overlay');
-let scrollY = 0;
+    <!-- CTA BANNER -->
+    <div class="section-outer content-block">
+      <div class="cta-banner w-full mx-auto">
+        <div class="relative z-10">
+          <h2>Wo verliert Ihre Druckluftanlage Energie?</h2>
+          <p>Nehmen Sie gerne Kontakt mit uns auf, wenn Sie wissen möchten, ob Ihre Druckluftanlage wirtschaftlich arbeitet und wo mögliche Einsparpotenziale liegen.</p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="tel:+49123456789" class="cta-outline px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5">
+              <i class="fas fa-phone text-sm"></i> +49 152 28760622
+            </a>
+            <a href="index.html#anfrage" class="cta-button text-white px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg">
+              <i class="fas fa-paper-plane text-sm"></i> Kontaktformular
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-function openMobileMenu() {
-  scrollY = window.scrollY;
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollY}px`;
-  mobileMenu.classList.add('active');
-  blurOverlay.classList.add('active');
-  document.body.classList.add('menu-open');
-  hamburgerIcon.classList.add('is-open');
-}
-function closeMobileMenu() {
-  mobileMenu.classList.remove('active');
-  blurOverlay.classList.remove('active');
-  document.body.style.position = '';
-  document.body.style.top = '';
-  window.scrollTo(0, scrollY);
-  document.body.classList.remove('menu-open');
-  hamburgerIcon.classList.remove('is-open');
-}
-mobileBtn.addEventListener('click', () => mobileMenu.classList.contains('active') ? closeMobileMenu() : openMobileMenu());
-blurOverlay.addEventListener('click', closeMobileMenu);
+  </main>
 
-function toggleSubmenu(id) {
-  const sub = document.getElementById(`${id}-submenu`);
-  const icon = document.getElementById(`${id}-icon`);
-  if (sub) { sub.classList.toggle('active'); icon.classList.toggle('fa-chevron-down'); icon.classList.toggle('fa-chevron-up'); }
-}
+  <!-- FOOTER -->
+  <footer class="w-full mt-4">
+    <div class="max-w-[1400px] mx-auto px-6 pt-14 pb-10">
+      <div class="grid md:grid-cols-3 gap-10 md:gap-12">
 
-/* ─── SMOOTH SCROLL ─── */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
+        <div>
+          <a href="index.html" class="logo-wrapper group mb-4">
+            <div class="logo-img-box" style="width: 36px; height: 36px;">
+              <img src="logo_projekt.png" alt="ProEnergie Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" stroke="#72CD14" stroke-width="1.5" fill="rgba(114,205,20,0.15)" />
+                <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="logo-text-block">
+              <span class="logo-brand" style="font-size: 1.1rem;"><span class="pro">Pro</span><span class="energie">Energie</span></span>
+              <span class="logo-sub" style="color: #ffffff; font-size: 0.55rem;">— Versorgungstechnik —</span>
+            </div>
+          </a>
+          <p class="text-sm leading-relaxed" style="color:var(--text-footer-muted); max-width:260px;">Ihr Spezialist für zuverlässige, effiziente und zukunftssichere Druckluft- und Gasversorgungssysteme.</p>
+          <div class="mt-6 flex gap-4">
+            <a href="#" class="w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all" style="background:rgba(255,255,255,0.07); color:var(--text-footer-muted);" onmouseover="this.style.color='#72CD14'" onmouseout="this.style.color=''"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
 
-    // Falls das Mobile-Menü geöffnet ist, schließe es zuerst
+        <div>
+          <h5 class="text-[10px] font-bold tracking-widest uppercase mb-5" style="color:#72CD14">Kontakt</h5>
+          <div class="space-y-4 text-sm" style="color:var(--text-footer-muted)">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-phone flex-shrink-0" style="color:#72CD14"></i>
+              <a href="tel:+49123456789" style="color:var(--text-footer-muted)" class="hover:text-[#72CD14] transition-colors">+49 152 28760622</a>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-envelope mt-0.5 flex-shrink-0" style="color:#72CD14"></i>
+              <span style="color:var(--text-footer-muted)" class="break-all">info@proenergie-versorgungstechnik.de</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:#72CD14"></i>
+              <div>
+                <p>Dittmannsdorfer Str. 44 · 09322 Penig</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t mt-12 pt-7 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs" style="border-color:rgba(255,255,255,0.08); color:var(--text-footer-muted)">
+        <p>© 2026 ProEnergie – Alle Rechte vorbehalten</p>
+        <div class="flex gap-6">
+          <a href="impressum.html" class="hover:text-[#72CD14] transition-colors">Impressum</a>
+          <a href="datenschutz.html" class="hover:text-[#72CD14] transition-colors">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ─── THEME ─── */
+    function getURLTheme() {
+      return new URLSearchParams(window.location.search).get('erscheinungsbild');
+    }
+
+    function setURLTheme(t) {
+      const u = new URL(window.location.href);
+      u.searchParams.set('erscheinungsbild', t);
+      history.replaceState(null, '', u.toString());
+    }
+
+    function patchLinks(theme) {
+      document.querySelectorAll('a[href]').forEach(link => {
+        const h = link.getAttribute('href');
+        if (!h || h.startsWith('#') || h.startsWith('mailto:') || h.startsWith('tel:')) return;
+        try {
+          const u = new URL(h, window.location.href);
+          if (u.origin === window.location.origin) {
+            u.searchParams.set('erscheinungsbild', theme);
+            link.setAttribute('href', u.pathname + u.search + u.hash);
+          }
+        } catch (e) {}
+      });
+    }
+
+    // Standardmäßig Light Mode erzwingen
+    document.documentElement.classList.remove('dark');
+    localStorage.setItem('proenergie-theme', 'light');
+    setURLTheme('light');
+    patchLinks('light');
+
+    function updateToggleState() {
+      const dark = document.documentElement.classList.contains('dark');
+      const label = document.getElementById('footer-theme-label');
+      if (label) label.textContent = dark ? 'Dark' : 'Light';
+    }
+
+    function applyTheme(dark) {
+      if (dark) { document.documentElement.classList.add('dark');
+        localStorage.setItem('proenergie-theme', 'dark'); } else { document.documentElement.classList.remove('dark');
+        localStorage.setItem('proenergie-theme', 'light'); }
+      setURLTheme(dark ? 'dark' : 'light');
+      patchLinks(dark ? 'dark' : 'light');
+      updateToggleState();
+    }
+
+    ['mobile-theme-toggle', 'footer-theme-toggle', 'desktop-theme-toggle'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', () => applyTheme(!document.documentElement.classList.contains('dark')));
+    });
+
+    updateToggleState();
+
+    /* ─── MOBILE MENU ─── */
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
     const mobileMenu = document.getElementById('mobile-menu');
     const blurOverlay = document.getElementById('page-blur-overlay');
-    const hamburgerIcon = document.getElementById('hamburger-icon');
+    let scrollY = 0;
 
-    if (mobileMenu && mobileMenu.classList.contains('active')) {
+    function openMobileMenu() {
+      scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      mobileMenu.classList.add('active');
+      blurOverlay.classList.add('active');
+      document.body.classList.add('menu-open');
+      hamburgerIcon.classList.add('is-open');
+    }
+
+    function closeMobileMenu() {
       mobileMenu.classList.remove('active');
       blurOverlay.classList.remove('active');
       document.body.style.position = '';
       document.body.style.top = '';
+      window.scrollTo(0, scrollY);
       document.body.classList.remove('menu-open');
       hamburgerIcon.classList.remove('is-open');
     }
+    mobileBtn.addEventListener('click', () => mobileMenu.classList.contains('active') ? closeMobileMenu() : openMobileMenu());
+    blurOverlay.addEventListener('click', closeMobileMenu);
 
-    // Scrollen nach dem Schließen des Menüs
-    setTimeout(() => {
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+    function toggleSubmenu(id) {
+      const sub = document.getElementById(`${id}-submenu`);
+      const icon = document.getElementById(`${id}-icon`);
+      if (sub) { sub.classList.toggle('active');
+        icon.classList.toggle('fa-chevron-down');
+        icon.classList.toggle('fa-chevron-up'); }
+    }
 
-      // Falls der Link zu einer anderen Seite verweist (z.B. index.html#anfrage)
-      if (this.href.includes('#')) {
-        const targetUrl = new URL(this.href);
-        if (targetUrl.origin === window.location.origin && targetUrl.pathname === window.location.pathname) {
-          const target = document.querySelector(targetUrl.hash);
-          if (target) {
-            const headerOffset = 72;
-            const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    /* ─── SMOOTH SCROLL ─── */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
 
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }
-        } else {
-          // Falls der Link zu einer anderen Seite verweist, einfach folgen
-          window.location.href = this.href;
+        // Falls das Mobile-Menü geöffnet ist, schließe es zuerst
+        const mobileMenu = document.getElementById('mobile-menu');
+        const blurOverlay = document.getElementById('page-blur-overlay');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+
+        if (mobileMenu && mobileMenu.classList.contains('active')) {
+          mobileMenu.classList.remove('active');
+          blurOverlay.classList.remove('active');
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.classList.remove('menu-open');
+          hamburgerIcon.classList.remove('is-open');
         }
-      }
-    }, 10);
-  });
-});
 
-/* ─── SCROLL ANIMATIONS ─── */
-function animateOnScroll() {
-  const blocks = document.querySelectorAll('.content-block');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
-  }, { threshold: 0.06 });
-  blocks.forEach(b => { b.style.opacity='0'; b.style.transform='translateY(28px)'; obs.observe(b); });
-}
+        // Scrollen nach dem Schließen des Menüs
+        setTimeout(() => {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
 
-window.onload = function() {
-  animateOnScroll();
-  patchLinks(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-  updateToggleState();
-};
-</script>
+          // Falls der Link zu einer anderen Seite verweist (z.B. index.html#anfrage)
+          if (this.href.includes('#')) {
+            const targetUrl = new URL(this.href);
+            if (targetUrl.origin === window.location.origin && targetUrl.pathname === window.location.pathname) {
+              const target = document.querySelector(targetUrl.hash);
+              if (target) {
+                const headerOffset = 72;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth'
+                });
+              }
+            } else {
+              // Falls der Link zu einer anderen Seite verweist, einfach folgen
+              window.location.href = this.href;
+            }
+          }
+        }, 10);
+      });
+    });
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    function animateOnScroll() {
+      const blocks = document.querySelectorAll('.content-block');
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1';
+            e.target.style.transform = 'translateY(0)'; } });
+      }, { threshold: 0.06 });
+      blocks.forEach(b => { b.style.opacity = '0';
+        b.style.transform = 'translateY(28px)';
+        obs.observe(b); });
+    }
+
+    window.onload = function() {
+      animateOnScroll();
+      patchLinks(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      updateToggleState();
+    };
+  </script>
 </body>
 </html>

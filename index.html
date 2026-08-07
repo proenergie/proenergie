@@ -4,13 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>ProEnergie – Ihr Partner für Druckluft & Gasversorgungssysteme</title>
+
+<!-- PERFORMANCE: Preload wichtigste Bilder (LCP) -->
+<link rel="preload" as="image" href="bilder/hintergrund_start-1920.webp" imagesrcset="bilder/hintergrund_start-800.webp 800w, bilder/hintergrund_start-1280.webp 1280w, bilder/hintergrund_start-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="bilder/logo_projekt-512.png" fetchpriority="high">
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* Neues Farbschema: Dunkelblau #03 1F 5C + Grün #6B A2 42 */
   --primary: #031F5C;
   --primary-mid: #1249B4;
   --secondary: #6BA242;
@@ -51,7 +55,6 @@ html.dark {
   --border-card: #1a2845;
   --shadow-header: 0 1px 0 rgba(0,0,0,0.35);
 }
-
 *, *::before, *::after { box-sizing: border-box; }
 html { overflow-x: hidden; width: 100%; }
 body {
@@ -65,8 +68,6 @@ body {
   padding-top: 72px;
 }
 body.menu-open { overflow: hidden; }
-
-/* ───── HEADER ───── */
 header {
   position: fixed; top: 0; left: 0; right: 0;
   background-color: var(--bg-header);
@@ -83,8 +84,6 @@ header {
   transition: opacity 0.3s ease;
 }
 #page-blur-overlay.active { opacity: 1; pointer-events: all; }
-
-/* ───── LOGO BEREICH ───── */
 .logo-wrapper {
   display: flex;
   align-items: center;
@@ -99,19 +98,17 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Hintergrund und Shadow entfernen */
   background: transparent !important;
   box-shadow: none !important;
-  border-radius: 0; /* Optional: Falls du keine abgerundeten Ecken möchtest */
-  overflow: visible; /* Falls das Logo über den Container hinausragen soll */
+  border-radius: 0;
+  overflow: visible;
 }
 .logo-img-box img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 0; /* Falls du den inneren Abstand entfernen möchtest */
+  padding: 0;
 }
-/* Fallback SVG wenn kein Bild vorhanden */
 .logo-img-box .logo-svg-fallback {
   width: 30px;
   height: 30px;
@@ -140,8 +137,6 @@ header {
   margin-top: 1px;
   text-align: center;
 }
-
-/* NAV */
 .nav-link {
   position: relative; color: var(--text-nav);
   font-size: 0.9375rem; font-weight: 500;
@@ -156,7 +151,6 @@ header {
 .nav-link:hover::after { width: 100%; }
 html.dark .nav-link:hover { color: #72CD14; }
 html.dark .nav-link:hover::after { background: #72CD14; }
-
 .submenu {
   position: absolute; top: calc(100% + 12px); left: -16px;
   background-color: var(--bg-header);
@@ -175,8 +169,6 @@ html.dark .nav-link:hover::after { background: #72CD14; }
 }
 .submenu a:hover { background: rgba(3,31,92,0.06); color: var(--primary); padding-left: 26px; }
 html.dark .submenu a:hover { background: rgba(107,162,66,0.08); color: #72CD14; }
-
-/* MOBILE MENU */
 #mobile-menu {
   position: fixed; top: 72px; right: 0;
   width: 82%; max-width: 340px;
@@ -191,21 +183,16 @@ html.dark .submenu a:hover { background: rgba(107,162,66,0.08); color: #72CD14; 
 #mobile-menu a { color: var(--text-nav); }
 .mobile-submenu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
 .mobile-submenu.active { max-height: 500px; }
-
-/* MOBILE MENU - Kontaktbutton */
 #mobile-menu .cta-button {
     background: linear-gradient(90deg, var(--primary), var(--primary-mid)) !important;
     color: #ffffff !important;
     box-shadow: 0 4px 15px rgba(3, 31, 92, 0.35) !important;
     border: none !important;
 }
-
 html.dark #mobile-menu .cta-button {
     background: linear-gradient(90deg, #6BA242, #72CD14) !important;
     box-shadow: 0 4px 15px rgba(107, 162, 66, 0.45) !important;
 }
-
-/* HAMBURGER */
 #hamburger-icon {
   width: 26px; height: 18px; position: relative;
   display: flex; flex-direction: column;
@@ -223,8 +210,6 @@ html.dark #mobile-menu .cta-button {
 #hamburger-icon.is-open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
 #hamburger-icon.is-open span:nth-child(2) { opacity: 0; transform: translateY(-50%) scaleX(0); }
 #hamburger-icon.is-open span:nth-child(3) { top: 50%; bottom: auto; transform: translateY(-50%) rotate(-45deg); }
-
-/* THEME TOGGLE */
 .theme-toggle-btn {
   display: flex; align-items: center; justify-content: center;
   position: relative; width: 44px; height: 26px; border-radius: 13px;
@@ -252,7 +237,20 @@ html.dark .toggle-moon { opacity: 1; }
 
 /* ───── HERO ───── */
 .hero-bg {
-  background: url('hintergrund_start.jpg') center center/cover no-repeat;
+  background-image: url('bilder/hintergrund_start-1920.webp');
+  background-image: -webkit-image-set(
+    url('bilder/hintergrund_start-800.webp') 1x,
+    url('bilder/hintergrund_start-1280.webp') 1.5x,
+    url('bilder/hintergrund_start-1920.webp') 2x
+  );
+  background-image: image-set(
+    url('bilder/hintergrund_start-800.webp') 800w,
+    url('bilder/hintergrund_start-1280.webp') 1280w,
+    url('bilder/hintergrund_start-1920.webp') 1920w
+  );
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
   background-position: 40% center;
@@ -276,7 +274,6 @@ html.dark .hero-bg::before {
   background: radial-gradient(ellipse 60% 60% at 70% 50%, rgba(107, 162, 66, 0.12) 0%, transparent 70%);
   pointer-events: none;
 }
-
 @media (max-width: 768px) and (orientation: portrait) {
   .hero-bg {
     background-position: 70% center;
@@ -286,7 +283,6 @@ html.dark .hero-bg::before {
     -webkit-backdrop-filter: blur(4px);
   }
 }
-
 #hero-content {
   display: flex;
   flex-direction: column;
@@ -327,7 +323,6 @@ html.dark .hero-bg::before {
   margin: 1.25rem auto 0;
   max-width: 800px;
 }
-
 .cta-button {
   background: linear-gradient(90deg, #031F5C, #1249B4);
   transition: all 0.3s ease; border-radius: 100px;
@@ -340,11 +335,7 @@ html.dark .hero-bg::before {
   transition: all 0.3s ease;
 }
 .cta-outline:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
-
-/* ───── EFFIZIENZ-WIDGET ───── */
-#efficiency-widget-wrapper {
-  display: none;
-}
+#efficiency-widget-wrapper { display: none; }
 #efficiency-widget {
   padding: 2.25rem 1.75rem 1.75rem;
   background: rgba(255,255,255,0.08);
@@ -425,31 +416,21 @@ html.dark .hero-bg::before {
   font-size: 0.78rem; color: rgba(255,255,255,0.50);
   text-align: center; margin: 1rem auto 0; line-height: 1.4;
 }
-
-/* ───── SECTIONS ───── */
 main { width: 100%; max-width: 1400px; margin: 0 auto; }
-
-.section-outer {
-  padding: 6rem 2rem;
-}
+.section-outer { padding: 6rem 2rem; }
 .section-outer + .section-outer { padding-top: 0; }
-
 @media (max-width: 768px) {
   .section-outer { padding: 4rem 1.25rem; }
 }
-
 .section-divider {
   height: 1px; background: var(--border-card);
   margin: 0 2rem;
 }
 html.dark .section-divider { background: var(--border-card); }
-
 .section-alt-bg {
   background: var(--bg-page-alt);
   transition: background 0.3s;
 }
-
-/* Cards */
 .proenergie-card {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
@@ -460,35 +441,29 @@ html.dark .section-divider { background: var(--border-card); }
   transform: none;
   box-shadow: none;
 }
-
 .img-col {
-  height: 400px; /* Standardhöhe für Desktop (PC) */
-  overflow: hidden; /* Verhindert sichtbaren Beschnitt */
+  height: 400px;
+  overflow: hidden;
+  border-radius: 20px;
 }
-
-/* Tablets (z. B. iPad, mittlere Bildschirme) */
+.img-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 @media (max-width: 1024px) {
-  .img-col {
-    height: 300px;
-  }
+  .img-col { height: 300px; }
 }
-
-/* Kleine Tablets und große Smartphones */
 @media (max-width: 768px) {
-  .img-col {
-    height: 250px;
-  }
+  .img-col { height: 250px; }
 }
-
-/* Smartphones (Hochformat) */
 @media (max-width: 480px) {
   .img-col {
     height: 220px;
-    width: 400px;
+    width: 100%;
   }
 }
-
-/* Image-text layouts */
 .image-text-wrapper {
   display: flex; flex-direction: column; gap: 3.5rem;
   align-items: center;
@@ -499,7 +474,6 @@ html.dark .section-divider { background: var(--border-card); }
   .image-text-wrapper > .img-col { flex: 0 0 42%; }
   .image-text-wrapper > .text-col { flex: 1; }
 }
-
 .img-placeholder {
   width: 100%; border-radius: 20px; overflow: hidden;
   aspect-ratio: 4/3;
@@ -510,13 +484,10 @@ html.dark .section-divider { background: var(--border-card); }
 html.dark .img-placeholder {
   background: linear-gradient(135deg, #020d28 0%, #082040 100%);
 }
-
-/* Typography */
 .text-heading { color: var(--text-heading); }
 .text-muted-custom { color: var(--text-muted); }
 .prose-custom p { margin-bottom: 1.15rem; line-height: 1.75; color: var(--text-base); }
 .prose-custom ul { color: var(--text-base); }
-
 .section-label {
   display: inline-block;
   font-size: 1rem; font-weight: 700; letter-spacing: 0.12em;
@@ -529,25 +500,20 @@ html.dark .img-placeholder {
   line-height: 1.12; font-weight: 400; color: var(--text-heading);
   margin-bottom: 1.25rem;
 }
-
 .section-h2-leistungen {
   white-space: nowrap;
   margin-bottom: 6rem;
 }
-
 @media (max-width: 768px) {
   .section-h2-leistungen {
     white-space: normal;
     margin-bottom: 3rem;
   }
 }
-
 .section-intro {
   font-size: clamp(1rem, 2vw, 1.1rem);
   color: var(--text-muted); line-height: 1.7;
 }
-
-/* CTA Banner */
 .cta-banner {
   background: linear-gradient(110deg, #020f30 0%, #031F5C 40%, #0a3585 100%);
   border-radius: 24px; overflow: hidden; position: relative;
@@ -561,8 +527,6 @@ html.dark .cta-banner {
   background: radial-gradient(ellipse 55% 75% at 100% 50%, rgba(107,162,66,0.12) 0%, transparent 65%);
   pointer-events: none;
 }
-
-/* Blockquote */
 .quote-section { padding: 5rem 2rem; }
 blockquote.big-quote {
   font-family: 'DM Serif Display', Georgia, serif;
@@ -578,8 +542,6 @@ blockquote.big-quote::before {
   display: block; margin-bottom: 1rem;
   font-family: 'DM Serif Display', serif;
 }
-
-/* Form */
 .form-input {
   width: 100%;
   border: 1.5px solid var(--border-card);
@@ -602,8 +564,6 @@ blockquote.big-quote::before {
   margin-bottom: 6px;
   color: var(--text-base);
 }
-
-/* Inline link arrow */
 .link-arrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-weight: 600; color: var(--primary);
@@ -612,13 +572,9 @@ blockquote.big-quote::before {
 .link-arrow:hover { gap: 14px; color: var(--accent-blue); }
 html.dark .link-arrow { color: #6BA242; }
 html.dark .link-arrow:hover { color: #9ad85a; }
-
-/* Content-block animations */
 .content-block {
   transition: opacity 0.6s cubic-bezier(0.34,1,0.64,1), transform 0.6s cubic-bezier(0.34,1,0.64,1);
 }
-
-/* ───── "Warum ProEnergie" Karten ───── */
 .why-card {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
@@ -647,8 +603,6 @@ html.dark .why-card-icon {
 .why-card p {
   font-size: 0.875rem; line-height: 1.7; color: var(--text-muted);
 }
-
-/* THEME TOGGLE - Verbesserter Kontrast */
 .theme-toggle-btn {
     display: flex;
     align-items: center;
@@ -663,12 +617,10 @@ html.dark .why-card-icon {
     transition: all 0.3s ease;
     flex-shrink: 0;
 }
-
 html.dark .theme-toggle-btn {
     background: rgba(107,162,66,0.22);
     border: 2px solid rgba(107,162,66,0.55);
 }
-
 .toggle-knob {
     position: absolute;
     left: 4px;
@@ -679,13 +631,11 @@ html.dark .theme-toggle-btn {
     box-shadow: 0 2px 6px rgba(0,0,0,0.25);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 html.dark .toggle-knob {
     transform: translateX(14px);
     background: #ffffff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
-
 .toggle-sun {
     position: absolute;
     right: 4px;
@@ -694,9 +644,7 @@ html.dark .toggle-knob {
     transition: opacity 0.3s;
     pointer-events: none;
 }
-
 html.dark .toggle-sun { opacity: 0; }
-
 .toggle-moon {
     position: absolute;
     left: 6px;
@@ -706,21 +654,15 @@ html.dark .toggle-sun { opacity: 0; }
     opacity: 0;
     transition: opacity 0.3s;
 }
-
 html.dark .toggle-moon { opacity: 1; }
-
-/* Footer-spezifischer Toggle (noch höherer Kontrast) */
 #footer-theme-toggle.theme-toggle-btn {
     background: rgba(255,255,255,0.15) !important;
     border-color: rgba(255,255,255,0.55) !important;
 }
-
 html.dark #footer-theme-toggle.theme-toggle-btn {
     background: rgba(107,162,66,0.35) !important;
     border-color: #9ad85a !important;
 }
-
-/* Desktop contact info */
 .desktop-contact-info {
   display: none; flex-direction: column; gap: 3px;
   font-size: 0.78rem; color: var(--text-muted);
@@ -734,19 +676,15 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
 .desktop-contact-info a:hover { color: var(--primary); }
 .desktop-contact-info i { font-size: 10px; color: var(--primary); flex-shrink: 0; }
 html.dark .desktop-contact-info i { color: #6BA242; }
-/* Darkmode: Telefonnummer-Hover-Kontrast verbessern */
 html.dark .desktop-contact-info a:hover {
     color: #72CD14 !important;
 }
-
 @media (max-width: 1279px) {
   header { height: 72px !important; }
   body { padding-top: 72px !important; }
   #mobile-menu { top: 72px !important; height: calc(100dvh - 72px) !important; }
   #page-blur-overlay { top: 72px !important; }
 }
-
-/* ───── CEO + KONTAKTFORMULAR LAYOUT ───── */
 .anfrage-layout {
   display: flex;
   flex-direction: column;
@@ -845,21 +783,24 @@ html.dark .desktop-contact-info a:hover {
 <header class="w-full">
   <div class="px-6 flex justify-between items-center max-w-[1400px] mx-auto w-full h-full gap-8">
 
-    <!-- Logo + Schriftzug -->
+    <!-- Logo + Schriftzug mit responsiven Größen -->
     <a href="index.html" class="logo-wrapper group">
-      <!-- Quadratisches Logo-Bild -->
       <div class="logo-img-box">
-        <!-- Musterlink – später ersetzen durch echtes Logo -->
-        <img src="logo_projekt.png"
-             alt="ProEnergie Logo"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <!-- SVG-Fallback -->
+        <img 
+          src="bilder/logo_projekt-512.png"
+          srcset="bilder/logo_projekt-16.png 16w, bilder/logo_projekt-32.png 32w, bilder/logo_projekt-64.png 64w, bilder/logo_projekt-128.png 128w, bilder/logo_projekt-256.png 256w, bilder/logo_projekt-512.png 512w"
+          sizes="(max-width: 768px) 46px, 46px"
+          alt="ProEnergie Logo"
+          width="46" 
+          height="46"
+          fetchpriority="high"
+          decoding="async"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" stroke="#72CD14" stroke-width="1.5" fill="rgba(114,205,20,0.15)"/>
           <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <!-- Schriftzug -->
       <div class="logo-text-block">
         <span class="logo-brand"><span class="pro">Pro</span><span class="energie">Energie</span></span>
         <span class="logo-sub">— Versorgungstechnik —</span>
@@ -883,18 +824,13 @@ html.dark .desktop-contact-info a:hover {
           <a href="leckageortung.html">Leckageortung</a>
         </div>
       </div>
-      <!-- <div class="nav-item relative">
-        <a href="partner.html" class="nav-link">Partner</a>
-      </div> -->
     </nav>
 
     <div class="flex items-center gap-3 flex-shrink-0">
-      <!-- CTA Desktop -->
       <a href="#anfrage" class="cta-button text-white px-5 py-2.5 text-sm font-semibold shadow-md hidden xl:inline-flex items-center gap-2">
         <i class="fas fa-paper-plane text-xs"></i>
         <span>Kontaktformular</span>
       </a>
-      <!-- Hamburger -->
       <button id="mobile-menu-btn" class="xl:hidden p-2 flex items-center justify-center" aria-label="Menü öffnen">
         <div id="hamburger-icon"><span></span><span></span><span></span></div>
       </button>
@@ -952,7 +888,6 @@ html.dark .desktop-contact-info a:hover {
 <!-- HERO -->
 <section class="hero-bg">
   <div id="hero-content">
-    <!-- Text Block -->
     <div id="hero-text-block">
       <div class="hero-badge">Ihr Partner für effiziente</div>
       <h1 class="hero-h1">Druckluft &amp;<br> Gasversorgungs&shy;systeme</h1>
@@ -969,65 +904,58 @@ html.dark .desktop-contact-info a:hover {
 <!-- MAIN -->
 <main class="w-full max-w-[1400px] mx-auto">
 
-  <!-- Warum ProEnergie -->
   <div class="section-outer content-block">
     <div class="text-center max-w-xl mx-auto mb-12">
       <span class="section-label">Warum ProEnergie?</span>
       <h2 class="section-h2">Was Unternehmen wirklich davon haben</h2>
     </div>
     <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-
       <div class="why-card">
-        <!-- <div class="why-card-icon">1</div> -->
         <h4>Herstellerunabhängige Beratung</h4>
         <p>Wir unterstützen Sie von der ersten Analyse über die Fachplanung bis zur erfolgreichen Umsetzung Ihres Projekts. Neutral, praxisnah und ohne Herstellerbindung bewerten wir Ihre Druckluft- und Gasversorgung technisch und wirtschaftlich und entwickeln bedarfsgerechte Lösungen statt pauschaler Standardkonzepte.</p>
       </div>
-
       <div class="why-card">
-        <!--<div class="why-card-icon">2</div>-->
         <h4>Starkes Partnernetzwerk</h4>
         <p>Für Umbauten und Zusatzgewerke greifen wir auf erfahrene regionale Partner zurück, holen transparente Vergleichsangebote ein und begleiten die Umsetzung so, dass sie für Sie wirtschaftlich sinnvoll, effizient und praxisgerecht erfolgt.</p>
       </div>
-
       <div class="why-card">
-        <!-- <div class="why-card-icon">3</div> -->
         <h4>Technische Erfahrung aus der Praxis</h4>
         <p>Durch Erfahrung in Projektleitung, Planung und Umsetzung technischer Anlagen kennen wir nicht nur die Theorie, sondern auch die typischen Probleme im Betrieb. Dadurch entstehen Lösungen, die auf der Baustelle und im laufenden Betrieb funktionieren.</p>
       </div>
-
       <div class="why-card md:col-span-2 xl:col-span-1">
-        <!-- <div class="why-card-icon">5</div> -->
         <h4>Zukunftssichere Lösungen</h4>
         <p>Unsere Konzepte sind auf Nachhaltigkeit, Erweiterbarkeit und langfristige Betriebssicherheit ausgelegt, damit Ihre Investition auch morgen noch wirtschaftlich trägt.</p>
       </div>
-
       <div class="why-card">
-        <!-- <div class="why-card-icon">4</div> -->
         <h4>Sichere Versorgung im Fokus</h4>
         <p>Ob Druckluft, Gasversorgungsanlagen oder technische Gebäudeausrüstung: Ziel ist eine stabile, zuverlässige und betriebssichere Versorgung. Schwachstellen werden früh erkannt, Risiken reduziert und die Grundlage für einen sicheren Anlagenbetrieb geschaffen.</p>
       </div>
-
       <div class="why-card">
-        <!-- <div class="why-card-icon">6</div> -->
         <h4>Fördermittel &amp; Transparenz</h4>
         <p>Wir zeigen Investition, Einsparpotenziale und mögliche Förderwege offen auf – verständlich dokumentiert, sauber kalkuliert und ohne versteckte Verkaufsagenda.</p>
       </div>
-
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-<!-- Energieberatung -->
+<!-- Energieberatung - OPTIMIERT mit WebP -->
 <div class="section-outer content-block">
   <div class="text-center max-w-xl mx-auto mb-12">
     <span class="section-label">Leistungen</span>
     <h2 class="section-h2 section-h2-leistungen">Unsere Leistungen im Überblick</h2>
   </div>
-
   <div class="image-text-wrapper">
     <div class="img-col">
-      <img src="icon_energieberatung.jpg" alt="Energieberatung Icon" class="w-full h-auto object-contain">
+      <img 
+      src="bilder/icon_energieberatung-800.webp"
+      srcset="bilder/icon_energieberatung-400.webp 400w, bilder/icon_energieberatung-800.webp 800w, bilder/icon_energieberatung-1280.webp 1280w"
+      sizes="(max-width: 900px) 100vw, 42vw"
+      alt="Energieberatung Icon"
+      width="800" 
+      height="600"
+      loading="lazy"
+      decoding="async">
     </div>
     <div class="text-col">
       <span class="section-label" style="font-size: 1.25rem;">Energieberatung</span>
@@ -1050,11 +978,18 @@ html.dark .desktop-contact-info a:hover {
 
 <div class="section-divider"></div>
 
-<!-- Fachplanung -->
+<!-- Fachplanung - OPTIMIERT mit WebP -->
 <div class="section-outer content-block">
   <div class="image-text-wrapper">
     <div class="img-col">
-      <img src="icon_fachplanung.jpg" alt="Fachplanung Icon" class="w-full h-full object-cover">
+      <img 
+        src="bilder/icon_fachplanung-800.webp"
+        srcset="bilder/icon_fachplanung-400.webp 400w, bilder/icon_fachplanung-800.webp 800w"
+        sizes="(max-width: 900px) 100vw, 42vw"
+        alt="Fachplanung für Druckluft- und Gasversorgungssysteme"
+        width="800" height="600"
+        loading="lazy"
+        decoding="async">
     </div>
     <div class="text-col">
       <span class="section-label" style="font-size: 1.25rem;">Fachplanung</span>
@@ -1077,11 +1012,18 @@ html.dark .desktop-contact-info a:hover {
 
 <div class="section-divider"></div>
 
-<!-- Projektleitung/Objektüberwachung -->
+<!-- Projektleitung - OPTIMIERT mit WebP -->
 <div class="section-outer content-block">
   <div class="image-text-wrapper">
     <div class="img-col">
-      <img src="icon_projektleitung.jpg" alt="Projektleitung Icon" class="w-full h-full object-cover">
+      <img 
+        src="bilder/icon_projektleitung-800.webp"
+        srcset="bilder/icon_projektleitung-400.webp 400w, bilder/icon_projektleitung-800.webp 800w, bilder/icon_projektleitung-1280.webp 1280w"
+        sizes="(max-width: 900px) 100vw, 42vw"
+        alt="Projektleitung und Objektüberwachung für technische Anlagen"
+        width="800" height="600"
+        loading="lazy"
+        decoding="async">
     </div>
     <div class="text-col">
       <span class="section-label" style="font-size: 1.25rem;">Projektleitung</span>
@@ -1104,11 +1046,18 @@ html.dark .desktop-contact-info a:hover {
 
 <div class="section-divider"></div>
 
-<!-- Leckagemanagement -->
+<!-- Leckagemanagement - OPTIMIERT mit WebP -->
 <div class="section-outer content-block">
   <div class="image-text-wrapper">
     <div class="img-col">
-      <img src="icon_leckagemanagement.jpg" alt="Leckagemanagement Icon" class="w-full h-full object-cover">
+      <img 
+        src="bilder/icon_leckagemanagement_alt-800.webp"
+        srcset="bilder/icon_leckagemanagement_alt-400.webp 400w, bilder/icon_leckagemanagement_alt-800.webp 800w, bilder/icon_leckagemanagement_alt-1280.webp 1280w"
+        sizes="(max-width: 900px) 100vw, 42vw"
+        alt="Leckagemanagement mit Ultraschall - Druckluftverluste finden"
+        width="800" height="600"
+        loading="lazy"
+        decoding="async">
     </div>
     <div class="text-col">
       <span class="section-label" style="font-size: 1.25rem;">Leckagemanagement</span>
@@ -1131,15 +1080,20 @@ html.dark .desktop-contact-info a:hover {
 
 <div class="section-divider"></div>
 
-<!-- CEO + Kontaktformular: Desktop nebeneinander, Mobile CEO oben -->
+<!-- CEO + Kontaktformular - OPTIMIERT mit WebP -->
 <div class="section-outer content-block">
   <div class="anfrage-layout">
-
-    <!-- CEO / Persönlicher Ansprechpartner -->
     <div class="ceo-col">
       <div class="ceo-photo-frame">
         <div class="ceo-photo-circle">
-          <img src="icon_ceo.jpg" alt="Unternehmen ProEnergie">
+          <img 
+            src="bilder/icon_ceo-400.webp"
+            srcset="bilder/icon_ceo-400.webp 400w, bilder/icon_ceo-800.webp 800w"
+            sizes="200px"
+            alt="David Michel - Ihr Ansprechpartner bei ProEnergie"
+            width="200" height="200"
+            loading="lazy"
+            decoding="async">
         </div>
         <span class="ceo-badge-tag">David Michel</span>
       </div>
@@ -1150,11 +1104,8 @@ html.dark .desktop-contact-info a:hover {
         <p>Sie erhalten eine ehrliche Beratung, kurze Entscheidungswege und Lösungen, die technisch funktionieren, wirtschaftlich sinnvoll sind und zu Ihrem Betrieb passen.</p>
         <p>Sprechen Sie mich gerne direkt über das Kontaktformular an.</p>
       </div>
-      <!-- <div class="ceo-name">Name</div>
-      <div class="ceo-role">ProEnergie</div> -->
     </div>
 
-    <!-- Kontaktformular -->
     <div id="anfrage" class="form-col">
       <div class="text-center mb-10">
         <span class="section-label">Anfrage</span>
@@ -1167,14 +1118,10 @@ html.dark .desktop-contact-info a:hover {
           <input type="hidden" name="access_key" value="ea80d424-3259-4cab-85de-9751fe99c0bd">
           <input type="hidden" name="redirect" value="danke.html">
           <input type="hidden" id="formTimestamp" name="formTimestamp" value="">
-
-          <!-- Honeypot-Feld -->
           <div style="display: none;">
             <label for="honeypot">Bitte leer lassen</label>
             <input type="text" id="honeypot" name="honeypot" tabindex="-1" autocomplete="off">
           </div>
-
-          <!-- Deine bestehenden Felder -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label class="form-label">Firmenname *</label>
@@ -1228,7 +1175,6 @@ html.dark .desktop-contact-info a:hover {
         </form>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -1236,14 +1182,19 @@ html.dark .desktop-contact-info a:hover {
 <footer style="background: var(--bg-footer); width: 100vw; margin-left: calc(50% - 50vw);">
   <div class="max-w-[1400px] mx-auto px-6 pt-14 pb-10">
     <div class="grid md:grid-cols-3 gap-10 md:gap-12">
-
       <div>
-        <!-- Footer Logo (kleineres Bild, kleinerer Text, "Versorgungstechnik" in Weiß) -->
         <a href="index.html" class="logo-wrapper group mb-4">
           <div class="logo-img-box" style="width: 36px; height: 36px;">
-            <img src="logo_projekt.png"
-                 alt="ProEnergie Logo"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img 
+              src="bilder/logo_projekt-128.png"
+              srcset="bilder/logo_projekt-16.png 16w, bilder/logo_projekt-32.png 32w, bilder/logo_projekt-64.png 64w, bilder/logo_projekt-128.png 128w, bilder/logo_projekt-256.png 256w, bilder/logo_projekt-512.png 512w"
+              sizes="36px"
+              alt="ProEnergie Logo"
+              width="36" 
+              height="36"
+              loading="lazy"
+              decoding="async"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" stroke="#72CD14" stroke-width="1.5" fill="rgba(114,205,20,0.15)"/>
               <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1259,7 +1210,6 @@ html.dark .desktop-contact-info a:hover {
           <a href="#" class="w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all" style="background:rgba(255,255,255,0.07); color:var(--text-footer-muted);" onmouseover="this.style.color='#72CD14'" onmouseout="this.style.color=''"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
-
       <div>
         <h5 class="text-[10px] font-bold tracking-widest uppercase mb-5" style="color:#72CD14">Kontakt</h5>
         <div class="space-y-4 text-sm" style="color:var(--text-footer-muted)">
@@ -1280,7 +1230,6 @@ html.dark .desktop-contact-info a:hover {
         </div>
       </div>
     </div>
-
     <div class="border-t mt-12 pt-7 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs" style="border-color:rgba(255,255,255,0.08); color:var(--text-footer-muted)">
       <p>© 2026 ProEnergie – Alle Rechte vorbehalten</p>
       <div class="flex gap-6">
@@ -1291,22 +1240,14 @@ html.dark .desktop-contact-info a:hover {
   </div>
 </footer>
 
-<!-- JavaScript für Kontaktformular -->
 <script>
-  // Globale Variable für Interaktionscheck
   let hasInteracted = false;
-
-  // Setze Timestamp beim Laden
   document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('formTimestamp').value = new Date().getTime();
   });
-
-  // Tracke Nutzerinteraktionen
   document.addEventListener('mousemove', () => { hasInteracted = true; });
   document.addEventListener('keydown', () => { hasInteracted = true; });
   document.addEventListener('click', () => { hasInteracted = true; });
-
-  // Validierungsfunktionen
   function validateHoneypot() {
     const honeypot = document.getElementById('honeypot').value;
     if (honeypot) {
@@ -1315,18 +1256,16 @@ html.dark .desktop-contact-info a:hover {
     }
     return true;
   }
-
   function validateTime() {
     const startTime = parseInt(document.getElementById('formTimestamp').value);
     const endTime = new Date().getTime();
-    const timeDiff = (endTime - startTime) / 1000; // Sekunden
+    const timeDiff = (endTime - startTime) / 1000;
     if (timeDiff < 2) {
       alert('Bitte nehmen Sie sich etwas Zeit für das Formular.');
       return false;
     }
     return true;
   }
-
   function validateInteraction() {
     if (!hasInteracted) {
       alert('Bitte interagieren Sie mit der Seite.');
@@ -1337,7 +1276,6 @@ html.dark .desktop-contact-info a:hover {
 </script>
 
 <script>
-/* ─── THEME ─── */
 function getURLTheme() {
   return new URLSearchParams(window.location.search).get('erscheinungsbild');
 }
@@ -1359,13 +1297,10 @@ function patchLinks(theme) {
     } catch(e) {}
   });
 }
-
-// Standardmäßig Light Mode erzwingen
 document.documentElement.classList.remove('dark');
 localStorage.setItem('proenergie-theme', 'light');
 setURLTheme('light');
 patchLinks('light');
-
 function updateToggleState() {
   const dark = document.documentElement.classList.contains('dark');
   const label = document.getElementById('footer-theme-label');
@@ -1378,21 +1313,16 @@ function applyTheme(dark) {
   patchLinks(dark ? 'dark' : 'light');
   updateToggleState();
 }
-
 ['mobile-theme-toggle','footer-theme-toggle','desktop-theme-toggle'].forEach(id => {
   const el = document.getElementById(id);
   if (el) el.addEventListener('click', () => applyTheme(!document.documentElement.classList.contains('dark')));
 });
-
 updateToggleState();
-
-/* ─── MOBILE MENU ─── */
 const mobileBtn = document.getElementById('mobile-menu-btn');
 const hamburgerIcon = document.getElementById('hamburger-icon');
 const mobileMenu = document.getElementById('mobile-menu');
 const blurOverlay = document.getElementById('page-blur-overlay');
 let scrollY = 0;
-
 function openMobileMenu() {
   scrollY = window.scrollY;
   document.body.style.position = 'fixed';
@@ -1413,14 +1343,11 @@ function closeMobileMenu() {
 }
 mobileBtn.addEventListener('click', () => mobileMenu.classList.contains('active') ? closeMobileMenu() : openMobileMenu());
 blurOverlay.addEventListener('click', closeMobileMenu);
-
 function toggleSubmenu(id) {
   const sub = document.getElementById(`${id}-submenu`);
   const icon = document.getElementById(`${id}-icon`);
   if (sub) { sub.classList.toggle('active'); icon.classList.toggle('fa-chevron-down'); icon.classList.toggle('fa-chevron-up'); }
 }
-
-/* ─── SMOOTH SCROLL ─── */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
@@ -1440,8 +1367,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
-
-/* ─── SCROLL ANIMATIONS ─── */
 function animateOnScroll() {
   const blocks = document.querySelectorAll('.content-block');
   const obs = new IntersectionObserver(entries => {
@@ -1449,7 +1374,6 @@ function animateOnScroll() {
   }, { threshold: 0.08 });
   blocks.forEach(b => { b.style.opacity='0'; b.style.transform='translateY(28px)'; obs.observe(b); });
 }
-
 window.onload = function() {
   animateOnScroll();
   patchLinks(document.documentElement.classList.contains('dark') ? 'dark' : 'light');

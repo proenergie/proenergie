@@ -535,6 +535,19 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
 .prose-custom p { margin-bottom: 1.15rem; line-height: 1.75; color: var(--text-base); }
 .prose-custom ul { color: var(--text-base); }
 
+/* Bild-Container für responsive Bilder */
+.responsive-image {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+.responsive-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+}
+
 @media (max-width: 1279px) {
   header { height: 72px !important; }
   body { padding-top: 72px !important; }
@@ -662,29 +675,43 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
 <!-- MAIN -->
 <main class="w-full max-w-[1400px] mx-auto">
 
-  <!-- INTRO -->
+  <!-- INTRO – NEUER TEXT -->
   <div class="section-outer content-block">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
       <div class="lg:col-span-2">
         <span class="section-label">Unser Ansatz</span>
         <h2 class="section-h2">Maßgeschneiderte Planung für Ihre Druckluft- und Gasversorgung</h2>
         <div class="prose-custom text-sm mt-4 space-y-4">
-          <p>Jedes Unternehmen hat individuelle Anforderungen an seine Druckluft- und Gasversorgung. Standardlösungen reichen hier oft nicht aus – sie sind entweder überdimensioniert und damit unwirtschaftlich oder unterdimensioniert und führen zu Engpässen im Betrieb.</p>
-          <p>Als erfahrener Partner für Fachplanung analysieren wir Ihren Bedarf präzise, entwickeln technisch und wirtschaftlich optimierte Konzepte und begleiten Sie von der ersten Idee bis zur Umsetzung. Unser Ziel: eine Versorgungslösung, die perfekt zu Ihren Prozessen passt – heute und in Zukunft.</p>
-          <p>Dabei setzen wir auf Herstellerunabhängigkeit, transparente Kalkulationen und eine enge Zusammenarbeit mit Ihnen. So entstehen Lösungen, die nicht nur auf dem Papier funktionieren, sondern auch im täglichen Betrieb überzeugen.</p>
+          <p>Als spezialisiertes Planungsbüro entwickeln wir Versorgungslösungen, die technisch überzeugen, wirtschaftlich sinnvoll sind und zuverlässig im Betrieb funktionieren.</p>
+          <p>Wir analysieren Anforderungen, Verbrauch, Anlagenstruktur und technische Schnittstellen. Daraus entsteht eine klare Planung, die Sicherheit schafft, Investitionen gezielt steuert und spätere Anpassungen berücksichtigt.</p>
+          <p>Von der ersten Idee über die Systemauslegung bis zur ausführungsreifen Planung erhalten Sie eine herstellerunabhängige Lösung aus einer Hand. Unser Anspruch ist eine Versorgung, die dauerhaft leistungsfähig, effizient und zukunftssicher bleibt.</p>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BILD – icon_leckagemanagement -->
+  <div class="section-outer content-block" style="padding-top: 0;">
+    <div class="max-w-4xl mx-auto">
+      <div class="responsive-image">
+        <picture>
+          <source srcset="bilder/icon_leckagemanagement-1280.webp" media="(min-width: 1024px)">
+          <source srcset="bilder/icon_leckagemanagement-800.webp" media="(min-width: 640px)">
+          <source srcset="bilder/icon_leckagemanagement-400.webp" media="(max-width: 639px)">
+          <img src="bilder/icon_leckagemanagement-1280.webp" alt="Leckagemanagement und Druckluft-Effizienz" loading="lazy">
+        </picture>
       </div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- ANWENDUNGSBEREICHE -->
+  <!-- ANWENDUNGSBEREICHE – mit neuen Branchen -->
   <div class="section-outer content-block" style="background: var(--bg-page-alt);">
     <div class="text-center max-w-xl mx-auto mb-12">
       <span class="section-label">Anwendungsbereiche</span>
       <h2 class="section-h2">Für welche Branchen wir planen</h2>
-      <p class="section-intro text-sm">Unsere Expertise kommt in verschiedenen Industriezweigen zum Einsatz – immer dort, wo zuverlässige Druckluft- und Gasversorgung entscheidend ist.</p>
+      <p class="section-intro text-sm">Unsere Expertise kommt in zahlreichen Industriezweigen zum Einsatz, überall dort, wo eine zuverlässige Versorgung mit Druckluft und Gasen entscheidend ist.</p>
     </div>
     <div class="flex flex-wrap justify-center gap-4">
       <a href="#" class="industry-pill"><i class="fas fa-industry"></i> Maschinen- und Anlagenbau</a>
@@ -695,69 +722,21 @@ html.dark #footer-theme-toggle.theme-toggle-btn {
       <a href="#" class="industry-pill"><i class="fas fa-syringe"></i> Medizintechnik</a>
       <a href="#" class="industry-pill"><i class="fas fa-box"></i> Verpackungsindustrie</a>
       <a href="#" class="industry-pill"><i class="fas fa-warehouse"></i> Logistikzentren</a>
+      <!-- Neue Branchen -->
+      <a href="#" class="industry-pill"><i class="fas fa-utensils"></i> Lebensmittel- und Getränkeindustrie</a>
+      <a href="#" class="industry-pill"><i class="fas fa-paint-brush"></i> Oberflächentechnik</a>
+      <a href="#" class="industry-pill"><i class="fas fa-flask"></i> Forschung und Labore</a>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- LEISTUNGSSPEKTRUM -->
-  <div class="section-outer content-block">
-    <div class="max-w-3xl mx-auto">
-      <span class="section-label">Unser Leistungsspektrum</span>
-      <h2 class="section-h2">Von der Analyse bis zur Umsetzung</h2>
-      <p class="section-intro text-sm">Umfassende Planungsservices für Ihre Druckluft- und Gasversorgung – alles aus einer Hand.</p>
-      <div class="space-y-0 mt-8">
-        <div class="flex gap-4 pb-7 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">1</div>
-          <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Bedarfsanalyse & Bestandsaufnahme</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Erfassung Ihres aktuellen Verbrauchs, Analyse der Lastprofile, Identifikation von Optimierungspotenzialen und Schwachstellen in der bestehenden Versorgung.</p>
-          </div>
-        </div>
-        <div class="flex gap-4 pb-7 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">2</div>
-          <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Konzeptentwicklung & Machbarkeitsstudie</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Erarbeitung technischer Lösungsvorschläge, wirtschaftliche Bewertung verschiedener Varianten, Erstellung von Kosten-Nutzen-Analysen.</p>
-          </div>
-        </div>
-        <div class="flex gap-4 pb-7 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">3</div>
-          <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Detaillierte Fachplanung</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Erstellung von Rohrleitungsplänen, Komponentenauswahl, Dimensionierung von Kompressoren, Trocknern und Filtern, Integration in bestehende Systeme.</p>
-          </div>
-        </div>
-        <div class="flex gap-4 pb-7 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">4</div>
-          <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Ausschreibung & Vergabeunterstützung</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Erstellung von Leistungsverzeichnissen, Einholung und Vergleich von Angeboten, Unterstützung bei der Auftragsvergabe.</p>
-          </div>
-        </div>
-        <div class="flex gap-4 relative">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">5</div>
-          <div class="pt-1.5">
-            <h4 class="font-bold text-[var(--text-heading)] mb-1">Umsetzungsbegleitung</h4>
-            <p class="text-sm text-[var(--text-muted)] leading-relaxed">Technische Begleitung während der Installation, Abnahme der Anlage, Dokumentation und Inbetriebnahme.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- CTA BANNER -->
+  <!-- CTA BANNER – NEUER TEXT -->
   <div class="section-outer content-block">
     <div class="cta-banner w-full mx-auto">
       <div class="relative z-10">
-        <h2>Bereit für eine maßgeschneiderte Lösung?</h2>
-        <p>Gerne analysieren wir Ihren Bedarf und entwickeln ein individuelles Konzept für Ihre Druckluft- und Gasversorgung.</p>
+        <h2>Ihre Versorgung beginnt mit einer klaren Planung</h2>
+        <p>Wir analysieren Ihre Anforderungen und entwickeln eine technisch fundierte, wirtschaftliche und herstellerunabhängige Planung für Ihre Druckluft und Gasversorgung.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="tel:+49123456789" class="cta-outline px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5">
             <i class="fas fa-phone text-sm"></i> +49 152 28760622
