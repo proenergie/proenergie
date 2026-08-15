@@ -101,7 +101,7 @@
       <!-- Desktop Nav -->
       <nav aria-label="Hauptnavigation" class="hidden xl:flex items-center gap-9 flex-shrink-0">
         <div class="nav-item relative">
-          <a aria-haspopup="true" class="nav-link" href="#">Leistungen</a>
+          <button aria-haspopup="true" class="nav-link" type="button">Leistungen</button>
           <div class="submenu">
             <a href="energieberatung.html">Energieberatung</a>
             <a href="fachplanung.html">Fachplanung</a>
@@ -109,7 +109,7 @@
           </div>
         </div>
         <div class="nav-item relative">
-          <a aria-haspopup="true" class="nav-link" href="#">Druckluft-Effizienz</a>
+          <button aria-haspopup="true" class="nav-link" type="button">Druckluft-Effizienz</button>
           <div class="submenu">
             <a href="basischeck.html">BasisCheck</a>
             <a href="leckageortung.html">Leckageortung</a>
@@ -213,28 +213,58 @@
       </div>
       <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
         <div class="why-card">
-          <h4>Herstellerunabhängige Beratung</h4>
-          <p>Wir unterstützen Sie von der ersten Analyse über die Fachplanung bis zur erfolgreichen Umsetzung Ihres Projekts. Neutral, praxisnah und ohne Herstellerbindung bewerten wir Ihre Druckluft- und Gasversorgung technisch und wirtschaftlich und entwickeln bedarfsgerechte Lösungen statt pauschaler Standardkonzepte.</p>
+          <button aria-controls="why-content-1" aria-expanded="false" class="why-card-toggle" type="button">
+            <h4>Herstellerunabhängige Beratung</h4>
+            <i aria-hidden="true" class="fas fa-chevron-down why-card-icon-toggle"></i>
+          </button>
+          <div class="why-card-content" id="why-content-1">
+            <p>Wir unterstützen Sie von der ersten Analyse über die Fachplanung bis zur erfolgreichen Umsetzung Ihres Projekts. Neutral, praxisnah und ohne Herstellerbindung bewerten wir Ihre Druckluft- und Gasversorgung technisch und wirtschaftlich und entwickeln bedarfsgerechte Lösungen statt pauschaler Standardkonzepte.</p>
+          </div>
         </div>
         <div class="why-card">
-          <h4>Starkes Partnernetzwerk</h4>
-          <p>Für Umbauten und Zusatzgewerke greifen wir auf erfahrene regionale Partner zurück, holen transparente Vergleichsangebote ein und begleiten die Umsetzung so, dass sie für Sie wirtschaftlich sinnvoll, effizient und praxisgerecht erfolgt.</p>
+          <button aria-controls="why-content-2" aria-expanded="false" class="why-card-toggle" type="button">
+            <h4>Starkes Partnernetzwerk</h4>
+            <i aria-hidden="true" class="fas fa-chevron-down why-card-icon-toggle"></i>
+          </button>
+          <div class="why-card-content" id="why-content-2">
+            <p>Für Umbauten und Zusatzgewerke greifen wir auf erfahrene regionale Partner zurück, holen transparente Vergleichsangebote ein und begleiten die Umsetzung so, dass sie für Sie wirtschaftlich sinnvoll, effizient und praxisgerecht erfolgt.</p>
+          </div>
         </div>
         <div class="why-card">
-          <h4>Technische Erfahrung aus der Praxis</h4>
-          <p>Durch Erfahrung in Projektleitung, Planung und Umsetzung technischer Anlagen kennen wir nicht nur die Theorie, sondern auch die typischen Probleme im Betrieb. Dadurch entstehen Lösungen, die auf der Baustelle und im laufenden Betrieb funktionieren.</p>
+          <button aria-controls="why-content-3" aria-expanded="false" class="why-card-toggle" type="button">
+            <h4>Technische Erfahrung aus der Praxis</h4>
+            <i aria-hidden="true" class="fas fa-chevron-down why-card-icon-toggle"></i>
+          </button>
+          <div class="why-card-content" id="why-content-3">
+            <p>Durch Erfahrung in Projektleitung, Planung und Umsetzung technischer Anlagen kennen wir nicht nur die Theorie, sondern auch die typischen Probleme im Betrieb. Dadurch entstehen Lösungen, die auf der Baustelle und im laufenden Betrieb funktionieren.</p>
+          </div>
         </div>
         <div class="why-card md:col-span-2 xl:col-span-1">
-          <h4>Zukunftssichere Lösungen</h4>
-          <p>Unsere Konzepte sind auf Nachhaltigkeit, Erweiterbarkeit und langfristige Betriebssicherheit ausgelegt, damit Ihre Investition auch morgen noch wirtschaftlich trägt.</p>
+          <button aria-controls="why-content-4" aria-expanded="false" class="why-card-toggle" type="button">
+            <h4>Zukunftssichere Lösungen</h4>
+            <i aria-hidden="true" class="fas fa-chevron-down why-card-icon-toggle"></i>
+          </button>
+          <div class="why-card-content" id="why-content-4">
+            <p>Unsere Konzepte sind auf Nachhaltigkeit, Erweiterbarkeit und langfristige Betriebssicherheit ausgelegt, damit Ihre Investition auch morgen noch wirtschaftlich trägt.</p>
+          </div>
         </div>
         <div class="why-card">
-          <h4>Sichere Versorgung im Fokus</h4>
-          <p>Ob Druckluft, Gasversorgungsanlagen oder technische Gebäudeausrüstung: Ziel ist eine stabile, zuverlässige und betriebssichere Versorgung. Schwachstellen werden früh erkannt, Risiken reduziert und die Grundlage für einen sicheren Anlagenbetrieb geschaffen.</p>
+          <button aria-controls="why-content-5" aria-expanded="false" class="why-card-toggle" type="button">
+            <h4>Sichere Versorgung im Fokus</h4>
+            <i aria-hidden="true" class="fas fa-chevron-down why-card-icon-toggle"></i>
+          </button>
+          <div class="why-card-content" id="why-content-5">
+            <p>Ob Druckluft, Gasversorgungsanlagen oder technische Gebäudeausrüstung: Ziel ist eine stabile, zuverlässige und betriebssichere Versorgung. Schwachstellen werden früh erkannt, Risiken reduziert und die Grundlage für einen sicheren Anlagenbetrieb geschaffen.</p>
+          </div>
         </div>
         <div class="why-card">
-          <h4>Fördermittel &amp; Transparenz</h4>
-          <p>Wir zeigen Investition, Einsparpotenziale und mögliche Förderwege offen auf – verständlich dokumentiert, sauber kalkuliert und ohne versteckte Verkaufsagenda.</p>
+          <button aria-controls="why-content-6" aria-expanded="false" class="why-card-toggle" type="button">
+            <h4>Fördermittel &amp; Transparenz</h4>
+            <i aria-hidden="true" class="fas fa-chevron-down why-card-icon-toggle"></i>
+          </button>
+          <div class="why-card-content" id="why-content-6">
+            <p>Wir zeigen Investition, Einsparpotenziale und mögliche Förderwege offen auf – verständlich dokumentiert, sauber kalkuliert und ohne versteckte Verkaufsagenda.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -407,8 +437,7 @@
             </div>
             <span class="ceo-badge-tag">David Michel</span>
           </div>
-          <span class="section-label" style="margin-top:1.5rem;"></span>
-          <h2 class="section-h2 ceo-heading">Ihr Ansprechpartner</h2>
+          <h2 class="section-h2 ceo-heading" style="margin-top:1.5rem;">Ihr Ansprechpartner</h2>
           <div class="prose-custom text-sm">
             <p>Als erfahrener Projektleiter im Anlagenbau begleite ich Sie persönlich bei technischen Planungen, ingenieurtechnischen Leistungen und der Umsetzung anspruchsvoller Versorgungssysteme.</p>
             <p>Sprechen Sie mich gerne direkt über das Kontaktformular an.</p>
@@ -523,16 +552,6 @@
             </div>
           </a>
           <p class="text-sm leading-relaxed" style="color:var(--text-footer-muted); max-width:260px;">Ihr Spezialist für zuverlässige, effiziente und zukunftssichere Druckluft- und Gasversorgungssysteme.</p>
-          <div class="mt-6 flex gap-4">
-            <a
-              class="w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all"
-              href="#"
-              onmouseout="this.style.color=''"
-              onmouseover="this.style.color='#72CD14'"
-              style="background:rgba(255,255,255,0.07); color:var(--text-footer-muted);">
-              <i class="fab fa-instagram"></i>
-            </a>
-          </div>
         </div>
         <div>
           <h5 class="text-[10px] font-bold tracking-widest uppercase mb-5" style="color:#72CD14">Kontakt</h5>

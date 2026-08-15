@@ -56,7 +56,8 @@
   <!-- Scripts & Styles -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="preconnect" rel="stylesheet">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
   <!-- Einbinden der eigenen css Datei -->
   <link href="style.css" rel="stylesheet">
@@ -81,7 +82,7 @@
             src="bilder/logo_projekt-512.png"
             srcset="bilder/logo_projekt-16.png 16w, bilder/logo_projekt-32.png 32w, bilder/logo_projekt-64.png 64w, bilder/logo_projekt-128.png 128w, bilder/logo_projekt-256.png 256w, bilder/logo_projekt-512.png 512w"
             width="46">
-          <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" fill="rgba(114,205,20,0.15)" stroke="#72CD14" stroke-width="1.5"/>
             <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
           </svg>
@@ -186,13 +187,10 @@
     <div class="max-w-[1400px] mx-auto relative z-10">
       <div class="hero-badge">Druckluft-Effizienz</div>
       <h1 class="page-hero-h1">
-        Druckluftverluste erkennen
-        <br>
+        Druckluftverluste erkennen<br>
         <em>Energie sparen, Kosten senken</em>
       </h1>
-      <p class="page-hero-lead">
-        Leckagen gehören zu den häufigsten und teuersten Schwachstellen in Druckluftanlagen. Wir helfen Ihnen, sie systematisch zu erkennen, zu bewerten und dauerhaft zu reduzieren.
-      </p>
+      <p class="page-hero-lead">Leckagen gehören zu den häufigsten und teuersten Schwachstellen in Druckluftanlagen. Wir helfen Ihnen, sie systematisch zu erkennen, zu bewerten und dauerhaft zu reduzieren.</p>
       <div class="mt-8 flex flex-col sm:flex-row gap-3">
         <a class="cta-button text-white px-7 py-3.5 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg" href="index.html#anfrage">
           <i class="fas fa-arrow-right text-sm"></i>
@@ -209,25 +207,15 @@
       <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
         <div class="lg:col-span-2">
           <span class="section-label">Leckageortung</span>
-          <h2 class="section-h2">
-            Druckluftverluste gezielt orten, bewerten und Betriebskosten dauerhaft senken.
-          </h2>
+          <h2 class="section-h2">Druckluftverluste gezielt orten, bewerten und Betriebskosten dauerhaft senken.</h2>
           <div class="prose-custom text-sm mt-4 space-y-4">
             <p>
               <strong class="text-[#6BA242]">Systematische Leckageortung für messbare Einsparungen</strong>
             </p>
-            <p>
-              Leckagen in Druckluftanlagen bleiben im laufenden Betrieb häufig unbemerkt. Dennoch verursachen selbst kleine Undichtigkeiten kontinuierliche Energieverluste, erhöhen die Laufzeiten der Kompressoren und belasten die gesamte Druckluftversorgung. Über das Jahr können daraus erhebliche Mehrkosten entstehen.
-            </p>
-            <p>
-              Mit einer strukturierten Begehung erfassen wir Leckagen im gesamten Versorgungssystem. Dazu gehören Rohrleitungen, Armaturen, Kupplungen, Schläuche, Anschlüsse, Maschinen und Verbraucher. Die Ortung erfolgt während des laufenden Betriebs, sodass Produktionsabläufe möglichst nicht beeinträchtigt werden.
-            </p>
-            <p>
-              Jede Fundstelle wird eindeutig dokumentiert, technisch bewertet und nach Dringlichkeit sowie Einsparpotenzial eingeordnet. Sie erhalten eine transparente Übersicht der festgestellten Verluste und eine klare Grundlage für gezielte Reparaturmaßnahmen.
-            </p>
-            <p>
-              Auf Wunsch unterstützen wir Sie auch bei der Priorisierung, Umsetzung und anschließenden Kontrolle der Maßnahmen. So lassen sich Druckluftverluste dauerhaft reduzieren, Betriebskosten senken und die Effizienz Ihrer Anlage nachhaltig verbessern.
-            </p>
+            <p>Leckagen in Druckluftanlagen bleiben im laufenden Betrieb häufig unbemerkt. Dennoch verursachen selbst kleine Undichtigkeiten kontinuierliche Energieverluste, erhöhen die Laufzeiten der Kompressoren und belasten die gesamte Druckluftversorgung. Über das Jahr können daraus erhebliche Mehrkosten entstehen.</p>
+            <p>Mit einer strukturierten Begehung erfassen wir Leckagen im gesamten Versorgungssystem. Dazu gehören Rohrleitungen, Armaturen, Kupplungen, Schläuche, Anschlüsse, Maschinen und Verbraucher. Die Ortung erfolgt während des laufenden Betriebs, sodass Produktionsabläufe möglichst nicht beeinträchtigt werden.</p>
+            <p>Jede Fundstelle wird eindeutig dokumentiert, technisch bewertet und nach Dringlichkeit sowie Einsparpotenzial eingeordnet. Sie erhalten eine transparente Übersicht der festgestellten Verluste und eine klare Grundlage für gezielte Reparaturmaßnahmen.</p>
+            <p>Auf Wunsch unterstützen wir Sie auch bei der Priorisierung, Umsetzung und anschließenden Kontrolle der Maßnahmen. So lassen sich Druckluftverluste dauerhaft reduzieren, Betriebskosten senken und die Effizienz Ihrer Anlage nachhaltig verbessern.</p>
           </div>
         </div>
       </div>
@@ -240,9 +228,7 @@
       <div class="max-w-3xl mx-auto">
         <span class="section-label">Leckagekosten</span>
         <h2 class="section-h2">Beispiel Leckagekosten pro Jahr</h2>
-        <p class="text-sm text-[var(--text-muted)] mb-6">
-          Je höher das Druckniveau in einem Druckluftsystem, desto kostenintensiver sind Leckageverluste. Die folgende Tabelle verdeutlicht die Kosten je nach Druckniveau und Leckagegröße (Durchmesser).
-        </p>
+        <p class="text-sm text-[var(--text-muted)] mb-6">Je höher das Druckniveau in einem Druckluftsystem, desto kostenintensiver sind Leckageverluste. Die folgende Tabelle verdeutlicht die Kosten je nach Druckniveau und Leckagegröße (Durchmesser).</p>
 
         <div class="overflow-x-auto rounded-xl border border-[var(--border-card)]">
           <table class="cost-table">
@@ -290,9 +276,7 @@
             <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
             <div class="pt-1.5">
               <h4 class="font-bold text-[var(--text-heading)] mb-1">Aufnahme der Druckluftanlage vor Ort</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">
-                Wir analysieren Ihre Anlage und identifizieren potenzielle Schwachstellen für Leckagen.
-              </p>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Wir analysieren Ihre Anlage und identifizieren potenzielle Schwachstellen für Leckagen.</p>
             </div>
           </div>
           <div class="flex gap-4 pb-7 relative">
@@ -300,9 +284,7 @@
             <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
             <div class="pt-1.5">
               <h4 class="font-bold text-[var(--text-heading)] mb-1">Systematische Begehung der relevanten Anlagenbereiche</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">
-                Wir durchsuchen systematisch alle relevanten Bereiche Ihrer Anlage nach Leckagen.
-              </p>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Wir durchsuchen systematisch alle relevanten Bereiche Ihrer Anlage nach Leckagen.</p>
             </div>
           </div>
           <div class="flex gap-4 pb-7 relative">
@@ -310,9 +292,7 @@
             <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
             <div class="pt-1.5">
               <h4 class="font-bold text-[var(--text-heading)] mb-1">Erkennung von Leckagen mittels Ultraschallmesstechnik</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">
-                Gefundene Leckagen werden dokumentiert und für die weitere Analyse markiert.
-              </p>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Gefundene Leckagen werden dokumentiert und für die weitere Analyse markiert.</p>
             </div>
           </div>
           <div class="flex gap-4 pb-7 relative">
@@ -320,9 +300,7 @@
             <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
             <div class="pt-1.5">
               <h4 class="font-bold text-[var(--text-heading)] mb-1">Dokumentation der Fundstellen</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">
-                Alle Leckagen werden detailliert dokumentiert, um eine transparente Übersicht zu schaffen.
-              </p>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Alle Leckagen werden detailliert dokumentiert, um eine transparente Übersicht zu schaffen.</p>
             </div>
           </div>
           <div class="flex gap-4 pb-7 relative">
@@ -330,9 +308,7 @@
             <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
             <div class="pt-1.5">
               <h4 class="font-bold text-[var(--text-heading)] mb-1">Bewertung der möglichen Einsparpotenziale</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">
-                Wir bewerten die Leckagen nach Größe, Kosten und Priorität, um die wirtschaftlich sinnvollsten Maßnahmen zu identifizieren.
-              </p>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Wir bewerten die Leckagen nach Größe, Kosten und Priorität, um die wirtschaftlich sinnvollsten Maßnahmen zu identifizieren.</p>
             </div>
           </div>
           <div class="flex gap-4 pb-7 relative">
@@ -340,18 +316,14 @@
             <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
             <div class="pt-1.5">
               <h4 class="font-bold text-[var(--text-heading)] mb-1">Priorisierung der empfohlenen Maßnahmen</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">
-                Die Maßnahmen werden nach Dringlichkeit und Wirtschaftlichkeit priorisiert.
-              </p>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Die Maßnahmen werden nach Dringlichkeit und Wirtschaftlichkeit priorisiert.</p>
             </div>
           </div>
           <div class="flex gap-4 relative">
             <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">7</div>
             <div class="pt-1.5">
               <h4 class="font-bold text-[var(--text-heading)] mb-1">Übergabe einer verständlichen Auswertung</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">
-                Sie erhalten eine klare und verständliche Auswertung mit allen Ergebnissen und Empfehlungen.
-              </p>
+              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Sie erhalten eine klare und verständliche Auswertung mit allen Ergebnissen und Empfehlungen.</p>
             </div>
           </div>
         </div>
@@ -365,9 +337,7 @@
       <div class="cta-banner w-full mx-auto">
         <div class="relative z-10">
           <h2>Wo verliert Ihre Anlage Energie?</h2>
-          <p>
-            Nehmen Sie gerne Kontakt mit uns auf, wenn Sie wissen möchten, wie viel Druckluft in Ihrem Betrieb ungenutzt verloren geht und wie sich Ihre Druckluftkosten gezielt senken lassen.
-          </p>
+          <p>Nehmen Sie gerne Kontakt mit uns auf, wenn Sie wissen möchten, wie viel Druckluft in Ihrem Betrieb ungenutzt verloren geht und wie sich Ihre Druckluftkosten gezielt senken lassen.</p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a class="cta-outline px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5" href="tel:+49123456789">
               <i class="fas fa-phone text-sm"></i>
@@ -401,7 +371,7 @@
                 src="bilder/logo_projekt-128.png"
                 srcset="bilder/logo_projekt-16.png 16w, bilder/logo_projekt-32.png 32w, bilder/logo_projekt-64.png 64w, bilder/logo_projekt-128.png 128w, bilder/logo_projekt-256.png 256w, bilder/logo_projekt-512.png 512w"
                 width="36">
-              <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" fill="none">
+              <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" fill="rgba(114,205,20,0.15)" stroke="#72CD14" stroke-width="1.5"/>
                 <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
               </svg>
@@ -414,9 +384,7 @@
               <span class="logo-sub" style="color: #ffffff; font-size: 0.55rem;">— Versorgungstechnik —</span>
             </div>
           </a>
-          <p class="text-sm leading-relaxed" style="color:var(--text-footer-muted); max-width:260px;">
-            Ihr Spezialist für zuverlässige, effiziente und zukunftssichere Druckluft- und Gasversorgungssysteme.
-          </p>
+          <p class="text-sm leading-relaxed" style="color:var(--text-footer-muted); max-width:260px;">Ihr Spezialist für zuverlässige, effiziente und zukunftssichere Druckluft- und Gasversorgungssysteme.</p>
           <div class="mt-6 flex gap-4">
             <a
               class="w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all"
