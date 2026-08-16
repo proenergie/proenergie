@@ -18,7 +18,7 @@
     logo: {
       basePath: '/bilder',
       webmPattern: (res) => `/bilder/logo_projekt-${res}.webm`,
-      webpFallback: '/bilder/logo_projekt-512.png',
+      webpFallback: '/bilder/logo_projekt-512.webp',
       timeoutMs: 2500,
     }
   };
@@ -349,34 +349,48 @@
   }
 
   // ======================================================
-  // 5. FOOTER LOGO
+  // 5. FOOTER LOGO - Safari = direkt PNG
   // ======================================================
+  function isSafari() {
+    const ua = navigator.userAgent;
+    return /Safari/.test(ua) && !/Chrome|Chromium|Android/.test(ua);
+  }
+
   function showLogoFallback() {
     if (!DOM.footerVideo || !DOM.footerFallback) return;
     DOM.footerVideo.style.display = 'none';
     DOM.footerVideo.pause();
     DOM.footerVideo.removeAttribute('src');
     DOM.footerVideo.innerHTML = '';
-    DOM.footerFallback.src = CONFIG.logo.webpFallback;
+    DOM.footerFallback.src = CONFIG.logo.webpFallback; // dein png
     DOM.footerFallback.style.display = 'block';
   }
 
   function loadFooterLogo() {
     const { footerVideo: video, footerFallback: fallback } = DOM;
     if (!video || !fallback) return;
-    if (isSlowConnection()) { showLogoFallback(); return; }
+
+    // SAFARI oder langsame Leitung = direkt PNG
+    if (isSafari() || isSlowConnection()) {
+      showLogoFallback();
+      return;
+    }
+
     const res = getLogoResolution();
     const src = CONFIG.logo.webmPattern(res);
     if (video.dataset.loaded === src) { video.play().catch(()=>{}); return; }
+    
     video.dataset.loaded = src;
     video.innerHTML = `<source src="${src}" type="video/webm">`;
     let timedOut = false;
     const timeout = setTimeout(() => { timedOut = true; showLogoFallback(); }, CONFIG.logo.timeoutMs);
+    
     video.addEventListener('canplay', () => {
       if (timedOut) return;
       clearTimeout(timeout);
       video.play().catch(()=>{});
     }, { once: true });
+    
     video.addEventListener('error', () => { clearTimeout(timeout); showLogoFallback(); }, { once: true });
     video.load();
   }
