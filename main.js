@@ -180,44 +180,52 @@
         updateHashFromDOM();
       }
       syncHashToInternalLinks();
-      // Preopen-Klassen auf jeden Fall entfernen falls noch da
-      document.documentElement.classList.remove('menu-preopen');
-      document.documentElement.className = document.documentElement.className
-      .replace(/preopen-\S+/g, '').replace(/\s{2,}/g, ' ').trim();
       return;
     }
 
-    // Untermenüs exakt nach Hash
+    // EXAKT den Zustand aus dem Hash wiederherstellen - zu bleibt zu
     SUBMENU_IDS.forEach(id => setSubmenuState(id, parsed.has(id)));
 
     if (parsed.has(MENU_KEY)) {
-      // Menü offen lassen - kein Auto-Close mehr
-      if (DOM.mobileMenu &&!DOM.mobileMenu.classList.contains('active')) {
-        scrollY = window.scrollY || 0;
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.left = '0';
-        document.body.style.right = '0';
-        document.body.style.width = '100%';
+      // Sicherstellen dass Menü als offen gilt für getCurrentHashSet
+      if (DOM.mobileMenu && !DOM.mobileMenu.classList.contains('active')) {
         DOM.mobileMenu.classList.add('active');
         if (DOM.blurOverlay) DOM.blurOverlay.classList.add('active');
         document.body.classList.add('menu-open');
         setMenuButtonState(true);
       }
-      // Preopen jetzt sofort entfernen, aber ohne zu schließen
-      if (DOM.mobileMenu) DOM.mobileMenu.style.transition = '';
-      if (DOM.blurOverlay) DOM.blurOverlay.style.transition = '';
-      document.documentElement.classList.remove('menu-preopen');
-      document.documentElement.className = document.documentElement.className
-      .replace(/preopen-\S+/g, '').replace(/\s{2,}/g, ' ').trim();
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          // Transition wieder aktivieren
+          if (DOM.mobileMenu) DOM.mobileMenu.style.transition = '';
+          if (DOM.blurOverlay) DOM.blurOverlay.style.transition = '';
+
+          // nur preopen-* entfernen
+          document.documentElement.classList.remove('menu-preopen');
+          document.documentElement.className = document.documentElement.className
+            .replace(/preopen-\S+/g, '')
+            .replace(/\s{2,}/g, ' ')
+            .trim();
+
+          setTimeout(() => {
+            closeMobileMenu();
+            const cleaned = new Set(parsed);
+            cleaned.delete(MENU_KEY);
+            const newHash = serializeHash(cleaned);
+            history.replaceState(null, '', newHash ? '#' + newHash : location.pathname + location.search);
+            syncHashToInternalLinks();
+          }, 150);
+        });
+      });
     } else {
-      // Falls kein menu im Hash, zu machen
-      if (DOM.mobileMenu?.classList.contains('active')) closeMobileMenu();
       document.documentElement.classList.remove('menu-preopen');
       document.documentElement.className = document.documentElement.className
-      .replace(/preopen-\S+/g, '').replace(/\s{2,}/g, ' ').trim();
+        .replace(/preopen-\S+/g, '')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+      syncHashToInternalLinks();
     }
-    syncHashToInternalLinks();
   }
 
   function toggleSubmenu(id) {
