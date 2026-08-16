@@ -1,13 +1,27 @@
-// preopen.js - muss synchron vor style.css laufen!
+// preopen.js - MUSS synchron vor style.css im <head> laufen!
 (function(){
-  const raw = (location.hash || '').replace('#','');
-  if(!raw) return;
-  const parts = raw.split('&');
-  parts.forEach(p => {
-    const k = p.split('=')[0];
-    if(k) document.documentElement.classList.add('preopen-' + k);
-  });
-  if(raw.includes('menu')){
-    document.documentElement.classList.add('menu-preopen');
-  }
+  try {
+    var raw = (location.hash || '').replace(/^#/, '').trim();
+    if (!raw) return;
+
+    var root = document.documentElement;
+    var hasMenu = false;
+    var allowed = ['menu', 'leistungen', 'druckluft-effizienz', 'anfrage'];
+
+    raw.split('&').forEach(function(p){
+      if (!p) return;
+      var k = p.split('=')[0].trim();
+      if (!k) return;
+      if (allowed.indexOf(k) === -1) return;
+
+      root.classList.add('preopen-' + k);
+      if (k === 'menu') hasMenu = true;
+    });
+
+    if (hasMenu) {
+      root.classList.add('menu-preopen');
+      // Verhindert den 1-Frame Layout-Shift in Firefox beim Neuladen
+      root.style.scrollbarGutter = 'stable';
+    }
+  } catch(e) {}
 })();

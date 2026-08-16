@@ -801,6 +801,26 @@ html.menu-preopen #mobile-menu {
   transition: none !important;
 }
 
+#mobile-menu {
+  visibility: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0) translateX(100%);
+}
+#mobile-menu.active,
+html.menu-preopen #mobile-menu {
+  visibility: visible;
+  transform: translateZ(0) translateX(0);
+}
+
+/* Firefox: blur + fixed body flackert */
+@supports (-moz-appearance: none) {
+  html.menu-preopen #page-blur-overlay {
+    backdrop-filter: none!important;
+    -webkit-backdrop-filter: none!important;
+  }
+}
+
 /* Hamburger sofort als X */
 html.menu-preopen #hamburger-icon span:nth-child(1) {
   top: 50%;
