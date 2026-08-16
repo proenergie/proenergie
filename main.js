@@ -17,12 +17,15 @@
   const CONFIG = {
     logo: {
       basePath: 'bilder',
-      // Dateinamen aus deinem Python-Skript: logo_projekt-64.webm etc.
       webmPattern: (res) => `bilder/logo_projekt-${res}.webm`,
       webpFallback: 'bilder/logo_projekt-512.png',
       timeoutMs: 2500,
     }
   };
+
+  const SUBMENU_IDS = ['leistungen', 'druckluft-effizienz'];
+  const MENU_KEY = 'menu';
+  const ANFRAGE_KEY = 'anfrage';
 
   let scrollY = 0;
 
@@ -38,20 +41,19 @@
   function getLogoResolution() {
     const w = window.innerWidth;
     const isSlow = isSlowConnection();
-    const isGood =!isSlow;
-
-    if (w >= 1536) return isGood? '512' : '256';
-    if (w >= 768) return isGood? '256' : '128';
-    return isGood? '128' : '64';
+    const isGood = !isSlow;
+    if (w >= 1536) return isGood ? '512' : '256';
+    if (w >= 768) return isGood ? '256' : '128';
+    return isGood ? '128' : '64';
   }
 
   // ======================================================
-  // 3. MOBILE MENU
+  // 3. MOBILE MENU + HASH STATE (# &)
   // ======================================================
   function setMenuButtonState(isOpen) {
     if (!DOM.mobileBtn) return;
     DOM.mobileBtn.setAttribute('aria-expanded', String(isOpen));
-    DOM.mobileBtn.setAttribute('aria-label', isOpen? 'Menü schließen' : 'Menü öffnen');
+    DOM.mobileBtn.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
     if (DOM.hamburgerIcon) DOM.hamburgerIcon.classList.toggle('is-open', isOpen);
   }
 
@@ -68,6 +70,7 @@
     if (DOM.blurOverlay) DOM.blurOverlay.classList.add('active');
     document.body.classList.add('menu-open');
     setMenuButtonState(true);
+    updateHashFromDOM();
   }
 
   function closeMobileMenu() {
@@ -83,22 +86,156 @@
     document.body.classList.remove('menu-open');
     setMenuButtonState(false);
     window.scrollTo(0, scrollY);
+    updateHashFromDOM();
+  }
+
+  function parseHash() {
+    const raw = location.hash.replace(/^#/, '').trim();
+    if (!raw) return null;
+    const open = new Set();
+    raw.split('&').forEach(part => {
+      if (!part) return;
+      const [key, val] = part.split('=');
+      const k = (key || '').trim();
+      if (!k) return;
+      if (![...SUBMENU_IDS, MENU_KEY, ANFRAGE_KEY].includes(k)) return;
+      if (val === undefined || val === '' || ['1','true','open'].includes(val)) {
+        open.add(k);
+      }
+    });
+    return open;
+  }
+
+  function serializeHash(openSet) {
+    return Array.from(openSet).join('&');
+  }
+
+  function setSubmenuState(id, isOpen) {
+    const sub = document.getElementById(`${id}-submenu`);
+    const icon = document.getElementById(`${id}-icon`);
+    const button = sub?.previousElementSibling || document.querySelector(`[aria-controls="${id}-submenu"]`);
+    if (!sub) return;
+    sub.classList.toggle('active', isOpen);
+    if (icon) {
+      icon.classList.toggle('fa-chevron-down', !isOpen);
+      icon.classList.toggle('fa-chevron-up', isOpen);
+    }
+    if (button) button.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  function getCurrentHashSet() {
+    const set = new Set();
+    SUBMENU_IDS.forEach(id => {
+      const sub = document.getElementById(`${id}-submenu`);
+      if (sub?.classList.contains('active')) set.add(id);
+      // Falls Seite gerade durch preopen.js geöffnet wurde, zähle preopen-* mit
+      else if (document.documentElement.classList.contains(`preopen-${id}`)) set.add(id);
+    });
+    // Menü gilt als offen wenn .active ODER preopen
+    if (DOM.mobileMenu?.classList.contains('active') || document.documentElement.classList.contains('menu-preopen') || document.documentElement.classList.contains(`preopen-${MENU_KEY}`)) {
+      set.add(MENU_KEY);
+    }
+    if (location.hash.includes(ANFRAGE_KEY)) set.add(ANFRAGE_KEY);
+    return set;
+  }
+
+  function updateHashFromDOM() {
+    // Während der Preopen-Phase Hash nicht überschreiben
+    if (document.documentElement.classList.contains('menu-preopen')) return;
+    const openSet = getCurrentHashSet();
+    const newHash = serializeHash(openSet);
+    if (newHash) {
+      history.replaceState(null, '', '#' + newHash);
+    } else {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+    syncHashToInternalLinks();
+  }
+
+  function syncHashToInternalLinks() {
+    const currentSet = getCurrentHashSet();
+    const hashForLinks = serializeHash(currentSet);
+    
+    document.querySelectorAll('a[href$=".html"], a[href*=".html#"]').forEach(a => {
+      if (a.hostname !== location.hostname) return;
+      try {
+        const url = new URL(a.href, location.href);
+        // FIX: Nicht alten Hash mergen, sondern exakt den aktuellen Zustand nehmen
+        // Sonst bleibt einmal geöffnetes für immer drin
+        if (hashForLinks) {
+          url.hash = hashForLinks;
+        } else {
+          url.hash = '';
+        }
+        a.href = url.toString();
+      } catch(e) {}
+    });
+  }
+
+  function applyHashState() {
+    const parsed = parseHash();
+
+    if (parsed === null) {
+      const isMobile = window.matchMedia('(pointer: coarse), (hover: none), (max-width: 1279px)').matches;
+      if (isMobile) {
+        SUBMENU_IDS.forEach(id => setSubmenuState(id, true));
+        updateHashFromDOM();
+      }
+      syncHashToInternalLinks();
+      return;
+    }
+
+    // EXAKT den Zustand aus dem Hash wiederherstellen - zu bleibt zu
+    SUBMENU_IDS.forEach(id => setSubmenuState(id, parsed.has(id)));
+
+    if (parsed.has(MENU_KEY)) {
+      // Sicherstellen dass Menü als offen gilt für getCurrentHashSet
+      if (DOM.mobileMenu && !DOM.mobileMenu.classList.contains('active')) {
+        DOM.mobileMenu.classList.add('active');
+        if (DOM.blurOverlay) DOM.blurOverlay.classList.add('active');
+        document.body.classList.add('menu-open');
+        setMenuButtonState(true);
+      }
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          // Transition wieder aktivieren
+          if (DOM.mobileMenu) DOM.mobileMenu.style.transition = '';
+          if (DOM.blurOverlay) DOM.blurOverlay.style.transition = '';
+
+          // nur preopen-* entfernen
+          document.documentElement.classList.remove('menu-preopen');
+          document.documentElement.className = document.documentElement.className
+            .replace(/preopen-\S+/g, '')
+            .replace(/\s{2,}/g, ' ')
+            .trim();
+
+          setTimeout(() => {
+            closeMobileMenu();
+            const cleaned = new Set(parsed);
+            cleaned.delete(MENU_KEY);
+            const newHash = serializeHash(cleaned);
+            history.replaceState(null, '', newHash ? '#' + newHash : location.pathname + location.search);
+            syncHashToInternalLinks();
+          }, 150);
+        });
+      });
+    } else {
+      document.documentElement.classList.remove('menu-preopen');
+      document.documentElement.className = document.documentElement.className
+        .replace(/preopen-\S+/g, '')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+      syncHashToInternalLinks();
+    }
   }
 
   function toggleSubmenu(id) {
     const sub = document.getElementById(`${id}-submenu`);
-    const icon = document.getElementById(`${id}-icon`);
-    const button = sub? sub.previousElementSibling : null;
     if (!sub) return;
-
-    const willOpen =!sub.classList.contains('active');
-    sub.classList.toggle('active', willOpen);
-
-    if (icon) {
-      icon.classList.toggle('fa-chevron-down',!willOpen);
-      icon.classList.toggle('fa-chevron-up', willOpen);
-    }
-    if (button) button.setAttribute('aria-expanded', String(willOpen));
+    const willOpen = !sub.classList.contains('active');
+    setSubmenuState(id, willOpen);
+    updateHashFromDOM();
   }
 
   function initMobileMenu() {
@@ -106,7 +243,7 @@
       DOM.mobileBtn.setAttribute('aria-controls', 'mobile-menu');
       DOM.mobileBtn.setAttribute('aria-expanded', 'false');
       DOM.mobileBtn.addEventListener('click', () => {
-        DOM.mobileMenu.classList.contains('active')? closeMobileMenu() : openMobileMenu();
+        DOM.mobileMenu.classList.contains('active') ? closeMobileMenu() : openMobileMenu();
       });
     }
     if (DOM.blurOverlay) DOM.blurOverlay.addEventListener('click', closeMobileMenu);
@@ -118,16 +255,19 @@
       }
     });
     document.querySelectorAll('#mobile-menu a').forEach(link => {
-      link.addEventListener('click', closeMobileMenu);
+      link.addEventListener('click', () => {
+        if (link.hash === '#anfrage' || link.getAttribute('href').startsWith('#')) {
+          closeMobileMenu();
+        }
+      });
     });
   }
 
-  // Expose für inline onclick
   window.toggleSubmenu = toggleSubmenu;
   window.closeMobileMenu = closeMobileMenu;
 
   // ======================================================
-  // 4. TEXT COLLAPSE (Vorschau / Ausklappen)
+  // 4. TEXT COLLAPSE
   // ======================================================
   function getCollapseInner(collapse) {
     return collapse?.querySelector('.text-collapse-inner');
@@ -136,10 +276,8 @@
   function setCollapseState(collapse, expanded) {
     const inner = getCollapseInner(collapse);
     const button = collapse?.querySelector('.text-collapse-toggle');
-    if (!inner ||!button) return;
-
+    if (!inner || !button) return;
     const preview = getComputedStyle(collapse).getPropertyValue('--collapse-preview-height').trim() || '4.2em';
-
     if (expanded) {
       inner.style.maxHeight = `${inner.scrollHeight}px`;
       collapse.classList.add('is-expanded');
@@ -159,13 +297,11 @@
   function initTextCollapse(collapse) {
     const inner = getCollapseInner(collapse);
     const button = collapse.querySelector('.text-collapse-toggle');
-    if (!inner ||!button) return;
-
+    if (!inner || !button) return;
     button.addEventListener('click', (e) => {
       e.preventDefault();
-      setCollapseState(collapse,!collapse.classList.contains('is-expanded'));
+      setCollapseState(collapse, !collapse.classList.contains('is-expanded'));
     });
-
     const media = window.matchMedia('(max-width: 767px)');
     const sync = () => {
       if (media.matches) {
@@ -186,13 +322,10 @@
 
   function initAllCollapses() {
     document.querySelectorAll('.text-collapse').forEach(initTextCollapse);
-
-    // Why-Cards automatisch zu Collapse umbauen
     document.querySelectorAll('#why-cards-grid.why-card').forEach(card => {
       if (card.querySelector('.text-collapse')) return;
       const p = card.querySelector(':scope > p');
       if (!p) return;
-
       const collapse = document.createElement('div');
       collapse.className = 'text-collapse';
       collapse.style.setProperty('--collapse-preview-height', '4.5em');
@@ -201,7 +334,6 @@
       p.parentNode.insertBefore(collapse, p);
       inner.appendChild(p);
       collapse.appendChild(inner);
-
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'text-collapse-toggle';
@@ -209,19 +341,17 @@
       btn.setAttribute('aria-label', 'Text ausklappen');
       btn.innerHTML = '<i aria-hidden="true" class="fas fa-chevron-down"></i>';
       collapse.appendChild(btn);
-
       initTextCollapse(collapse);
     });
-
     window.addEventListener('resize', () => {
-      document.querySelectorAll('.text-collapse.is-expanded.text-collapse-inner').forEach(inner => {
+      document.querySelectorAll('.text-collapse.is-expanded .text-collapse-inner').forEach(inner => {
         inner.style.maxHeight = `${inner.scrollHeight}px`;
       });
     }, { passive: true });
   }
 
   // ======================================================
-  // 5. FOOTER LOGO - Lazy Load + Auto Play/Pause
+  // 5. FOOTER LOGO
   // ======================================================
   function showLogoFallback() {
     if (!DOM.footerVideo || !DOM.footerFallback) return;
@@ -236,72 +366,36 @@
   function loadFooterLogo() {
     const { footerVideo: video, footerFallback: fallback } = DOM;
     if (!video || !fallback) return;
-
-    if (isSlowConnection()) {
-      showLogoFallback();
-      return;
-    }
-
+    if (isSlowConnection()) { showLogoFallback(); return; }
     const res = getLogoResolution();
     const src = CONFIG.logo.webmPattern(res);
-    if (video.dataset.loaded === src) {
-      // Schon geladen, nur wieder abspielen
-      video.play().catch(()=>{});
-      return;
-    }
-
+    if (video.dataset.loaded === src) { video.play().catch(()=>{}); return; }
     video.dataset.loaded = src;
     video.innerHTML = `<source src="${src}" type="video/webm">`;
-
     let timedOut = false;
-    const timeout = setTimeout(() => {
-      timedOut = true;
-      showLogoFallback();
-    }, CONFIG.logo.timeoutMs);
-
+    const timeout = setTimeout(() => { timedOut = true; showLogoFallback(); }, CONFIG.logo.timeoutMs);
     video.addEventListener('canplay', () => {
       if (timedOut) return;
       clearTimeout(timeout);
       video.play().catch(()=>{});
     }, { once: true });
-
-    video.addEventListener('error', () => {
-      clearTimeout(timeout);
-      showLogoFallback();
-    }, { once: true });
-
+    video.addEventListener('error', () => { clearTimeout(timeout); showLogoFallback(); }, { once: true });
     video.load();
   }
 
   function initFooterLogo() {
     if (!DOM.footerVideo) return;
-
-    if (!('IntersectionObserver' in window)) {
-      loadFooterLogo();
-      return;
-    }
-
+    if (!('IntersectionObserver' in window)) { loadFooterLogo(); return; }
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Footer kommt ins Bild -> laden / abspielen
-          if (DOM.footerVideo.style.display === 'none' && DOM.footerFallback.style.display === 'block') {
-            // War im WebP Fallback, bleibt so
-            return;
-          }
+          if (DOM.footerVideo.style.display === 'none' && DOM.footerFallback.style.display === 'block') return;
           loadFooterLogo();
         } else {
-          // Footer ist raus -> Video pausieren, spart Akku
-          if (DOM.footerVideo && !DOM.footerVideo.paused) {
-            DOM.footerVideo.pause();
-          }
+          if (DOM.footerVideo && !DOM.footerVideo.paused) DOM.footerVideo.pause();
         }
       });
-    }, { 
-      rootMargin: '300px', // 300px vorher anfangen zu laden
-      threshold: 0 // schon bei 1px sichtbar triggern
-    });
-
+    }, { rootMargin: '300px', threshold: 0 });
     observer.observe(DOM.footerVideo);
   }
 
@@ -326,6 +420,8 @@
     initAllCollapses();
     initFooterLogo();
     enforceLightAndCleanURL();
+    applyHashState();
   });
 
+  window.addEventListener('hashchange', applyHashState);
 })();
