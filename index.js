@@ -51,36 +51,3 @@
     initFormProtection();
   }
 })();
-
-// === WHY-CARDS ACCORDION (nur auf Mobile aktiv) ===
-(() => {
-  'use strict';
-
-  const mq = window.matchMedia('(max-width: 767px)');
-  const toggles = document.querySelectorAll('.why-card-toggle');
-  if (!toggles.length) return;
-
-  function syncAriaState() {
-    toggles.forEach(btn => {
-      const card = btn.closest('.why-card');
-      if (!mq.matches) {
-        // Ab 768px ist der Inhalt immer vollständig sichtbar
-        btn.setAttribute('aria-expanded', 'true');
-      } else {
-        btn.setAttribute('aria-expanded', card.classList.contains('is-open') ? 'true' : 'false');
-      }
-    });
-  }
-
-  toggles.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (!mq.matches) return; // Desktop: Button hat keine Funktion, Inhalt ist ohnehin offen
-      const card = btn.closest('.why-card');
-      card.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', card.classList.contains('is-open') ? 'true' : 'false');
-    });
-  });
-
-  syncAriaState();
-  mq.addEventListener('change', syncAriaState);
-})();

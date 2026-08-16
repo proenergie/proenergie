@@ -4,62 +4,44 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
 
-  <!-- *** SEO: Präziser Titel mit Haupt-Keywords (ohne Standort) *** -->
   <title>Basischeck Druckluftanlagen – ProEnergie Energieberatung</title>
-
-  <!-- *** SEO: Meta-Beschreibung mit Inhaber & Standort *** -->
   <meta content="Basischeck für Druckluftanlagen von David Michel in Penig – Energieverluste erkennen, Betriebskosten senken und Versorgungssicherheit verbessern. Jetzt prüfen lassen!" name="description">
-
-  <!-- *** SEO: Keywords mit Standort und Inhaber *** -->
   <meta content="Basischeck Druckluft, Druckluftanlage prüfen, Druckluft Effizienz, Energieberatung Druckluft, Leckageortung, ProEnergie, David Michel, Penig, Sachsen, Versorgungstechnik" name="keywords">
 
-  <!-- *** SEO: Canonical-Tag *** -->
   <link href="https://proenergie-versorgungstechnik.de/basischeck.html" rel="canonical">
 
-  <!-- *** SEO: Open Graph für bessere Darstellung in sozialen Netzwerken *** -->
   <meta content="Basischeck Druckluftanlagen – ProEnergie Energieberatung" property="og:title">
   <meta content="Basischeck für Druckluftanlagen von David Michel in Penig – Energieverluste erkennen, Betriebskosten senken und Versorgungssicherheit verbessern." property="og:description">
   <meta content="website" property="og:type">
   <meta content="https://proenergie-versorgungstechnik.de/basischeck.html" property="og:url">
   <meta content="https://proenergie-versorgungstechnik.de/bilder/logo_projekt-512.png" property="og:image">
 
-  <!-- *** SEO: Geo-Tags für lokale Suche (Penig) *** -->
   <meta content="DE-SN" name="geo.region">
   <meta content="Penig" name="geo.placename">
   <meta content="50.9333;12.7000" name="geo.position">
   <meta content="50.9333, 12.7000" name="ICBM">
 
-  <!-- ========== FAVICONS ========== -->
   <link href="favicon/favicon-512.png" rel="icon" sizes="512x512" type="image/png">
   <link href="favicon/favicon-256.png" rel="icon" sizes="256x256" type="image/png">
   <link href="favicon/favicon-128.png" rel="icon" sizes="128x128" type="image/png">
   <link href="favicon/favicon-64.png" rel="icon" sizes="64x64" type="image/png">
   <link href="favicon/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
   <link href="favicon/favicon-16.png" rel="icon" sizes="16x16" type="image/png">
-
-  <!-- Apple Touch Icon für iOS -->
   <link href="favicon/favicon-512.png" rel="apple-touch-icon" sizes="512x512">
   <link href="favicon/favicon-256.png" rel="apple-touch-icon" sizes="256x256">
   <link href="favicon/favicon-128.png" rel="apple-touch-icon" sizes="128x128">
-
   <link href="favicon/favicon-32.png" rel="shortcut icon">
-
-  <!-- Android Chrome / PWA -->
   <link href="site.webmanifest" rel="manifest">
   <meta content="#031F5C" name="theme-color">
   <meta content="yes" name="apple-mobile-web-app-capable">
   <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
 
-  <!-- PERFORMANCE: Preload Logo (LCP-Optimierung) -->
   <link as="image" fetchpriority="high" href="bilder/logo_projekt-512.png" rel="preload">
 
-  <!-- Scripts & Styles -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <!-- Einbinden der eigenen css Datei -->
   <link href="style.css" rel="stylesheet">
 </head>
 
@@ -68,8 +50,7 @@
 
   <!-- HEADER -->
   <header class="w-full">
-    <div class="px-6 flex justify-between items-center max-w-[1400px] mx-auto w-full h-full gap-8">
-      <!-- Logo + Schriftzug mit responsiven Größen -->
+    <div class="site-container flex justify-between items-center h-full gap-8">
       <a class="logo-wrapper group" href="index.html">
         <div class="logo-img-box">
           <img
@@ -88,18 +69,14 @@
           </svg>
         </div>
         <div class="logo-text-block">
-          <span class="logo-brand">
-            <span class="pro">Pro</span>
-            <span class="energie">Energie</span>
-          </span>
+          <span class="logo-brand"><span class="pro">Pro</span><span class="energie">Energie</span></span>
           <span class="logo-sub">— Versorgungstechnik —</span>
         </div>
       </a>
 
-      <!-- Desktop Nav -->
-      <nav class="hidden xl:flex items-center gap-9 flex-shrink-0">
+      <nav aria-label="Hauptnavigation" class="hidden xl:flex items-center gap-9 flex-shrink-0">
         <div class="nav-item relative">
-          <a class="nav-link">Leistungen</a>
+          <button aria-haspopup="true" class="nav-link" type="button">Leistungen</button>
           <div class="submenu">
             <a href="energieberatung.html">Energieberatung</a>
             <a href="fachplanung.html">Fachplanung</a>
@@ -107,7 +84,7 @@
           </div>
         </div>
         <div class="nav-item relative">
-          <a class="nav-link">Druckluft-Effizienz</a>
+          <button aria-haspopup="true" class="nav-link" type="button">Druckluft-Effizienz</button>
           <div class="submenu">
             <a href="basischeck.html">BasisCheck</a>
             <a href="leckageortung.html">Leckageortung</a>
@@ -121,64 +98,45 @@
           <span>Kontaktformular</span>
         </a>
         <button aria-label="Menü öffnen" class="xl:hidden p-2 flex items-center justify-center" id="mobile-menu-btn">
-          <div id="hamburger-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+          <div id="hamburger-icon"><span></span><span></span><span></span></div>
         </button>
       </div>
     </div>
 
     <!-- MOBILE MENU -->
-    <div class="xl:hidden" id="mobile-menu">
+    <div aria-modal="true" class="xl:hidden" id="mobile-menu" role="dialog">
       <div class="flex flex-col px-5 pb-8 pt-5 text-base font-medium">
         <div class="nav-item relative">
-          <button class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" onclick="toggleSubmenu('leistungen')" style="color:var(--text-nav)">
+          <button aria-controls="leistungen-submenu" aria-expanded="false" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" onclick="toggleSubmenu('leistungen')" style="color:var(--text-nav)">
             Leistungen
             <i class="fas fa-chevron-down text-xs transition-transform" id="leistungen-icon" style="color:var(--text-muted)"></i>
           </button>
-          <div class="mobile-submenu pl-4 text-sm" id="leistungen-submenu" style="color:var(--text-muted)">
-            <a class="block py-3" href="energieberatung.html">Energieberatung</a>
-            <a class="block py-3" href="fachplanung.html">Fachplanung</a>
-            <a class="block py-3" href="projektleitung.html">Projektleitung/Objektüberwachung</a>
+          <div class="mobile-submenu pl-1 text-sm" id="leistungen-submenu" style="color:var(--text-muted)">
+            <a class="mobile-submenu-link" href="energieberatung.html"><span class="mobile-submenu-icon"><i aria-hidden="true" class="fas fa-bolt"></i></span>Energieberatung</a>
+            <a class="mobile-submenu-link" href="fachplanung.html"><span class="mobile-submenu-icon"><i aria-hidden="true" class="fas fa-drafting-compass"></i></span>Fachplanung</a>
+            <a class="mobile-submenu-link" href="projektleitung.html"><span class="mobile-submenu-icon"><i aria-hidden="true" class="fas fa-diagram-project"></i></span>Projektleitung/Objektüberwachung</a>
           </div>
         </div>
-
         <div class="nav-item relative">
-          <button class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" onclick="toggleSubmenu('druckluft-effizienz')" style="color:var(--text-nav)">
+          <button aria-controls="druckluft-effizienz-submenu" aria-expanded="false" class="flex justify-between items-center py-4 border-b border-[var(--border-card)] w-full text-left" onclick="toggleSubmenu('druckluft-effizienz')" style="color:var(--text-nav)">
             Druckluft-Effizienz
             <i class="fas fa-chevron-down text-xs transition-transform" id="druckluft-effizienz-icon" style="color:var(--text-muted)"></i>
           </button>
-          <div class="mobile-submenu pl-4 text-sm" id="druckluft-effizienz-submenu" style="color:var(--text-muted)">
-            <a class="block py-3" href="basischeck.html">BasisCheck</a>
-            <a class="block py-3" href="leckageortung.html">Leckageortung</a>
+          <div class="mobile-submenu pl-1 text-sm" id="druckluft-effizienz-submenu" style="color:var(--text-muted)">
+            <a class="mobile-submenu-link" href="basischeck.html"><span class="mobile-submenu-icon"><i aria-hidden="true" class="fas fa-clipboard-check"></i></span>BasisCheck</a>
+            <a class="mobile-submenu-link" href="leckageortung.html"><span class="mobile-submenu-icon"><i aria-hidden="true" class="fas fa-wave-square"></i></span>Leckageortung</a>
           </div>
         </div>
-
         <div class="mt-6">
           <a class="cta-button text-white w-full py-3.5 text-sm font-semibold flex items-center justify-center gap-2 shadow-md" href="index.html#anfrage">
-            <i class="fas fa-paper-plane text-xs"></i>
-            Zum Kontaktformular
+            <i class="fas fa-paper-plane text-xs"></i> Zum Kontaktformular
           </a>
         </div>
-
         <div class="mt-8 border-t border-[var(--border-card)] pt-7 space-y-4 text-sm">
-          <p class="text-[10px] font-bold tracking-widest uppercase" style="color:var(--secondary)">Kontakt</p>
-          <div class="flex items-center gap-3">
-            <i class="fas fa-phone flex-shrink-0" style="color:var(--primary)"></i>
-            <a href="tel:+49123456789" style="color:var(--text-nav)">+49 152 28760622</a>
-          </div>
-          <div class="flex items-center gap-3">
-            <i class="fas fa-envelope flex-shrink-0" style="color:var(--primary)"></i>
-            <a class="break-all" href="mailto:info@proenergie-versorgungstechnik.de" style="color:var(--text-nav)">info@proenergie-versorgungstechnik.de</a>
-          </div>
-          <div class="flex items-start gap-3">
-            <i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:var(--primary)"></i>
-            <div style="color:var(--text-muted)">
-              <p>Dittmannsdorfer Str. 44 · 09322 Penig</p>
-            </div>
-          </div>
+          <p class="font-bold tracking-widest uppercase" style="color:var(--secondary)">Kontakt</p>
+          <div class="flex items-center gap-3"><i class="fas fa-phone flex-shrink-0" style="color:var(--primary)"></i><a href="tel:+4915228760622" style="color:var(--text-nav)">+49 152 28760622</a></div>
+          <div class="flex items-center gap-3"><i class="fas fa-envelope flex-shrink-0" style="color:var(--primary)"></i><a class="break-all" href="mailto:info@proenergie-versorgungstechnik.de" style="color:var(--text-nav)">info@proenergie-versorgungstechnik.de</a></div>
+          <div class="flex items-start gap-3"><i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:var(--primary)"></i><div style="color:var(--text-muted)"><p>Dittmannsdorfer Str. 44 · 09322 Penig</p></div></div>
         </div>
       </div>
     </div>
@@ -186,28 +144,26 @@
 
   <!-- PAGE HERO -->
   <section class="page-hero">
-    <div class="max-w-[1400px] mx-auto relative z-10">
+    <div class="page-hero-inner">
       <div class="hero-badge">Druckluft-Effizienz</div>
       <h1 class="page-hero-h1">Basischeck <em>Druckluftanlagen</em></h1>
       <p class="page-hero-lead">Energieverluste erkennen, Betriebskosten senken und die Versorgungssicherheit gezielt verbessern.</p>
-      <div class="mt-8 flex flex-col sm:flex-row gap-3">
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 items-center">
         <a class="cta-button text-white px-7 py-3.5 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg" href="index.html#anfrage">
-          <i class="fas fa-arrow-right text-sm"></i>
-          Jetzt Kontakt aufnehmen
+          <i class="fas fa-arrow-right text-sm"></i> Jetzt Kontakt aufnehmen
         </a>
       </div>
     </div>
   </section>
 
-  <!-- MAIN -->
-  <main class="w-full max-w-[1400px] mx-auto">
-    <!-- INTRO – NEUER TEXT -->
+  <main class="w-full max-w- mx-auto">
+    <!-- INTRO -->
     <div class="section-outer content-block">
-      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-        <div class="lg:col-span-2">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start min-w-0">
+        <div class="lg:col-span-2 min-w-0">
           <span class="section-label">Einführung</span>
           <h2 class="section-h2">Warum ein Basischeck für Ihre Druckluftanlage?</h2>
-          <div class="prose-custom text-sm mt-4 space-y-4">
+          <div class="prose-custom prose-intro text-sm mt-4 space-y-4 text-scroll h-scroll">
             <p>Druckluft ist für viele Produktionsprozesse unverzichtbar, zählt jedoch zugleich zu den kostenintensivsten Energieformen im Betrieb. Bereits kleinere Schwachstellen können dauerhaft hohe Mehrkosten verursachen. Dazu gehören überhöhte Druckniveaus, unnötige Leerlaufzeiten, ungünstige Schaltzyklen, eine nicht bedarfsgerechte Anlagenkonfiguration, Druckverluste im Netz oder ein erhöhter Verbrauch durch Leckagen.</p>
             <p>Im laufenden Betrieb bleiben diese Auffälligkeiten häufig unbemerkt, da belastbare Betriebsdaten fehlen oder einzelne Komponenten nicht im Zusammenhang betrachtet werden.</p>
             <p>Mit unserem Basischeck erhalten Sie eine fachlich fundierte Ersteinschätzung Ihrer Druckluftanlage. Wir betrachten Erzeugung, Aufbereitung, Speicherung und Verteilung unter realen Betriebsbedingungen. Ziel ist es, Schwachstellen sichtbar zu machen, Einsparpotenziale zu bewerten und konkrete Handlungsempfehlungen abzuleiten.</p>
@@ -219,75 +175,44 @@
 
     <div class="section-divider"></div>
 
-    <!-- VORGEHEN – BEIBEHALTEN (8 Schritte) -->
+    <!-- VORGEHEN -->
     <div class="section-outer content-block">
       <div class="max-w-3xl mx-auto">
         <span class="section-label">Unser Vorgehen</span>
         <h2 class="section-h2">So führen wir den Basischeck durch</h2>
         <p class="section-intro text-sm">Strukturierte Schritte für eine umfassende Analyse Ihrer Druckluftanlage.</p>
-        <div class="space-y-0 mt-8">
-          <div class="flex gap-4 pb-7 relative">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">1</div>
-            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-            <div class="pt-1.5">
-              <h4 class="font-bold text-[var(--text-heading)] mb-1">Aufnahme der Druckluftanlage vor Ort</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Detaillierte Erfassung der Anlage und ihrer Komponenten direkt bei Ihnen im Betrieb.</p>
-            </div>
+        <div class="mt-8">
+          <div class="process-step">
+            <div class="step-num">1</div>
+            <div class="step-content"><h4>Aufnahme der Druckluftanlage vor Ort</h4><p>Detaillierte Erfassung der Anlage und ihrer Komponenten direkt bei Ihnen im Betrieb.</p></div>
           </div>
-          <div class="flex gap-4 pb-7 relative">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">2</div>
-            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-            <div class="pt-1.5">
-              <h4 class="font-bold text-[var(--text-heading)] mb-1">Sichtung der Kompressorstation und Hauptkomponenten</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Überprüfung der zentralen Elemente Ihrer Druckluftversorgung auf Funktionalität und Effizienz.</p>
-            </div>
+          <div class="process-step">
+            <div class="step-num">2</div>
+            <div class="step-content"><h4>Sichtung der Kompressorstation und Hauptkomponenten</h4><p>Überprüfung der zentralen Elemente Ihrer Druckluftversorgung auf Funktionalität und Effizienz.</p></div>
           </div>
-          <div class="flex gap-4 pb-7 relative">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">3</div>
-            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-            <div class="pt-1.5">
-              <h4 class="font-bold text-[var(--text-heading)] mb-1">Bewertung von Druckniveau, Aufbereitung und Speicher</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Analyse der wichtigsten Betriebsparameter für eine optimale Anlageneinstellung.</p>
-            </div>
+          <div class="process-step">
+            <div class="step-num">3</div>
+            <div class="step-content"><h4>Bewertung von Druckniveau, Aufbereitung und Speicher</h4><p>Analyse der wichtigsten Betriebsparameter für eine optimale Anlageneinstellung.</p></div>
           </div>
-          <div class="flex gap-4 pb-7 relative">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">4</div>
-            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-            <div class="pt-1.5">
-              <h4 class="font-bold text-[var(--text-heading)] mb-1">Betrachtung des Leitungsnetzes und typischer Schwachstellen</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Identifikation von potenziellen Energieverlusten im Leitungsnetz und an kritischen Punkten.</p>
-            </div>
+          <div class="process-step">
+            <div class="step-num">4</div>
+            <div class="step-content"><h4>Betrachtung des Leitungsnetzes und typischer Schwachstellen</h4><p>Identifikation von potenziellen Energieverlusten im Leitungsnetz und an kritischen Punkten.</p></div>
           </div>
-          <div class="flex gap-4 pb-7 relative">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">5</div>
-            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-            <div class="pt-1.5">
-              <h4 class="font-bold text-[var(--text-heading)] mb-1">Erfassung auffälliger Betriebszustände</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Dokumentation von Unregelmäßigkeiten und ungewöhnlichen Betriebszuständen.</p>
-            </div>
+          <div class="process-step">
+            <div class="step-num">5</div>
+            <div class="step-content"><h4>Erfassung auffälliger Betriebszustände</h4><p>Dokumentation von Unregelmäßigkeiten und ungewöhnlichen Betriebszuständen.</p></div>
           </div>
-          <div class="flex gap-4 pb-7 relative">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">6</div>
-            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-            <div class="pt-1.5">
-              <h4 class="font-bold text-[var(--text-heading)] mb-1">Überschlägige Einschätzung möglicher Einsparpotenziale</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Bewertung der identifizierten Potenziale für eine wirtschaftliche Optimierung.</p>
-            </div>
+          <div class="process-step">
+            <div class="step-num">6</div>
+            <div class="step-content"><h4>Überschlägige Einschätzung möglicher Einsparpotenziale</h4><p>Bewertung der identifizierten Potenziale für eine wirtschaftliche Optimierung.</p></div>
           </div>
-          <div class="flex gap-4 pb-7 relative">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">7</div>
-            <div style="position:absolute; left:19px; top:40px; bottom:0; width:2px; background: linear-gradient(to bottom, #6BA242, transparent);"></div>
-            <div class="pt-1.5">
-              <h4 class="font-bold text-[var(--text-heading)] mb-1">Empfehlung der nächsten sinnvollen Schritte</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Konkrete Handlungsempfehlungen für die weitere Vorgehensweise.</p>
-            </div>
+          <div class="process-step">
+            <div class="step-num">7</div>
+            <div class="step-content"><h4>Empfehlung der nächsten sinnvollen Schritte</h4><p>Konkrete Handlungsempfehlungen für die weitere Vorgehensweise.</p></div>
           </div>
-          <div class="flex gap-4 relative">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, #031F5C, #1249B4); box-shadow: 0 4px 12px rgba(3,31,92,0.25);">8</div>
-            <div class="pt-1.5">
-              <h4 class="font-bold text-[var(--text-heading)] mb-1">Übergabe einer verständlichen Kurzauswertung</h4>
-              <p class="text-sm text-[var(--text-muted)] leading-relaxed">Zusammenfassung der Ergebnisse in einer klaren und verständlichen Dokumentation.</p>
-            </div>
+          <div class="process-step">
+            <div class="step-num">8</div>
+            <div class="step-content"><h4>Übergabe einer verständlichen Kurzauswertung</h4><p>Zusammenfassung der Ergebnisse in einer klaren und verständlichen Dokumentation.</p></div>
           </div>
         </div>
       </div>
@@ -295,21 +220,15 @@
 
     <div class="section-divider"></div>
 
-    <!-- CTA BANNER -->
+    <!-- CTA -->
     <div class="section-outer content-block">
       <div class="cta-banner w-full mx-auto">
         <div class="relative z-10">
           <h2>Wo verliert Ihre Druckluftanlage Energie?</h2>
           <p>Nehmen Sie gerne Kontakt mit uns auf, wenn Sie wissen möchten, ob Ihre Druckluftanlage wirtschaftlich arbeitet und wo mögliche Einsparpotenziale liegen.</p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a class="cta-outline px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5" href="tel:+49123456789">
-              <i class="fas fa-phone text-sm"></i>
-              +49 152 28760622
-            </a>
-            <a class="cta-button text-white px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg" href="index.html#anfrage">
-              <i class="fas fa-paper-plane text-sm"></i>
-              Kontaktformular
-            </a>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a class="cta-outline px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5" href="tel:+4915228760622"><i class="fas fa-phone text-sm"></i> +49 152 28760622</a>
+            <a class="cta-button text-white px-6 py-3 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg" href="index.html#anfrage"><i class="fas fa-paper-plane text-sm"></i> Kontaktformular</a>
           </div>
         </div>
       </div>
@@ -317,70 +236,31 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="w-full mt-4">
-    <div class="max-w-[1400px] mx-auto px-6 pt-14 pb-10">
+  <footer style="background: var(--bg-footer); margin-left: calc(50% - 50vw); width: 100vw;">
+    <div class="site-container pt-14 pb-10">
       <div class="grid md:grid-cols-3 gap-10 md:gap-12">
         <div>
-          <!-- Footer Logo (kleinere Version) -->
           <a class="logo-wrapper group mb-4" href="index.html">
             <div class="logo-img-box" style="width: 36px; height: 36px;">
-              <img
-                alt="ProEnergie Logo"
-                decoding="async"
-                height="36"
-                loading="lazy"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                sizes="36px"
-                src="bilder/logo_projekt-128.png"
-                srcset="bilder/logo_projekt-16.png 16w, bilder/logo_projekt-32.png 32w, bilder/logo_projekt-64.png 64w, bilder/logo_projekt-128.png 128w, bilder/logo_projekt-256.png 256w, bilder/logo_projekt-512.png 512w"
-                width="36">
-              <svg class="logo-svg-fallback" style="display:none" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 3 L27 10 L27 20 L15 27 L3 20 L3 10 Z" fill="rgba(114,205,20,0.15)" stroke="#72CD14" stroke-width="1.5"/>
-                <path d="M15 8 L15 22 M10 13 L15 8 L20 13" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-              </svg>
+              <video id="footer-logo" width="36" height="36" muted loop playsinline preload="none" aria-label="ProEnergie Logo" style="width:100%; height:100%; object-fit:contain; display:block;"></video>
+              <img id="footer-logo-fallback" src="bilder/logo_projekt-512.png" width="36" height="36" alt="ProEnergie Logo" style="width:100%;height:100%;object-fit:contain;display:none;">
             </div>
             <div class="logo-text-block">
-              <span class="logo-brand" style="font-size: 1.1rem;">
-                <span class="pro">Pro</span>
-                <span class="energie">Energie</span>
-              </span>
+              <span class="logo-brand" style="font-size: 1.1rem;"><span class="pro">Pro</span><span class="energie">Energie</span></span>
               <span class="logo-sub" style="color: #ffffff; font-size: 0.55rem;">— Versorgungstechnik —</span>
             </div>
           </a>
           <p class="text-sm leading-relaxed" style="color:var(--text-footer-muted); max-width:260px;">Ihr Spezialist für zuverlässige, effiziente und zukunftssichere Druckluft- und Gasversorgungssysteme.</p>
-          <div class="mt-6 flex gap-4">
-            <a
-              class="w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all"
-              href="#"
-              onmouseout="this.style.color=''"
-              onmouseover="this.style.color='#72CD14'"
-              style="background:rgba(255,255,255,0.07); color:var(--text-footer-muted);">
-              <i class="fab fa-instagram"></i>
-            </a>
-          </div>
         </div>
-
         <div>
-          <h5 class="text-[10px] font-bold tracking-widest uppercase mb-5" style="color:#72CD14">Kontakt</h5>
+          <h5 class="font-bold tracking-widest uppercase mb-5" style="color:#72CD14">Kontakt</h5>
           <div class="space-y-4 text-sm" style="color:var(--text-footer-muted)">
-            <div class="flex items-center gap-3">
-              <i class="fas fa-phone flex-shrink-0" style="color:#72CD14"></i>
-              <a class="hover:text-[#72CD14] transition-colors" href="tel:+49123456789" style="color:var(--text-footer-muted)">+49 152 28760622</a>
-            </div>
-            <div class="flex items-start gap-3">
-              <i class="fas fa-envelope mt-0.5 flex-shrink-0" style="color:#72CD14"></i>
-              <span class="break-all" style="color:var(--text-footer-muted)">info@proenergie-versorgungstechnik.de</span>
-            </div>
-            <div class="flex items-start gap-3">
-              <i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:#72CD14"></i>
-              <div>
-                <p>Dittmannsdorfer Str. 44 · 09322 Penig</p>
-              </div>
-            </div>
+            <div class="flex items-center gap-3"><i class="fas fa-phone flex-shrink-0" style="color:#72CD14"></i><a class="hover:text-[#72CD14] transition-colors" href="tel:+4915228760622" style="color:var(--text-footer-muted)">+49 152 28760622</a></div>
+            <div class="flex items-start gap-3"><i class="fas fa-envelope mt-0.5 flex-shrink-0" style="color:#72CD14"></i><span class="break-all" style="color:var(--text-footer-muted)">info@proenergie-versorgungstechnik.de</span></div>
+            <div class="flex items-start gap-3"><i class="fas fa-map-marker-alt mt-0.5 flex-shrink-0" style="color:#72CD14"></i><div><p>Dittmannsdorfer Str. 44 · 09322 Penig</p></div></div>
           </div>
         </div>
       </div>
-
       <div class="border-t mt-12 pt-7 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs" style="border-color:rgba(255,255,255,0.08); color:var(--text-footer-muted)">
         <p>© 2026 ProEnergie – Alle Rechte vorbehalten</p>
         <div class="flex gap-6">
