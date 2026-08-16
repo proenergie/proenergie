@@ -54,7 +54,7 @@
    2. BASIS / RESET
    =================================================================== */
 *, *::before, *::after { box-sizing: border-box; }
-html { overflow-x: hidden; width: 100%; }
+html { overflow-x: hidden; width: 100%; scrollbar-gutter: stable; overflow-y: scroll; }
 body {
   font-family: 'DM Sans', system-ui, sans-serif;
   background-color: var(--bg-page); color: var(--text-base);
@@ -787,6 +787,7 @@ html.menu-preopen body {
   left: 0; right: 0;
   width: 100%;
   overflow: hidden;
+  scrollbar-gutter: stable;
 }
 
 html.menu-preopen #page-blur-overlay {

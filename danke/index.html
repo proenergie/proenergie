@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    
+    <!-- *** SEO: NO-INDEX – Seite nicht in Suchergebnissen *** -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    
+    <!-- *** Titel (nur für Browser-Tab) *** -->
+    <title>Vielen Dank! – ProEnergie</title>
+    
+    <!-- Canonical nur intern, damit keine Duplicate-Probleme entstehen -->
+    <link rel="canonical" href="https://proenergie-versorgungstechnik.de/danke/">
+
+    <!-- ========== FAVICONS ========== -->
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon/favicon-512.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="/favicon/favicon-256.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="/favicon/favicon-128.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon/favicon-64.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16.png">
+    
+    <!-- Apple Touch Icon für iOS -->
+    <link rel="apple-touch-icon" sizes="512x512" href="/favicon/favicon-512.png">
+    <link rel="apple-touch-icon" sizes="256x256" href="/favicon/favicon-256.png">
+    <link rel="apple-touch-icon" sizes="128x128" href="/favicon/favicon-128.png">
+    
+    <link rel="shortcut icon" href="/favicon/favicon-32.png">
+    
+    <!-- Android Chrome / PWA -->
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#031F5C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Scripts & Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    
+<style>
+    :root {
+      --primary: #031F5C;
+      --primary-mid: #1249B4;
+      --secondary: #6BA242;
+      --secondary-light: #72CD14;
+      --accent-green: #72CD14;
+      --accent-blue: #1249B4;
+      --dark: #1a1f2e;
+      --light: #e8edf5;
+      --bg-page: #ffffff;
+      --text-base: #1e2535;
+      --text-heading: #031F5C;
+    }
+    html.dark {
+      --bg-page: #080e1f;
+      --text-base: #c8d5ee;
+      --text-heading: #6BA242;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-base);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    /* Confetti Container */
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #72CD14;
+      opacity: 0;
+      border-radius: 50%;
+      animation: confetti-fall 3s ease-out forwards;
+    }
+    .confetti:nth-child(odd) {
+      background: #1249B4;
+      width: 8px;
+      height: 8px;
+    }
+    .confetti:nth-child(3n) {
+      background: #6BA242;
+      width: 6px;
+      height: 6px;
+    }
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* Steam Animation */
+    .steam {
+      position: absolute;
+      width: 20px;
+      height: 60px;
+      background: linear-gradient(to top, rgba(255,255,255,0.1), transparent);
+      border-radius: 50%;
+      filter: blur(5px);
+      animation: steam-rise 2s ease-out infinite;
+      opacity: 0;
+    }
+    @keyframes steam-rise {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-40px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    /* Checkmark Animation */
+    .checkmark-circle {
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      stroke-width: 2;
+      stroke-miterlimit: 10;
+      stroke: var(--secondary);
+      fill: none;
+      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+    .checkmark-check {
+      transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      stroke: var(--secondary);
+      stroke-width: 3;
+      stroke-linecap: round;
+      animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    }
+    @keyframes stroke {
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    /* Fade-in Animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Button Hover */
+    .back-button {
+      transition: all 0.3s ease;
+      background: linear-gradient(90deg, var(--primary), var(--primary-mid));
+    }
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(3, 31, 92, 0.45);
+    }
+    html.dark .back-button {
+      background: linear-gradient(90deg, #6BA242, #72CD14);
+    }
+    html.dark .back-button:hover {
+      box-shadow: 0 8px 24px rgba(107, 162, 66, 0.45);
+    }
+  </style>
+</head>
+<body>
+  <!-- Confetti Background -->
+  <div class="confetti-container" id="confetti"></div>
+
+  <!-- Main Content -->
+  <div class="text-center max-w-2xl mx-auto fade-in">
+    <!-- Steam Elements (Druckluft-Theme) -->
+    <div class="steam" style="left: 30%; top: 20%; animation-delay: 0s;"></div>
+    <div class="steam" style="left: 50%; top: 25%; animation-delay: 0.5s;"></div>
+    <div class="steam" style="left: 70%; top: 20%; animation-delay: 1s;"></div>
+
+    <!-- Checkmark Animation -->
+    <div class="mb-8">
+      <svg width="120" height="120" viewBox="0 0 52 52" class="mx-auto fade-in" style="animation-delay: 0.2s;">
+        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+      </svg>
+    </div>
+
+    <!-- Thank You Text -->
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 fade-in" style="color: var(--text-heading); animation-delay: 0.4s;">
+      Vielen Dank für Ihre Anfrage!
+    </h1>
+    <p class="text-lg md:text-xl mb-8 fade-in" style="color: var(--text-muted); animation-delay: 0.6s;">
+      Wir haben Ihre Nachricht erhalten und melden uns schnellstmöglich bei Ihnen.
+    </p>
+
+    <!-- Back Button -->
+    <a href="/" class="back-button text-white px-8 py-3.5 text-base font-semibold inline-flex items-center gap-2.5 shadow-lg fade-in" style="animation-delay: 0.8s;">
+      <i class="fas fa-arrow-left text-sm"></i>
+      Zurück zur Startseite
+    </a>
+  </div>
+
+  <script>
+    // Generate Confetti
+    function createConfetti() {
+      const container = document.getElementById('confetti');
+      const colors = ['#72CD14', '#1249B4', '#6BA242', '#ffffff'];
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        container.appendChild(confetti);
+      }
+    }
+
+    // Trigger animations on load
+    window.addEventListener('load', () => {
+      createConfetti();
+      // Remove confetti after animation
+      setTimeout(() => {
+        document.getElementById('confetti').innerHTML = '';
+      }, 5000);
+    });
+
+    // Dark Mode Sync (falls nötig)
+    document.addEventListener('DOMContentLoaded', () => {
+      const theme = localStorage.getItem('proenergie-theme') || 'light';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    });
+  </script>
+</body>
+</html>

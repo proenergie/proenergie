@@ -16,9 +16,9 @@
 
   const CONFIG = {
     logo: {
-      basePath: 'bilder',
-      webmPattern: (res) => `bilder/logo_projekt-${res}.webm`,
-      webpFallback: 'bilder/logo_projekt-512.png',
+      basePath: '/bilder',
+      webmPattern: (res) => `/bilder/logo_projekt-${res}.webm`,
+      webpFallback: '/bilder/logo_projekt-512.png',
       timeoutMs: 2500,
     }
   };
@@ -156,12 +156,10 @@
     const currentSet = getCurrentHashSet();
     const hashForLinks = serializeHash(currentSet);
     
-    document.querySelectorAll('a[href$=".html"], a[href*=".html#"]').forEach(a => {
+    document.querySelectorAll('a[href$="/"], a[href*="/#"]').forEach(a => {
       if (a.hostname !== location.hostname) return;
       try {
         const url = new URL(a.href, location.href);
-        // FIX: Nicht alten Hash mergen, sondern exakt den aktuellen Zustand nehmen
-        // Sonst bleibt einmal geöffnetes für immer drin
         if (hashForLinks) {
           url.hash = hashForLinks;
         } else {
