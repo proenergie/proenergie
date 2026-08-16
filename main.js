@@ -116,30 +116,15 @@
     document.querySelectorAll('a[href$="/"], a[href*="/#"]').forEach(a => {
       if (a.hostname!== location.hostname) return;
       try {
-        const url = new URL(a.href, location.href);
-        const rawHash = url.hash.replace(/^#/, '');
-        
-        // Kontakt-Link -> NUR #anfrage=1
-        if (rawHash.includes('anfrage')) {
-          url.hash = '#anfrage=1';
-          a.href = url.toString();
-          return;
-        }
-
-        // Normaler Seiten-Link -> darf KEIN anfrage bekommen
-        const origParams = new URLSearchParams(rawHash);
-        const state = buildStateParams();
-        state.delete('anfrage');
-
-        origParams.forEach((v,k) => {
-          if (!STATE_KEYS.includes(k) && k !== 'anfrage') {
-            state.set(k,'1');
-          }
+        const originalUrl = new URL(a.href, location.href);
+        const originalHashParams = new URLSearchParams(originalUrl.hash.replace(/^#/, ''));
+        const stateParams = buildStateParams();
+        originalHashParams.forEach((value, key) => {
+          if (!STATE_KEYS.includes(key)) stateParams.set(key, '1');
         });
-
-        url.hash = state.toString()? `#${state.toString()}` : '';
-        a.href = url.toString();
-      } catch(e){}
+        originalUrl.hash = stateParams.toString()? `#${stateParams.toString()}` : '';
+        a.href = originalUrl.toString();
+      } catch (e) {}
     });
   }
 
@@ -361,9 +346,38 @@
       history.replaceState(null, '', url.pathname + url.search + url.hash);
     }
   }
+  function initLogoJump() {
+    document.querySelectorAll('a.logo-wrapper').forEach(a => {
+      a.addEventListener('click', (e) => {
+        if (!isIndexPage()) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (DOM.mobileMenu?.classList.contains('active')) {
+          closeMobileMenu({ updateHash: false });
+        }
+
+        sessionStorage.removeItem('jumpTo');
+
+        // nur #anfrage raus, alles andere bleibt
+        const p = getHashParams();
+        if (p.has('anfrage')) {
+          p.delete('anfrage');
+          setHashParams(p);
+        }
+
+        // instant springen
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }, true);
+    });
+  }
   document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initScrollLinks();
+    initLogoJump();
     initAllCollapses();
     initFooterLogo();
     enforceLightAndCleanURL();
