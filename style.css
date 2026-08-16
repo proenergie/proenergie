@@ -827,11 +827,3 @@ html.preopen-leistungen #leistungen-submenu {
 html.preopen-druckluft-effizienz #druckluft-effizienz-submenu {
   max-height: 500px !important;
 }
-
-/* Icons nur drehen wenn das jeweilige Untermenü wirklich offen ist */
-html.preopen-leistungen #leistungen-icon {
-  transform: rotate(180deg);
-}
-html.preopen-druckluft-effizienz #druckluft-effizienz-icon {
-  transform: rotate(180deg);
-}
