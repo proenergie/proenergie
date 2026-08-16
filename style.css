@@ -427,8 +427,12 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
     scroll-snap-type: x mandatory;
     scroll-padding-inline: 0;
     touch-action: pan-x pan-y;
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* IE / Edge */
   }
-  #anfrage .ceo-inline::-webkit-scrollbar { height: 5px; }
+  #anfrage .ceo-inline::-webkit-scrollbar {
+    display: none;                  /* Chrome, Safari, Opera */
+  }
   #anfrage .ceo-inline::-webkit-scrollbar-track { background: transparent; }
   #anfrage .ceo-inline::-webkit-scrollbar-thumb { background: var(--border-card); border-radius: 10px; }
 
