@@ -128,6 +128,27 @@
     });
   }
 
+  // NEU: Einmalig genutzte Sprung-Keys (z.B. "anfrage") nach dem Sprung wieder
+  // aus dem Hash entfernen. Ohne das blieb z.B. "anfrage=1" für immer im Hash
+  // "kleben" (buildStateParams() übernimmt unbekannte Hash-Keys automatisch in
+  // JEDEN neuen Hash), wodurch jeder weitere Menü-Klick am Desktop wieder zum
+  // Kontaktformular zurückgesprungen ist, statt zum eigentlichen Ziel.
+  function clearOneOffKeys(keysUsed) {
+    if (!keysUsed || !keysUsed.length) return;
+    const params = getHashParams();
+    let changed = false;
+    keysUsed.forEach(k => {
+      if (params.has(k)) {
+        params.delete(k);
+        changed = true;
+      }
+    });
+    if (changed) {
+      setHashParams(params);
+      syncHashToInternalLinks();
+    }
+  }
+
   function jumpToId(id) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -169,8 +190,16 @@
           document.documentElement.className = document.documentElement.className.replace(/preopen-\S+/g, '').replace(/\s{2,}/g, ' ').trim();
           setTimeout(() => {
             closeMobileMenu();
-            const cleaned = new URLSearchParams(params);
-            cleaned.delete(MENU_KEY);
+            // NEU: hier nicht nur MENU_KEY entfernen, sondern auch alle
+            // Nicht-State-Keys (z.B. "anfrage") - die wurden weiter unten
+            // bereits per jumpToId() konsumiert und dürfen nicht im Hash
+            // "kleben" bleiben.
+            const cleaned = new URLSearchParams();
+            params.forEach((value, key) => {
+              if (STATE_KEYS.includes(key) && key !== MENU_KEY) {
+                cleaned.set(key, value);
+              }
+            });
             setHashParams(cleaned);
             syncHashToInternalLinks();
           }, 150);
@@ -186,10 +215,18 @@
     if (stored && isIndexPage()) {
       sessionStorage.removeItem('jumpTo');
       jumpToId(stored);
+      // NEU: auch hier den einmalig genutzten Key wieder aus dem Hash entfernen
+      clearOneOffKeys([stored]);
     } else {
+      const jumped = [];
       params.forEach((v, k) => {
-        if (!STATE_KEYS.includes(k)) jumpToId(k);
+        if (!STATE_KEYS.includes(k)) {
+          jumpToId(k);
+          jumped.push(k);
+        }
       });
+      // NEU: einmalig genutzte Keys (z.B. "anfrage") nicht dauerhaft im Hash lassen
+      clearOneOffKeys(jumped);
     }
   }
 
@@ -249,6 +286,9 @@
         p.set(key, '1');
         setHashParams(p);
         jumpToId(key);
+        // NEU: einmalig genutzten Sprung-Key (z.B. "anfrage") direkt danach
+        // wieder aus dem Hash entfernen, statt ihn dauerhaft "kleben" zu lassen.
+        clearOneOffKeys([key]);
       };
       if (isMenuOpen) {
         closeMobileMenu({ restoreScroll: false, updateHash: false });

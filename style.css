@@ -1,3 +1,4 @@
+/* Fix: Mobile-Trigger jetzt nur bei hover:none + coarse + width<=1024, Desktop bei hover:hover. Hybrid-Laptops -> Desktop */
 /* ===================================================================
    style.css - ProEnergie - ZENTRAL (aufgeräumt & neu strukturiert)
    Responsive-Logik: Touch-Eingabe erzwingt Mobile-Modus – unabhängig von der Breite
@@ -42,7 +43,7 @@
 }
 
 /* Touch-Geräte: Mobile-Modus unabhängig von der Gerätebreite erzwingen. */
-@media (pointer: coarse), (hover: none), (any-pointer: coarse), (any-hover: none) {
+@media (hover: none) and (pointer: coarse) and (width <= 1024px) {
   :root {
     --section-space-y: clamp(1.5rem, 6vw, 2.25rem);
     --header-height: 64px;
@@ -251,7 +252,7 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
 .section-h2-leistungen { margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem); }
 .leistungen-label { font-size: var(--fs-xs); }
 
-@media (hover: hover) and (pointer: fine) and (any-hover: hover) and (any-pointer: fine) and (not (any-pointer: coarse)) {
+@media (hover: hover) and (pointer: fine), (width > 1024px) and (hover: hover), (width > 1024px) and (pointer: fine) {
   .leistungen-item + .leistungen-item {
     border-top: 1px solid var(--border-card);
     margin-top: clamp(2rem, 4vw, 3rem);
@@ -271,7 +272,7 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
    enthält – so bleibt die Überschrift überall statisch, nur die
    Kacheln/Absätze scrollen.
    =================================================================== */
-@media (pointer: coarse), (hover: none), (any-pointer: coarse), (any-hover: none) {
+@media (hover: none) and (pointer: coarse) and (width <= 1024px) {
   .h-scroll {
     display: flex;
     gap: 1rem;
@@ -350,7 +351,7 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
   .text-scroll-hint i { font-size: 0.7rem; }
 }
 
-@media (hover: hover) and (pointer: fine) and (any-hover: hover) and (any-pointer: fine) and (not (any-pointer: coarse)) {
+@media (hover: hover) and (pointer: fine), (width > 1024px) and (hover: hover), (width > 1024px) and (pointer: fine) {
   .text-scroll-hint { display: none; }
 }
 
@@ -361,7 +362,7 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
    damit die Überschrift darüber immer statisch stehen bleibt und nur
    die Karten scrollen, sobald die Mindestbreite nicht mehr passt.
    =================================================================== */
-@media (hover: hover) and (pointer: fine) and (any-hover: hover) and (any-pointer: fine) and (not (any-pointer: coarse)) {
+@media (hover: hover) and (pointer: fine), (width > 1024px) and (hover: hover), (width > 1024px) and (pointer: fine) {
   #why-cards-grid {
     display: grid !important;
     grid-auto-flow: column !important;
@@ -413,7 +414,7 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
 .ceo-photo-circle img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
 .ceo-role { font-size: var(--fs-xs); color: var(--secondary); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 
-@media (pointer: coarse), (hover: none), (any-pointer: coarse), (any-hover: none) {
+@media (hover: none) and (pointer: coarse) and (width <= 1024px) {
   #anfrage .ceo-col { max-width: 100%; min-width: 0; overflow: hidden; }
   .ceo-kachel { display: flex; justify-content: center; background: var(--bg-page-alt); border: none; border-radius: 0; padding: 1.15rem 1.25rem; }
 
@@ -449,13 +450,13 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
   #anfrage .anfrage-layout { width: calc(100% + (2 * var(--section-space-x))); max-width: none; margin-left: calc(-1 * var(--section-space-x)); }
 }
 
-@media (pointer: coarse) and (max-width: 430px), (hover: none) and (max-width: 430px) {
+@media (hover: none) and (pointer: coarse) and (width <= 430px) {
   #anfrage .ceo-inline { gap: 1rem; }
   #anfrage .ceo-inline .ceo-photo-frame { flex-basis: 145px; width: 145px; height: 145px; }
   #anfrage .ceo-inline .ceo-text { flex-basis: 340px; width: 340px; min-width: 340px; }
 }
 
-@media (hover: hover) and (pointer: fine) and (any-hover: hover) and (any-pointer: fine) and (not (any-pointer: coarse)) {
+@media (hover: hover) and (pointer: fine), (width > 1024px) and (hover: hover), (width > 1024px) and (pointer: fine) {
   .anfrage-layout { flex-direction: row; align-items: center; gap: 4rem; }
   .ceo-col { flex: 0 0 360px; }
   .form-col { flex: 1; min-width: 0; }
@@ -475,7 +476,7 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
 .text-collapse-toggle i { display: block; transition: transform 0.25s ease; }
 .text-collapse.is-expanded .text-collapse-toggle i { transform: rotate(180deg); }
 
-@media (pointer: coarse), (hover: none), (any-pointer: coarse), (any-hover: none) {
+@media (hover: none) and (pointer: coarse) and (width <= 1024px) {
   .text-collapse:not(.is-expanded) .text-collapse-inner { max-height: var(--collapse-preview-height, 4.2em); }
   .text-collapse:not(.is-expanded) .text-collapse-inner::after {
     content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2.25rem;
@@ -484,7 +485,7 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
   }
   .text-collapse-toggle { display: flex; }
 }
-@media (hover: hover) and (pointer: fine) and (any-hover: hover) and (any-pointer: fine) and (not (any-pointer: coarse)) {
+@media (hover: hover) and (pointer: fine), (width > 1024px) and (hover: hover), (width > 1024px) and (pointer: fine) {
   .text-collapse-inner { max-height: none !important; }
   .text-collapse-toggle { display: none !important; }
 }
@@ -492,7 +493,7 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
 /* ===================================================================
    16. MOBILE-SPEZIFISCHE ANPASSUNGEN
    =================================================================== */
-@media (pointer: coarse), (hover: none), (any-pointer: coarse), (any-hover: none) {
+@media (hover: none) and (pointer: coarse) and (width <= 1024px) {
   body { padding-top: var(--header-height); }
   header { height: var(--header-height); }
   header > div { padding-inline: 0.9rem !important; gap: 0.5rem !important; }
@@ -548,7 +549,7 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
   .advantage-grid, .analysis-grid, .stat-grid { grid-template-columns: 1fr; }
 }
 
-@media (pointer: coarse) and (orientation: portrait), (hover: none) and (orientation: portrait) {
+@media (hover: none) and (pointer: coarse) and (width <= 1024px) and (orientation: portrait) {
   .hero-bg { background-position: 70% center; }
   .hero-bg::before { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 }
@@ -556,7 +557,7 @@ main { width: 100%; max-width: var(--content-max-width); margin: 0 auto; }
 /* ===================================================================
    17. HOVER-EFFEKTE (nur für Geräte mit echtem Hover)
    =================================================================== */
-@media (hover: hover) and (pointer: fine) and (not (any-pointer: coarse)) {
+@media (hover: hover) and (pointer: fine), (width > 1024px) and (hover: hover), (width > 1024px) and (pointer: fine) {
   .nav-link:hover { color: var(--primary); }
   .nav-link:hover::after { width: 100%; }
   .submenu a:hover { background: rgba(3,31,92,0.06); color: var(--primary); padding-left: 26px; }
@@ -731,7 +732,7 @@ blockquote.big-quote::before {
 .usecase-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--secondary); flex-shrink: 0; }
 .usecase-pill span { font-size: var(--fs-sm); font-weight: 500; color: var(--text-base); }
 
-@media (hover: hover) and (pointer: fine) and (not (any-pointer: coarse)) {
+@media (hover: hover) and (pointer: fine), (width > 1024px) and (hover: hover), (width > 1024px) and (pointer: fine) {
   .industry-pill:hover { border-color: var(--secondary); color: var(--secondary); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(107,162,66,0.12); }
   .analysis-card:hover { border-color: var(--secondary); box-shadow: 0 8px 24px rgba(107,162,66,0.08); }
   .usecase-pill:hover { border-color: var(--secondary); box-shadow: 0 6px 18px rgba(107,162,66,0.10); transform: translateX(4px); }
