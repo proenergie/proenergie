@@ -19,10 +19,17 @@
   const SUBMENU_IDS = ['leistungen', 'druckluft-effizienz'];
   const MENU_KEY = 'menu';
   const STATE_KEYS = [...SUBMENU_IDS, MENU_KEY];
+  // WICHTIG: Laut Sitemap ist die Startseite ausschließlich unter "/" erreichbar,
+  // alle Unterseiten unter "/ordner/" (z.B. "/fachplanung/") - jede Unterseite hat
+  // inzwischen intern ebenfalls eine "index.html" (nur in ihrem eigenen Ordner).
+  // Der alte Check "p.endsWith('/index.html')" hat dadurch fälschlich JEDE
+  // Unterseite als Startseite erkannt, sobald sie über ihren echten Dateipfad
+  // (".../fachplanung/index.html" statt ".../fachplanung/") aufgerufen wurde.
+  // Deshalb hier ausschließlich exakte Root-Pfade zulassen.
   const INDEX_PATHS = ['/', '/index.html', '/index.htm', ''];
   function isIndexPage(path = location.pathname) {
     const p = path.toLowerCase();
-    return INDEX_PATHS.includes(p) || p.endsWith('/index.html') || p === '';
+    return INDEX_PATHS.includes(p);
   }
   let scrollY = 0;
 
@@ -113,18 +120,28 @@
     syncHashToInternalLinks();
   }
   function syncHashToInternalLinks() {
-    document.querySelectorAll('a[href$="/"], a[href*="/#"]').forEach(a => {
-      if (a.hostname!== location.hostname) return;
+    // WICHTIG: Nicht mehr auf den exakten String "/#" oder ein Href-Ende auf "/"
+    // verlassen. Startseiten-Links können je nach Vorlage z.B. "/", "/index.html",
+    // "/index.html#anfrage" oder "index.html#anfrage" lauten - ohne "/" direkt vor
+    // dem "#" wurden solche Links vorher NICHT erkannt und daher nie mit dem
+    // aktuellen Menü-/Submenü-Zustand synchronisiert. Jetzt wird jeder interne
+    // Link per isIndexPage() geprüft, unabhängig vom genauen URL-Format.
+    document.querySelectorAll('a[href]').forEach(a => {
+      const rawHref = a.getAttribute('href');
+      if (!rawHref || /^(mailto|tel|javascript):/i.test(rawHref)) return;
+      let originalUrl;
       try {
-        const originalUrl = new URL(a.href, location.href);
-        const originalHashParams = new URLSearchParams(originalUrl.hash.replace(/^#/, ''));
-        const stateParams = buildStateParams();
-        originalHashParams.forEach((value, key) => {
-          if (!STATE_KEYS.includes(key)) stateParams.set(key, '1');
-        });
-        originalUrl.hash = stateParams.toString()? `#${stateParams.toString()}` : '';
-        a.href = originalUrl.toString();
-      } catch (e) {}
+        originalUrl = new URL(a.href, location.href);
+      } catch (e) { return; }
+      if (originalUrl.hostname !== location.hostname) return;
+      if (!isIndexPage(originalUrl.pathname)) return;
+      const originalHashParams = new URLSearchParams(originalUrl.hash.replace(/^#/, ''));
+      const stateParams = buildStateParams();
+      originalHashParams.forEach((value, key) => {
+        if (!STATE_KEYS.includes(key)) stateParams.set(key, '1');
+      });
+      originalUrl.hash = stateParams.toString()? `#${stateParams.toString()}` : '';
+      a.href = originalUrl.toString();
     });
   }
 
@@ -255,7 +272,12 @@
   }
   function initScrollLinks() {
     document.addEventListener('click', (e) => {
-      const link = e.target.closest('a[href^="#"], a[href*="/#"]');
+      // WICHTIG: vorher wurden nur Links mit "#" ganz am Anfang oder dem exakten
+      // Teilstring "/#" erkannt. Links wie "/index.html#anfrage" (kein "/" direkt
+      // vor dem "#") fielen dadurch komplett durchs Raster und wurden nie von der
+      // eigenen Sprung-/Aufräum-Logik behandelt, sondern liefen als normaler,
+      // nativer Browser-Sprung - inklusive dem "anfrage klebt für immer im Hash"-Bug.
+      const link = e.target.closest('a[href*="#"]');
       if (!link) return;
       let key = '';
       let targetUrl = null;
@@ -275,7 +297,10 @@
         e.stopPropagation();
         if (isMenuOpen) closeMobileMenu({ restoreScroll: false, updateHash: false });
         sessionStorage.setItem('jumpTo', key);
-        window.location.href = `/#${key}=1`;
+        // WICHTIG: nicht hart auf "/" verlinken, sondern den tatsächlichen Pfad
+        // des geklickten Links übernehmen (z.B. "/index.html"), falls die
+        // Startseite ohne abschließenden "/" referenziert wird.
+        window.location.href = `${targetUrl.pathname}${targetUrl.search}#${key}=1`;
         return;
       }
       if (!document.getElementById(key)) return;
