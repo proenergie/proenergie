@@ -127,6 +127,11 @@
     // aktuellen Menü-/Submenü-Zustand synchronisiert. Jetzt wird jeder interne
     // Link per isIndexPage() geprüft, unabhängig vom genauen URL-Format.
     document.querySelectorAll('a[href]').forEach(a => {
+      // Das Logo bleibt IMMER ein sauberer, zustandsloser Link zur Startseite
+      // (kein anfrage/leistungen/menu im href) - es wird ausschließlich von
+      // initLogoJump() behandelt, nicht hier mit dem aktuellen Hash-Zustand
+      // synchronisiert.
+      if (a.classList.contains('logo-wrapper')) return;
       const rawHref = a.getAttribute('href');
       if (!rawHref || /^(mailto|tel|javascript):/i.test(rawHref)) return;
       let originalUrl;
