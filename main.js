@@ -139,7 +139,15 @@
         originalUrl = new URL(a.href, location.href);
       } catch (e) { return; }
       if (originalUrl.hostname !== location.hostname) return;
-      if (!isIndexPage(originalUrl.pathname)) return;
+      // WICHTIG: Hier ALLE "sauberen" internen Links behandeln - nicht nur
+      // die Startseite, sondern jede Unterseite (z.B. "/fachplanung/"), da
+      // sonst der Menü-/Submenü-Zustand (leistungen=1&druckluft-effizienz=1,
+      // menu=1) beim Seitenwechsel auf Mobile verloren geht. Ein Link gilt
+      // als "sauber", wenn sein Pfad auf "/" endet (Ordner-URL, deckt auch
+      // die Startseite "/" ab) oder er bereits einen Hash trägt.
+      const isCleanFolderLink = originalUrl.pathname.endsWith('/');
+      const hasHash = originalUrl.hash.length > 0;
+      if (!isCleanFolderLink && !hasHash) return;
       const originalHashParams = new URLSearchParams(originalUrl.hash.replace(/^#/, ''));
       const stateParams = buildStateParams();
       originalHashParams.forEach((value, key) => {
@@ -182,7 +190,7 @@
     const params = getHashParams();
     const hasAnyParam = [...params.keys()].length > 0;
     if (!hasAnyParam) {
-      const isMobile = window.matchMedia('(hover: none) and (pointer: coarse) and (max-width: 1024px)').matches;
+      const isMobile = window.matchMedia('(pointer: coarse), (hover: none), (max-width: 1279px)').matches;
       if (isMobile) {
         SUBMENU_IDS.forEach(id => setSubmenuState(id, true));
         updateHashFromDOM();
@@ -424,40 +432,31 @@
         e.preventDefault();
         e.stopPropagation();
 
-        // Logo-Klick = "zurück zum Start": kompletter Reset, nicht nur das
-        // Entfernen von "anfrage". Menü schließen, alle Submenüs zuklappen,
-        // evtl. hängende preopen-Klassen entfernen (identisch am Desktop wie
-        // am Mobile, da es hier keine geräteabhängige Verzweigung gibt).
         if (DOM.mobileMenu?.classList.contains('active')) {
           closeMobileMenu({ updateHash: false });
         }
-        SUBMENU_IDS.forEach(id => setSubmenuState(id, false));
-        document.documentElement.classList.remove('menu-preopen');
-        document.documentElement.className = document.documentElement.className
-          .replace(/preopen-\S+/g, '')
-          .replace(/\s{2,}/g, ' ')
-          .trim();
 
         sessionStorage.removeItem('jumpTo');
 
-        // Hash komplett leeren (nicht nur "anfrage") - das Logo ist der
-        // Ausgangspunkt, nicht nur ein Ausstieg aus dem Kontaktformular.
-        setHashParams(new URLSearchParams());
-        syncHashToInternalLinks();
+        // Nur einmalige Sprung-Parameter (z.B. "anfrage") raus, Menü-/Submenü-
+        // Zustand (leistungen/druckluft-effizienz/menu) bleibt erhalten.
+        const p = getHashParams();
+        let changed = false;
+        [...p.keys()].forEach(k => {
+          if (!STATE_KEYS.includes(k)) {
+            p.delete(k);
+            changed = true;
+          }
+        });
+        if (changed) {
+          setHashParams(p);
+          syncHashToInternalLinks();
+        }
 
-        // Instant an den Seitenanfang springen - unabhängig von evtl. per CSS
-        // gesetztem scroll-behavior (Absicherung, auch wenn aktuell keins
-        // definiert ist).
-        const root = document.documentElement;
-        const prevRootBehavior = root.style.scrollBehavior;
-        const prevBodyBehavior = document.body.style.scrollBehavior;
-        root.style.scrollBehavior = 'auto';
-        document.body.style.scrollBehavior = 'auto';
+        // Instant an den Seitenanfang springen.
         window.scrollTo(0, 0);
-        root.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        root.style.scrollBehavior = prevRootBehavior;
-        document.body.style.scrollBehavior = prevBodyBehavior;
       }, true);
     });
   }
