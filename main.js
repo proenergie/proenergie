@@ -177,7 +177,7 @@
     const params = getHashParams();
     const hasAnyParam = [...params.keys()].length > 0;
     if (!hasAnyParam) {
-      const isMobile = window.matchMedia('(pointer: coarse), (hover: none), (max-width: 1279px)').matches;
+      const isMobile = window.matchMedia('(hover: none) and (pointer: coarse) and (max-width: 1024px)').matches;
       if (isMobile) {
         SUBMENU_IDS.forEach(id => setSubmenuState(id, true));
         updateHashFromDOM();
@@ -419,23 +419,40 @@
         e.preventDefault();
         e.stopPropagation();
 
+        // Logo-Klick = "zurück zum Start": kompletter Reset, nicht nur das
+        // Entfernen von "anfrage". Menü schließen, alle Submenüs zuklappen,
+        // evtl. hängende preopen-Klassen entfernen (identisch am Desktop wie
+        // am Mobile, da es hier keine geräteabhängige Verzweigung gibt).
         if (DOM.mobileMenu?.classList.contains('active')) {
           closeMobileMenu({ updateHash: false });
         }
+        SUBMENU_IDS.forEach(id => setSubmenuState(id, false));
+        document.documentElement.classList.remove('menu-preopen');
+        document.documentElement.className = document.documentElement.className
+          .replace(/preopen-\S+/g, '')
+          .replace(/\s{2,}/g, ' ')
+          .trim();
 
         sessionStorage.removeItem('jumpTo');
 
-        // nur #anfrage raus, alles andere bleibt
-        const p = getHashParams();
-        if (p.has('anfrage')) {
-          p.delete('anfrage');
-          setHashParams(p);
-        }
+        // Hash komplett leeren (nicht nur "anfrage") - das Logo ist der
+        // Ausgangspunkt, nicht nur ein Ausstieg aus dem Kontaktformular.
+        setHashParams(new URLSearchParams());
+        syncHashToInternalLinks();
 
-        // instant springen
+        // Instant an den Seitenanfang springen - unabhängig von evtl. per CSS
+        // gesetztem scroll-behavior (Absicherung, auch wenn aktuell keins
+        // definiert ist).
+        const root = document.documentElement;
+        const prevRootBehavior = root.style.scrollBehavior;
+        const prevBodyBehavior = document.body.style.scrollBehavior;
+        root.style.scrollBehavior = 'auto';
+        document.body.style.scrollBehavior = 'auto';
         window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
+        root.scrollTop = 0;
         document.body.scrollTop = 0;
+        root.style.scrollBehavior = prevRootBehavior;
+        document.body.style.scrollBehavior = prevBodyBehavior;
       }, true);
     });
   }
